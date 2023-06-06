@@ -19,11 +19,16 @@ public class MainCharactor : MonoBehaviour
     public GameObject Charactor1;
     public GameObject Charactor2;
     public GameObject Charactor3;
+    public SpriteRenderer Knight;
     //?【NPC設定】
     SpriteRenderer NPCPic; //* (NPC圖片)
     public bool Carrying = false; //*(正在被搬運)
     //?【互動設定】
     public GameObject sign; //*(告示牌)
+    public Text MissionComplete;
+    //?【怪物設定】
+    public static int KillCount;
+    public Text KillGoal;
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>(); //* (尋找剛體)
@@ -35,6 +40,7 @@ public class MainCharactor : MonoBehaviour
     {
         PlayerMovement();
         Posion();
+        Mission();
 
         //Charactor1.transform.position = Charactor0.transform.position;
         //Charactor2.transform.position = Charactor0.transform.position;
@@ -45,9 +51,11 @@ public class MainCharactor : MonoBehaviour
         if(Input.GetAxisRaw("Horizontal") > 0.1f)
         {
             rb.AddForce(speed,0,0,ForceMode.Impulse);
+            Knight.flipX = false;
         }else if(Input.GetAxisRaw("Horizontal") < -0.1f)
         {
             rb.AddForce(-speed,0,0,ForceMode.Impulse);
+            Knight.flipX = true;
         }
         if(Input.GetAxisRaw("Vertical") > 0.1f)
         {
@@ -72,9 +80,12 @@ public class MainCharactor : MonoBehaviour
         {
             NPCPic.color = new Color32 (255,255,255,255); //* (圖片變透明)
             Carrying = false; //* (已經卸下)
+            Charactor1.SetActive(false);
+            Charactor2.SetActive(false);
+            Charactor3.SetActive(false);
             speed = 0.2f;
         }
-        if(Carrying == true)
+        if(Carrying == true && NPC.gameObject.tag == "NPC")
         {
             NPC.transform.position = transform.position;
         }
@@ -111,8 +122,6 @@ public class MainCharactor : MonoBehaviour
     }
     void CharactorChange()
     {
-        
-        
         if(PosionType == 1)
         {
             Charactor1.SetActive(true);
@@ -129,5 +138,19 @@ public class MainCharactor : MonoBehaviour
             Charactor2.SetActive(false);
             Charactor1.SetActive(false);
         }
+    }
+    void Mission()
+    {
+        if(KillCount >= 3)
+        {
+            KillGoal.text = "任務完成";
+            MissionComplete.text = "\n- 公告 - \n\n感謝神秘的勇者消滅了所有占據地盤的怪物";
+            Invoke("Reset",3f);
+            KillCount = 0;
+        }
+    }
+    void Reset()
+    {
+        KillGoal.text = "";
     }
 }
