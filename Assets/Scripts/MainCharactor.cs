@@ -32,7 +32,7 @@ public class MainCharactor : MonoBehaviour
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>(); //* (尋找剛體)
-        speed = 0.2f;
+        speed = 0.5f;
         PosionType = 1;
     }
 
