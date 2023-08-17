@@ -32,7 +32,7 @@ public class MainCharactor : MonoBehaviour
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>(); //* (尋找剛體)
-        speed = 0.3f;
+        speed = 0.2f;
         PosionType = 1;
     }
 
@@ -41,7 +41,7 @@ public class MainCharactor : MonoBehaviour
         PlayerMovement();
         Posion();
         Mission();
-
+        //Debug.Log(speed);
         //Charactor1.transform.position = Charactor0.transform.position;
         //Charactor2.transform.position = Charactor0.transform.position;
         //Charactor3.transform.position = Charactor0.transform.position;
