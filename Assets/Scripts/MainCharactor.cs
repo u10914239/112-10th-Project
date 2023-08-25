@@ -13,6 +13,7 @@ public class MainCharactor : MonoBehaviour
     //?【主角設定】
     public Rigidbody rb; //* (角色剛體)
     public float speed;
+    float stopSpeed = 0f;
     public int PosionType;
     public Text PosionTypeShow;
     public GameObject Charactor0;
@@ -29,6 +30,10 @@ public class MainCharactor : MonoBehaviour
     //?【怪物設定】
     public static int KillCount;
     public Text KillGoal;
+
+
+    public Animator animator;
+
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>(); //* (尋找剛體)
@@ -41,6 +46,8 @@ public class MainCharactor : MonoBehaviour
         PlayerMovement();
         Posion();
         Mission();
+        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * speed)+ Mathf.Abs(Input.GetAxisRaw("Vertical") * speed);
+        animator.SetFloat("Speed", Mathf.Abs(stopSpeed));
         //Debug.Log(speed);
         //Charactor1.transform.position = Charactor0.transform.position;
         //Charactor2.transform.position = Charactor0.transform.position;
@@ -50,10 +57,13 @@ public class MainCharactor : MonoBehaviour
     {
         if(Input.GetAxisRaw("Horizontal") > 0.1f)
         {
+            
+
             rb.AddForce(speed,0,0,ForceMode.Impulse);
             Knight.flipX = false;
         }else if(Input.GetAxisRaw("Horizontal") < -0.1f)
         {
+            
             rb.AddForce(-speed,0,0,ForceMode.Impulse);
             Knight.flipX = true;
         }
