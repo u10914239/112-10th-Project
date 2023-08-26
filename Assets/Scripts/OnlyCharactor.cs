@@ -6,16 +6,22 @@ public class OnlyCharactor : MonoBehaviour
 {
     public Rigidbody rb;
     public float speed;
+    float stopSpeed = 0f;
     public SpriteRenderer Knight;
+
+    public Animator animator;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        speed = 0.15f;
+        speed = 0.1f;
 
     }
     void Update()
     {
         PlayerMovement();
+        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * speed);
+        animator.SetFloat("Speed", Mathf.Abs(stopSpeed));
     }
     void PlayerMovement()
     {

@@ -1910,7 +1910,7 @@ TerrainCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 729405722}
-  m_Material: {fileID: 13400000, guid: f84cb8844bee68442828387b1d8ef79f, type: 2}
+  m_Material: {fileID: 0}
   m_Enabled: 1
   m_TerrainData: {fileID: 15600000, guid: 20e67909d60d73f49a93553f03df2edd, type: 2}
   m_EnableTreeColliders: 1
@@ -2808,7 +2808,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.004807525, y: -2.688466e-10, z: 1.2925017e-12, w: 0.99998844}
+  m_LocalRotation: {x: 0.004807525, y: 2.688466e-10, z: -1.2925017e-12, w: 0.99998844}
   m_LocalPosition: {x: -7.6, y: 2.1, z: -6.06}
   m_LocalScale: {x: 0.704951, y: 0.86694884, z: 4.560814}
   m_ConstrainProportionsScale: 0
@@ -4938,7 +4938,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804228624}
-  m_LocalRotation: {x: 0.004807525, y: -2.688466e-10, z: 1.2925017e-12, w: 0.99998844}
+  m_LocalRotation: {x: 0.004807525, y: 2.688466e-10, z: -1.2925017e-12, w: 0.99998844}
   m_LocalPosition: {x: 0, y: 0.49999994, z: -200}
   m_LocalScale: {x: 2.1376092, y: 1.1258312, z: 6.495406}
   m_ConstrainProportionsScale: 0
