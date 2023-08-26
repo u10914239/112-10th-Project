@@ -1050,8 +1050,8 @@ GameObject:
   - component: {fileID: 8348243783572635167}
   - component: {fileID: 8348243783572635166}
   - component: {fileID: 8348243783572635155}
-  - component: {fileID: 8348243783572635160}
   - component: {fileID: 8348243783572635161}
+  - component: {fileID: 8348243783572635168}
   m_Layer: 0
   m_Name: Charactor
   m_TagString: Player
@@ -1075,31 +1075,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!114 &8348243783572635160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8348243783572635154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28cd58a08422db049b9618cf4002f27a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 8348243783572635155}
-  speed: 0
-  PosionType: 0
-  PosionTypeShow: {fileID: 0}
-  Charactor0: {fileID: 0}
-  Charactor1: {fileID: 8348243783684099169}
-  Charactor2: {fileID: 8348243783650042496}
-  Charactor3: {fileID: 8348243784439294291}
-  Knight: {fileID: 8348243785413863970}
-  Carrying: 0
-  sign: {fileID: 0}
-  MissionComplete: {fileID: 0}
-  KillGoal: {fileID: 0}
 --- !u!136 &8348243783572635161
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1143,6 +1118,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8348243783572635168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8348243783572635154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f23524de13a6444479c391aee291df19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 8348243783572635155}
+  speed: 0
+  Knight: {fileID: 8348243785413863970}
 --- !u!1 &8348243783650042496
 GameObject:
   m_ObjectHideFlags: 0
