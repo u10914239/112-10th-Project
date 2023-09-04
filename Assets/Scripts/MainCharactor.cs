@@ -60,12 +60,15 @@ public class MainCharactor : MonoBehaviour
             
 
             rb.AddForce(speed,0,0,ForceMode.Impulse);
-            Knight.flipX = false;
-        }else if(Input.GetAxisRaw("Horizontal") < -0.1f)
+            //Knight.flipX = false;
+            gameObject.transform.localScale = new Vector3(1, 2, 0.02f);
+        }
+        else if(Input.GetAxisRaw("Horizontal") < -0.1f)
         {
             
             rb.AddForce(-speed,0,0,ForceMode.Impulse);
-            Knight.flipX = true;
+            //Knight.flipX = true;
+            gameObject.transform.localScale = new Vector3(-1, 2, 0.02f);
         }
         if(Input.GetAxisRaw("Vertical") > 0.1f)
         {
