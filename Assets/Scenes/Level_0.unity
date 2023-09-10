@@ -928,7 +928,7 @@ GameObject:
   - component: {fileID: 290229269}
   - component: {fileID: 290229270}
   - component: {fileID: 290229271}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: 2.0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3457,8 +3457,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8f912cf0bb3942428bca6276747eb1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 2087554207}
+  enemy: {fileID: 2087554212}
   player: {fileID: 290229269}
+  slime: {fileID: 2087554210}
 --- !u!1001 &921651751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3620,7 +3621,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.0029517335, y: -0.00028562438, z: 0.00000084309073, w: 0.99999565}
+  m_LocalRotation: {x: 0.002951719, y: -0.00028559068, z: 0.0000008429871, w: 0.99999565}
   m_LocalPosition: {x: -68.43, y: 1.72, z: 5.6779995}
   m_LocalScale: {x: 0.704951, y: 0.86694884, z: 4.560814}
   m_ConstrainProportionsScale: 0
@@ -6662,7 +6663,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804228624}
-  m_LocalRotation: {x: 0.0029517335, y: -0.00028562438, z: 0.00000084309073, w: 0.99999565}
+  m_LocalRotation: {x: 0.002951719, y: -0.00028559068, z: 0.0000008429871, w: 0.99999565}
   m_LocalPosition: {x: -68.43, y: 1.72, z: 5.6779995}
   m_LocalScale: {x: 2.1376092, y: 2.2514563, z: 0.13109706}
   m_ConstrainProportionsScale: 0
@@ -7615,9 +7616,10 @@ GameObject:
   - component: {fileID: 2087554204}
   - component: {fileID: 2087554205}
   - component: {fileID: 2087554206}
-  - component: {fileID: 2087554207}
   - component: {fileID: 2087554208}
-  - component: {fileID: 2087554209}
+  - component: {fileID: 2087554211}
+  - component: {fileID: 2087554210}
+  - component: {fileID: 2087554212}
   m_Layer: 0
   m_Name: Slime_Normal
   m_TagString: Untagged
@@ -7633,7 +7635,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2087554202}
   m_LocalRotation: {x: -0, y: 0.13052641, z: -0, w: 0.9914449}
-  m_LocalPosition: {x: -0.285, y: 0.37663227, z: -0.602}
+  m_LocalPosition: {x: 0.48, y: 0.37663227, z: -0.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7721,28 +7723,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!195 &2087554207
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2087554202}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 1.0899999
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 2.5
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1.54
-  m_BaseOffset: 0.5
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &2087554208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7755,7 +7735,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f89b239aa88f194fb738bc24121d508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2087554209
+--- !u!95 &2087554210
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087554202}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3ac48962305c49b4b86fdc8a235bd776, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2087554211
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7768,6 +7769,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freezeXZAxis: 1
+--- !u!195 &2087554212
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087554202}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 1.0899999
+  m_Speed: 2
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 2.5
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1.54
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &2089654310
 GameObject:
   m_ObjectHideFlags: 0

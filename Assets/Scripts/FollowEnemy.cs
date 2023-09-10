@@ -7,12 +7,14 @@ public class FollowEnemy : MonoBehaviour
 {
     public NavMeshAgent enemy;
     public Transform player;
-   
+    public Animator slime;
 
-
+    
     private void Update()
     {
-        
         enemy.SetDestination(player.position);
+        slime.SetFloat("Speed", 1);
+
     }
+    
 }
