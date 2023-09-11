@@ -165,12 +165,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 1892464550306166293}
-  range: 0
-  centrePoint: {fileID: 4359685345687021304, guid: 7ebbc7c6ecd91df43990e9a741229553, type: 3}
+  range: 10
+  centrePoint: {fileID: 1892464550306166314}
   player: {fileID: 3988935748985111391, guid: bdd3b4191575d32449a2919b9c66fd4f, type: 3}
   Slime: {fileID: 1892464550306166317}
   slime: {fileID: 1892464550306166291}
-  lookRadius: 0
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 128
+  lookRadius: 10
+  attackRadius: 2.5
+  playerInSightRange: 0
+  playerInAttackRange: 0
 --- !u!195 &1892464550306166293
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -180,16 +186,16 @@ NavMeshAgent:
   m_GameObject: {fileID: 1892464550306166315}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 2
   m_Acceleration: 60
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 2.5
+  m_AngularSpeed: 500
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
-  m_Height: 1
+  m_Height: 2
   m_BaseOffset: 0.5
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4

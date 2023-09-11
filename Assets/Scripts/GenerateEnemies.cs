@@ -9,7 +9,7 @@ public class GenerateEnemies : MonoBehaviour
     public int xPos;
     public int zPos;
     public int enemyCount;
-
+    public int spawnNumber;
 
     void Start()
     {
@@ -18,7 +18,7 @@ public class GenerateEnemies : MonoBehaviour
     }
     IEnumerator EnemyDrop()
     {
-        while (enemyCount < 10)
+        while (enemyCount < spawnNumber)
         {
             xPos = Random.Range(-10,10);
             zPos = Random.Range(-10,10);
