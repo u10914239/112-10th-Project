@@ -3573,7 +3573,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.0029517366, y: -0.00028560072, z: 0.00000084302167, w: 0.99999565}
+  m_LocalRotation: {x: 0.002951711, y: -0.00028565, z: 0.0000008431598, w: 0.99999565}
   m_LocalPosition: {x: 28.66, y: 1.72, z: -10.422}
   m_LocalScale: {x: 0.704951, y: 0.86694884, z: 4.560814}
   m_ConstrainProportionsScale: 0
@@ -3975,7 +3975,7 @@ GameObject:
   - component: {fileID: 1068872297}
   - component: {fileID: 1068872296}
   m_Layer: 0
-  m_Name: Slime Spawner
+  m_Name: Enemy Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6664,7 +6664,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804228624}
-  m_LocalRotation: {x: 0.0029517366, y: -0.00028560072, z: 0.00000084302167, w: 0.99999565}
+  m_LocalRotation: {x: 0.002951711, y: -0.00028565, z: 0.0000008431598, w: 0.99999565}
   m_LocalPosition: {x: 28.66, y: 1.72, z: -10.422}
   m_LocalScale: {x: 2.1376092, y: 2.2514563, z: 0.13109706}
   m_ConstrainProportionsScale: 0

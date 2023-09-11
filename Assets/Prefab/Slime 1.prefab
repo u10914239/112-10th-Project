@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1892464550306166314}
   - component: {fileID: 1892464550306166317}
-  - component: {fileID: 1892464550306166316}
   - component: {fileID: 1892464550306166319}
   - component: {fileID: 1892464550306166289}
   - component: {fileID: 1892464550306166290}
@@ -91,19 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!65 &1892464550306166316
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1892464550306166315}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.18, y: 1.1964273, z: 0.2}
-  m_Center: {x: 0, y: 0.17178634, z: 0}
 --- !u!54 &1892464550306166319
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -112,12 +98,12 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1892464550306166315}
   serializedVersion: 2
-  m_Mass: 2
+  m_Mass: 1
   m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &1892464550306166289
@@ -179,9 +165,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 1892464550306166293}
+  range: 0
+  centrePoint: {fileID: 4359685345687021304, guid: 7ebbc7c6ecd91df43990e9a741229553, type: 3}
   player: {fileID: 3988935748985111391, guid: bdd3b4191575d32449a2919b9c66fd4f, type: 3}
   Slime: {fileID: 1892464550306166317}
   slime: {fileID: 1892464550306166291}
+  lookRadius: 0
 --- !u!195 &1892464550306166293
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -191,16 +180,16 @@ NavMeshAgent:
   m_GameObject: {fileID: 1892464550306166315}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.0899999
+  m_Radius: 0.5
   m_Speed: 2
-  m_Acceleration: 8
+  m_Acceleration: 60
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 2.5
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
-  m_Height: 1.54
+  m_Height: 1
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
