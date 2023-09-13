@@ -9,7 +9,7 @@ public class FollowEnemy : MonoBehaviour
     public float range;
     public Transform centrePoint;
 
-    
+    public Animator animator;
 
     public GameObject player;
 
@@ -24,13 +24,13 @@ public class FollowEnemy : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        
+        animator = GetComponent<Animator>();
 
     }
 
     private void Update()
     {
-         scale = transform.localScale;
+        scale = transform.localScale;
 
         playerInSightRange = Physics.CheckSphere(transform.position, lookRadius, whatIsPlayer);
         playerInAttackRange= Physics.CheckSphere(transform.position, attackRadius, whatIsPlayer);
@@ -52,6 +52,9 @@ public class FollowEnemy : MonoBehaviour
             scale.x = Mathf.Abs(scale.x);
         }
         transform.localScale = scale;
+
+        
+        
     }
 
     private void Patrolling()
@@ -74,8 +77,8 @@ public class FollowEnemy : MonoBehaviour
     {
         
         agent.SetDestination(player.transform.position);
-        
-        
+        animator.SetFloat("Speed", 1);
+
     }
 
     private void Attacking()
@@ -83,7 +86,7 @@ public class FollowEnemy : MonoBehaviour
         agent.SetDestination(transform.position);
 
         isAttacking = true;
-
+        animator.SetFloat("Speed", 0);
 
 
     }
