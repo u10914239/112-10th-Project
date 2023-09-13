@@ -9,6 +9,8 @@ public class FollowEnemy : MonoBehaviour
     public float range;
     public Transform centrePoint;
 
+    
+
     public GameObject player;
 
     public SpriteRenderer Slime;
@@ -18,8 +20,10 @@ public class FollowEnemy : MonoBehaviour
     public LayerMask whatIsPlayer;
     public float lookRadius, attackRadius;
     public bool playerInSightRange, playerInAttackRange;
-    
+    Vector3 scale;
 
+    public int findRange;
+    bool isAttacking;
 
     void Start()
     {
@@ -30,7 +34,7 @@ public class FollowEnemy : MonoBehaviour
 
     private void Update()
     {
-        
+         scale = transform.localScale;
 
         playerInSightRange = Physics.CheckSphere(transform.position, lookRadius, whatIsPlayer);
         playerInAttackRange= Physics.CheckSphere(transform.position, attackRadius, whatIsPlayer);
@@ -39,18 +43,19 @@ public class FollowEnemy : MonoBehaviour
         if (playerInSightRange && !playerInAttackRange)Chasing();
         if (playerInSightRange && playerInAttackRange) Attacking();
 
-        float distance = Vector3.Distance(player.transform.position, transform.position);
-        slime.SetFloat("Speed", enemy.velocity.magnitude);
+       
 
-        if (enemy.desiredVelocity.x >= 0)
+        if (enemy.velocity.x > 0|| player.transform.position.x - transform.position.x >= 0)
         {
-            Slime.flipX = true;
+           
+            scale.x = Mathf.Abs(scale.x) * -1;
         }
         else
         {
-            Slime.flipX = false;
+            
+            scale.x = Mathf.Abs(scale.x);
         }
-
+        transform.localScale = scale;
     }
 
     private void Patrolling()
@@ -71,16 +76,33 @@ public class FollowEnemy : MonoBehaviour
 
     private void Chasing()
     {
-        //enemy.speed = 2;
+        
         enemy.SetDestination(player.transform.position);
+        
         
     }
 
     private void Attacking()
     {
         enemy.SetDestination(transform.position);
-        //enemy.desiredVelocity.x = player.transform.position.x-enemy.position.x;
-        //enemy.speed = 0;
+
+        isAttacking = true;
+
+
+
+    }
+
+    public void SetTarget(Vector3 point)
+    {
+        if (isAttacking)
+        {
+            enemy.stoppingDistance = findRange;
+        }
+        else
+        {
+            enemy.stoppingDistance = 0;
+        }
+
 
     }
     bool RandomPoint(Vector3 center, float range, out Vector3 result)

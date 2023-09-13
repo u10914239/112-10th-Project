@@ -22,7 +22,7 @@ public class GenerateEnemies : MonoBehaviour
         {
             xPos = Random.Range(-10,10);
             zPos = Random.Range(-10,10);
-            Instantiate(theEnemy, new Vector3(spawnPoint.transform.position.x+xPos,0, spawnPoint.transform.position.z+zPos),Quaternion.identity);
+            Instantiate(theEnemy, new Vector3(spawnPoint.position.x+xPos,0, spawnPoint.position.z+zPos),Quaternion.identity);
             yield return new WaitForSeconds(0.1f);
             enemyCount += 1;
 
