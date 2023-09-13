@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SpriteDirectionController : MonoBehaviour
 {
-    //[SerializeField] bool freezeXZAxis = true;
+    
 
     private void LateUpdate()
     {

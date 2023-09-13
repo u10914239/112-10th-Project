@@ -5,17 +5,13 @@ using UnityEngine.AI;
 
 public class FollowEnemy : MonoBehaviour
 {
-    public NavMeshAgent enemy;
+    public NavMeshAgent agent;
     public float range;
     public Transform centrePoint;
 
     
 
     public GameObject player;
-
-    public SpriteRenderer Slime;
-
-    public Animator slime;
 
     public LayerMask whatIsPlayer;
     public float lookRadius, attackRadius;
@@ -45,7 +41,7 @@ public class FollowEnemy : MonoBehaviour
 
        
 
-        if (enemy.velocity.x > 0|| player.transform.position.x - transform.position.x >= 0)
+        if (agent.velocity.x > 0|| player.transform.position.x - transform.position.x >= 0)
         {
            
             scale.x = Mathf.Abs(scale.x) * -1;
@@ -60,13 +56,13 @@ public class FollowEnemy : MonoBehaviour
 
     private void Patrolling()
     {
-        if (enemy.remainingDistance <= enemy.stoppingDistance) //done with path
+        if (agent.remainingDistance <= agent.stoppingDistance) //done with path
         {
             Vector3 point;
             if (RandomPoint(centrePoint.position, range, out point)) //pass in our centre point and radius of area
             {
                 Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f); //so you can see with gizmos
-                enemy.SetDestination(point);
+                agent.SetDestination(point);
 
             }
         }
@@ -77,14 +73,14 @@ public class FollowEnemy : MonoBehaviour
     private void Chasing()
     {
         
-        enemy.SetDestination(player.transform.position);
+        agent.SetDestination(player.transform.position);
         
         
     }
 
     private void Attacking()
     {
-        enemy.SetDestination(transform.position);
+        agent.SetDestination(transform.position);
 
         isAttacking = true;
 
@@ -96,11 +92,11 @@ public class FollowEnemy : MonoBehaviour
     {
         if (isAttacking)
         {
-            enemy.stoppingDistance = findRange;
+            agent.stoppingDistance = findRange;
         }
         else
         {
-            enemy.stoppingDistance = 0;
+            agent.stoppingDistance = 0;
         }
 
 
