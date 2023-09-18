@@ -11,20 +11,22 @@ public class FollowEnemy : MonoBehaviour
 
     public Animator animator;
 
-    public GameObject player;
+    public Transform player;
 
     public LayerMask whatIsPlayer;
     public float lookRadius, attackRadius;
     public bool playerInSightRange, playerInAttackRange;
+    public float timeBetweenAttack;
+
     Vector3 scale;
 
-    public int findRange;
+    
     bool isAttacking;
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        animator = GetComponent<Animator>();
+        player = GameObject.FindWithTag("Player").transform;
+        
 
     }
 
@@ -41,7 +43,7 @@ public class FollowEnemy : MonoBehaviour
 
        
 
-        if (agent.velocity.x > 0|| player.transform.position.x - transform.position.x >= 0)
+        if (agent.velocity.x > 0|| player.position.x - transform.position.x >= 0)
         {
            
             scale.x = Mathf.Abs(scale.x) * -1;
@@ -52,6 +54,13 @@ public class FollowEnemy : MonoBehaviour
             scale.x = Mathf.Abs(scale.x);
         }
         transform.localScale = scale;
+
+       
+        
+       
+
+
+        
 
         
         
@@ -69,41 +78,42 @@ public class FollowEnemy : MonoBehaviour
 
             }
         }
-        
-
+        animator.SetFloat("Speed", 1);
+        animator.SetBool("isAttacking", false);
     }
 
     private void Chasing()
     {
         
-        agent.SetDestination(player.transform.position);
+        agent.SetDestination(player.position);
         animator.SetFloat("Speed", 1);
-
+        animator.SetBool("isAttacking", false);
     }
 
     private void Attacking()
     {
         agent.SetDestination(transform.position);
 
-        isAttacking = true;
-        animator.SetFloat("Speed", 0);
 
+        if (!isAttacking)
+        {
+            animator.SetBool("isAttacking",true);
+            animator.SetFloat("Speed", 0);
+
+            isAttacking = true;
+            Invoke(nameof(ResetAttack), timeBetweenAttack);
+        }
+        
 
     }
 
-    public void SetTarget(Vector3 point)
+    private void ResetAttack()
     {
-        if (isAttacking)
-        {
-            agent.stoppingDistance = findRange;
-        }
-        else
-        {
-            agent.stoppingDistance = 0;
-        }
-
-
+        isAttacking = false;
+        
     }
+
+    
     bool RandomPoint(Vector3 center, float range, out Vector3 result)
     {
 
