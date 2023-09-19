@@ -43,7 +43,7 @@ public class FollowEnemy : MonoBehaviour
 
        
 
-        if (agent.velocity.x > 0|| player.position.x - transform.position.x >= 0)
+        if (agent.velocity.x > 0||player.position.x-transform.position.x>=0)
         {
            
             scale.x = Mathf.Abs(scale.x) * -1;
