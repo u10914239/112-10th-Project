@@ -146,7 +146,7 @@ MonoBehaviour:
   agent: {fileID: 3095772493407393891}
   range: 10
   centrePoint: {fileID: 3095772493407393884}
-  animator: {fileID: 0}
+  animator: {fileID: 3095772493407393893}
   player: {fileID: 3988935748985111391, guid: bdd3b4191575d32449a2919b9c66fd4f, type: 3}
   whatIsPlayer:
     serializedVersion: 2
@@ -155,7 +155,7 @@ MonoBehaviour:
   attackRadius: 2
   playerInSightRange: 0
   playerInAttackRange: 0
-  findRange: 5
+  timeBetweenAttack: 0
 --- !u!95 &3095772493407393893
 Animator:
   serializedVersion: 5
