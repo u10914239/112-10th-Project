@@ -18,6 +18,13 @@ public class FollowEnemy : MonoBehaviour
     public bool playerInSightRange, playerInAttackRange;
     public float timeBetweenAttack;
 
+    public int Health;
+    public bool FireCoolDown = false;
+    public SpriteRenderer color;
+
+    public SpriteRenderer SpriteRenderer;
+    public Sprite Blood1,Blood2,Blood3;
+
     Vector3 scale;
 
     
@@ -26,7 +33,7 @@ public class FollowEnemy : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
-        
+        color = gameObject.GetComponent<SpriteRenderer>();
 
     }
 
@@ -55,13 +62,25 @@ public class FollowEnemy : MonoBehaviour
         }
         transform.localScale = scale;
 
-       
+       color = gameObject.GetComponent<SpriteRenderer>();
         
-       
-
-
+       if(Health<=0)
+        {
+            Destroy(gameObject,0f);
+            
+            MainCharactor.KillCount += 1;
+        }
         
-
+        if(Health == 3)
+        {
+            SpriteRenderer.sprite = Blood3;
+        }else if(Health == 2)
+        {
+            SpriteRenderer.sprite = Blood2;
+        }else if(Health == 1)
+        {
+            SpriteRenderer.sprite = Blood1;
+        }
         
         
     }
@@ -129,5 +148,27 @@ public class FollowEnemy : MonoBehaviour
 
         result = Vector3.zero;
         return false;
+    }
+
+    void OnTriggerStay(Collider Player)
+    {
+        Debug.Log("Detect Player");
+
+        if(FireCoolDown == false && Player.CompareTag("Player") && Input.GetButton("Fire1"))
+        {
+            Debug.Log("dasdasdasdas");
+            Health = Health - 1;
+            FireCoolDown = true;
+            color.color = Color.red;
+            Invoke("colorwhite",0.3f);
+        }
+        if(!Input.GetButton("Fire1") && FireCoolDown == true)
+        {
+            FireCoolDown = false;
+        }
+    }
+    public void colorwhite()
+    {
+        color.color = Color.white;
     }
 }

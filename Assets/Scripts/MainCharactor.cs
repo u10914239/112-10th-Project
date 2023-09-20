@@ -37,7 +37,7 @@ public class MainCharactor : MonoBehaviour
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>(); //* (尋找剛體)
-        speed = 0.15f;
+        speed = 1f;
         PosionType = 1;
     }
 
@@ -76,6 +76,10 @@ public class MainCharactor : MonoBehaviour
         }else if(Input.GetAxisRaw("Vertical") < -0.1f)
         {
             rb.AddForce(0,0,-speed,ForceMode.Impulse);
+        }
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(0,30f,0,ForceMode.Impulse);
         }
     }
     void OnTriggerStay(Collider NPC) //? 【偵測NPC】
