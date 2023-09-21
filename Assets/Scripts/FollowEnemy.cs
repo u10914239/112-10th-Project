@@ -64,11 +64,12 @@ public class FollowEnemy : MonoBehaviour
 
        color = gameObject.GetComponent<SpriteRenderer>();
         
-       if(Health<=0)
+       if(Health==0)
         {
             Destroy(gameObject,0f);
             
             MainCharactor.KillCount += 1;
+            Health = -1;
         }
         
         if(Health == 3)
