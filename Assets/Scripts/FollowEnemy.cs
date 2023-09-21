@@ -20,7 +20,7 @@ public class FollowEnemy : MonoBehaviour
 
     public int maxHealth= 3;
     int currentHealth;
-
+    public GameObject spawner;
 
     public bool FireCoolDown = false;
     public SpriteRenderer color;
@@ -42,6 +42,8 @@ public class FollowEnemy : MonoBehaviour
         player = GameObject.FindWithTag("Player").transform;
         color = gameObject.GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody>();
+        spawner = GameObject.Find("Spawner");
+
         currentHealth = maxHealth;
         Knockback = 10f;
     }
@@ -140,6 +142,7 @@ public class FollowEnemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        
         rb.AddForce(D*Knockback,ForceMode.Impulse);
         color.color = Color.red;
         Invoke("colorwhite",0.3f);
@@ -148,6 +151,7 @@ public class FollowEnemy : MonoBehaviour
         {
             Die();
             Destroy(this.gameObject);
+            spawner.GetComponent<GenerateEnemies>().enemyCount--;
         }
     }
 
