@@ -30,6 +30,7 @@ public class MainCharactor : MonoBehaviour
     //?【怪物設定】
     public static int KillCount;
     public Text KillGoal;
+    public bool isGrounded;
 
 
     public Animator animator;
@@ -39,6 +40,7 @@ public class MainCharactor : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>(); //* (尋找剛體)
         speed = 0.5f;
         PosionType = 1;
+        isGrounded = true;
     }
 
     void Update()
@@ -77,13 +79,40 @@ public class MainCharactor : MonoBehaviour
         {
             rb.AddForce(0,0,-speed,ForceMode.Impulse);
         }
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(isGrounded==true && Input.GetKeyDown(KeyCode.Space))
         {
-            rb.AddForce(0,30f,0,ForceMode.Impulse);
+            isGrounded = false;
+            animator.SetBool("isJumping", !isGrounded);
+            rb.AddForce(0,20f,0,ForceMode.Impulse);
         }
     }
+
+    
+    void OnTriggerEnter(Collider Ground)
+    {
+
+        if (Ground.gameObject.tag == "Ground")
+        {
+            isGrounded = true;
+        }
+        animator.SetBool("isJumping", false);
+    }
+
+        void OnTriggerExit(Collider Ground)
+        {
+
+            if (Ground.gameObject.tag == "Ground")
+            {
+                isGrounded = false;
+            }
+        animator.SetBool("isJumping", false);
+
+    }
+
     void OnTriggerStay(Collider NPC) //? 【偵測NPC】
     {
+
+
         NPCPic = NPC.GetComponent<SpriteRenderer>(); //* (抓取圖形渲染)
 
         if(NPC.gameObject.tag == "NPC" && Input.GetKey(KeyCode.F)) //* (如果碰到NPC而且按下F鍵)

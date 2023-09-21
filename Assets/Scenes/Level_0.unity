@@ -1003,7 +1003,7 @@ Transform:
   m_GameObject: {fileID: 290229268}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.06, y: 0.11, z: -1.1}
+  m_LocalPosition: {x: 0.06, y: 0.118, z: -1.1}
   m_LocalScale: {x: 0.05, y: 0.025, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2437,7 +2437,7 @@ GameObject:
   - component: {fileID: 729405724}
   m_Layer: 0
   m_Name: Terrain_0_0_bbc55d75-20cb-4f8a-a60f-86b5eb5b2bd6
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -3440,8 +3440,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.003298729, y: -0.00047126986, z: 0.0000015546001, w: 0.99999446}
-  m_LocalPosition: {x: 31.1, y: 1.8, z: -11.799999}
+  m_LocalRotation: {x: 0.0044579227, y: -0.00047125045, z: 0.0000021008193, w: 0.99999}
+  m_LocalPosition: {x: 31.1, y: 2.046, z: -11.799999}
   m_LocalScale: {x: 0.704951, y: 0.86694884, z: 4.560814}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6081,8 +6081,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804228624}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.003298729, y: -0.00047126986, z: 0.0000015546001, w: 0.99999446}
-  m_LocalPosition: {x: 0.10000038, y: 0.34999996, z: -304.99997}
+  m_LocalRotation: {x: 0.0044579227, y: -0.00047125045, z: 0.0000021008193, w: 0.99999}
+  m_LocalPosition: {x: 0.10000038, y: 0.473, z: -304.99997}
   m_LocalScale: {x: 2.1376097, y: 1.125767, z: 6.532212}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6891,6 +6891,7 @@ GameObject:
   - component: {fileID: 2089654317}
   - component: {fileID: 2089654320}
   - component: {fileID: 2089654318}
+  - component: {fileID: 2089654321}
   m_Layer: 7
   m_Name: Charactor
   m_TagString: Player
@@ -6907,7 +6908,7 @@ Rigidbody:
   m_GameObject: {fileID: 2089654310}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 5
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -6967,6 +6968,7 @@ MonoBehaviour:
   sign: {fileID: 971982062}
   MissionComplete: {fileID: 751162184}
   KillGoal: {fileID: 2137157535}
+  isGrounded: 0
   animator: {fileID: 290229271}
 --- !u!136 &2089654317
 CapsuleCollider:
@@ -7040,9 +7042,30 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1.29
-  m_Height: 1
+  m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &2089654321
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089654310}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.07, z: 12.42}
+  m_Center: {x: 0, y: -0.56, z: 0}
 --- !u!1001 &2093327596
 PrefabInstance:
   m_ObjectHideFlags: 0
