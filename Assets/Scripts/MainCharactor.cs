@@ -76,6 +76,8 @@ public class MainCharactor : MonoBehaviour
         {
             Knight.flipX = true;
         }
+        
+
         //Debug.Log(speed);
         //Charactor1.transform.position = Charactor0.transform.position;
         //Charactor2.transform.position = Charactor0.transform.position;
