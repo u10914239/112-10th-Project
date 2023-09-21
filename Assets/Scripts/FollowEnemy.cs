@@ -71,20 +71,14 @@ public class FollowEnemy : MonoBehaviour
         }
         transform.localScale = scale;
 
-       //color = gameObject.GetComponent<SpriteRenderer>();
-        
-       
-            
-            
-            
+        D = transform.position - player.transform.position;
         
         
-       
         
         //Dis = transform.position.x - player.position.x;
-        D = transform.position - player.transform.position;
-
+        //color = gameObject.GetComponent<SpriteRenderer>();
         //Debug.Log(player.position.x - transform.position.x);
+
     }
 
     private void Patrolling()
@@ -137,6 +131,9 @@ public class FollowEnemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
+        //擊退效果跟受擊變紅寫這裡
+
 
         if (currentHealth <= 0)
         {
