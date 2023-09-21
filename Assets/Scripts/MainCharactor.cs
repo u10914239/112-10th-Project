@@ -241,7 +241,6 @@ public class MainCharactor : MonoBehaviour
         }
 
         
-
         if(cType >=4)
         {
             cType = 0;
