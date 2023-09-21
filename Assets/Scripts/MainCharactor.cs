@@ -22,11 +22,13 @@ public class MainCharactor : MonoBehaviour
     public LayerMask enemyLayers;
 
     public int PosionType;
+    public int cType;
     public Text PosionTypeShow;
     public GameObject Charactor0;
     public GameObject Charactor1;
     public GameObject Charactor2;
     public GameObject Charactor3;
+    public Sprite C0,C1,C2,C3;
     public SpriteRenderer Knight;
     Vector3 movement;
     //?【NPC設定】
@@ -49,6 +51,7 @@ public class MainCharactor : MonoBehaviour
         
         PosionType = 1;
         isGrounded = true;
+        cType = 0;
     }
 
     void Update()
@@ -57,7 +60,12 @@ public class MainCharactor : MonoBehaviour
         Posion();
         Mission();
         stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * runSpeed)+ Mathf.Abs(Input.GetAxisRaw("Vertical") * runSpeed);
-        animator.SetFloat("Speed", Mathf.Abs(stopSpeed));
+        
+
+        if(cType ==0)
+        {
+            animator.SetFloat("Speed", Mathf.Abs(stopSpeed));
+        }
 
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.z = Input.GetAxisRaw("Vertical");
@@ -77,7 +85,9 @@ public class MainCharactor : MonoBehaviour
             Knight.flipX = true;
         }
         
+        CharactorChange();
 
+        Debug.Log(cType);
         //Debug.Log(speed);
         //Charactor1.transform.position = Charactor0.transform.position;
         //Charactor2.transform.position = Charactor0.transform.position;
@@ -109,7 +119,11 @@ public class MainCharactor : MonoBehaviour
 
     public void Attack()
     {
-        animator.SetTrigger("Attack");
+        if(cType ==0)
+        {
+            animator.SetTrigger("Attack");
+        }
+        
 
         Collider[] hitEnemies=Physics.OverlapSphere(attackPoint.position,attackRange,enemyLayers);
 
@@ -206,6 +220,34 @@ public class MainCharactor : MonoBehaviour
         
     }
     void CharactorChange()
+    {
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            cType+=1;
+
+            if(cType==1)
+        {
+            Knight.sprite = C1;
+        }else if(cType==2)
+        {
+            Knight.sprite = C2;
+        }else if(cType==3)
+        {
+            Knight.sprite = C3;
+        }else if(cType==0)
+        {
+            Knight.sprite = C0;
+        }
+        }
+
+        
+
+        if(cType >=4)
+        {
+            cType = 0;
+        }
+    }
+    void FailCharactorChange()
     {
         if(PosionType == 1)
         {
