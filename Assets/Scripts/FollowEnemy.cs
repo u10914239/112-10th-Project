@@ -18,7 +18,10 @@ public class FollowEnemy : MonoBehaviour
     public bool playerInSightRange, playerInAttackRange;
     public float timeBetweenAttack;
 
-    public int Health;
+    public int maxHealth= 3;
+    int currentHealth;
+
+
     public bool FireCoolDown = false;
     public SpriteRenderer color;
 
@@ -39,6 +42,7 @@ public class FollowEnemy : MonoBehaviour
         player = GameObject.FindWithTag("Player").transform;
         color = gameObject.GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody>();
+        currentHealth = maxHealth;
         Knockback = 10f;
     }
 
@@ -67,31 +71,20 @@ public class FollowEnemy : MonoBehaviour
         }
         transform.localScale = scale;
 
-       color = gameObject.GetComponent<SpriteRenderer>();
+       //color = gameObject.GetComponent<SpriteRenderer>();
         
-       if(Health==0)
-        {
-            Destroy(gameObject,0f);
+       
             
-            MainCharactor.KillCount += 1;
-            Health = -1;
-        }
+            
+            
         
-        if(Health == 3)
-        {
-            SpriteRenderer.sprite = Blood3;
-        }else if(Health == 2)
-        {
-            SpriteRenderer.sprite = Blood2;
-        }else if(Health == 1)
-        {
-            SpriteRenderer.sprite = Blood1;
-        }
+        
+       
         
         //Dis = transform.position.x - player.position.x;
         D = transform.position - player.transform.position;
 
-        Debug.Log(player.position.x - transform.position.x);
+        //Debug.Log(player.position.x - transform.position.x);
     }
 
     private void Patrolling()
@@ -141,6 +134,24 @@ public class FollowEnemy : MonoBehaviour
         
     }
 
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+
+        if (currentHealth <= 0)
+        {
+            Die();
+            Destroy(this.gameObject);
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("I died");
+        MainCharactor.KillCount += 1;
+        Destroy(this);
+        
+    }
     
     bool RandomPoint(Vector3 center, float range, out Vector3 result)
     {
@@ -159,28 +170,7 @@ public class FollowEnemy : MonoBehaviour
         return false;
     }
 
-    void OnTriggerStay(Collider Player)
-    {
-        
-
-        Debug.Log("Detect Player");
-
-        if(FireCoolDown == false && Player.CompareTag("Player") && Input.GetButton("Fire1"))
-        {
-            //Debug.Log("dasdasdasdas");
-            rb.AddForce(D*Knockback,ForceMode.Impulse);
-            Health = Health - 1;
-            FireCoolDown = true;
-            color.color = Color.red;
-            Invoke("colorwhite",0.3f);
-
-            //rb.AddForce(player.position.x - transform.position.x,10f,player.position.z - transform.position.z,ForceMode.Impulse);
-        }
-        if(!Input.GetButton("Fire1") && FireCoolDown == true)
-        {
-            FireCoolDown = false;
-        }
-    }
+    
     public void colorwhite()
     {
         color.color = Color.white;

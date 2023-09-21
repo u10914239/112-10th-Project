@@ -12,8 +12,15 @@ public class MainCharactor : MonoBehaviour
 {
     //?【主角設定】
     public Rigidbody rb; //* (角色剛體)
-    public float speed;
+    public float runSpeed;
+    public float jumpPower;
     float stopSpeed = 0f;
+    public Animator animator;
+
+    public Transform attackPoint;
+    public float attackRange=0.5f;
+    public LayerMask enemyLayers;
+
     public int PosionType;
     public Text PosionTypeShow;
     public GameObject Charactor0;
@@ -21,6 +28,7 @@ public class MainCharactor : MonoBehaviour
     public GameObject Charactor2;
     public GameObject Charactor3;
     public SpriteRenderer Knight;
+    Vector3 movement;
     //?【NPC設定】
     SpriteRenderer NPCPic; //* (NPC圖片)
     public bool Carrying = false; //*(正在被搬運)
@@ -33,60 +41,89 @@ public class MainCharactor : MonoBehaviour
     public bool isGrounded;
 
 
-    public Animator animator;
+   
 
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>(); //* (尋找剛體)
-        speed = 0.5f;
+        
         PosionType = 1;
         isGrounded = true;
     }
 
     void Update()
     {
-        PlayerMovement();
+        Jump();
         Posion();
         Mission();
-        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * speed)+ Mathf.Abs(Input.GetAxisRaw("Vertical") * speed);
+        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * runSpeed)+ Mathf.Abs(Input.GetAxisRaw("Vertical") * runSpeed);
         animator.SetFloat("Speed", Mathf.Abs(stopSpeed));
+
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.z = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Attack();
+
+        }
+
+        if (movement.x > 0)
+        {
+            Knight.flipX = false;
+        }
+        else if (movement.x < 0)
+        {
+            Knight.flipX = true;
+        }
         //Debug.Log(speed);
         //Charactor1.transform.position = Charactor0.transform.position;
         //Charactor2.transform.position = Charactor0.transform.position;
         //Charactor3.transform.position = Charactor0.transform.position;
     }
-    void PlayerMovement() //? 【玩家移動】
-    {
-        if(Input.GetAxisRaw("Horizontal") > 0.1f)
-        {
-            
 
-            rb.AddForce(speed,0,0,ForceMode.Impulse);
-            Knight.flipX = false;
-            
-        }
-        else if(Input.GetAxisRaw("Horizontal") < -0.1f)
+    void FixedUpdate()
+    {
+
+        rb.MovePosition(rb.position + movement * runSpeed * Time.fixedDeltaTime);
+        
+      
+    }
+    void Jump() //? 【玩家移動】
+    {
+        
+        if(isGrounded && Input.GetButtonDown("Jump"))
         {
             
-            rb.AddForce(-speed,0,0,ForceMode.Impulse);
-            Knight.flipX = true;
-            
+            animator.SetBool("isJumping", true);
+            rb.velocity = new Vector2(rb.velocity.y, jumpPower);
         }
-        if(Input.GetAxisRaw("Vertical") > 0.1f)
+        else
         {
-            rb.AddForce(0,0,speed,ForceMode.Impulse);
-        }else if(Input.GetAxisRaw("Vertical") < -0.1f)
-        {
-            rb.AddForce(0,0,-speed,ForceMode.Impulse);
+            animator.SetBool("isJumping", false);
         }
-        if(isGrounded==true && Input.GetKeyDown(KeyCode.Space))
+       
+    }
+
+    public void Attack()
+    {
+        animator.SetTrigger("Attack");
+
+        Collider[] hitEnemies=Physics.OverlapSphere(attackPoint.position,attackRange,enemyLayers);
+
+        foreach(Collider enemy in hitEnemies)
         {
-            isGrounded = false;
-            animator.SetBool("isJumping", !isGrounded);
-            rb.AddForce(0,20f,0,ForceMode.Impulse);
+            enemy.GetComponent<FollowEnemy>().TakeDamage(1);
         }
     }
 
+    void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
     
     void OnTriggerEnter(Collider Ground)
     {
@@ -95,17 +132,17 @@ public class MainCharactor : MonoBehaviour
         {
             isGrounded = true;
         }
-        animator.SetBool("isJumping", false);
+        //animator.SetBool("isJumping", false);
     }
 
-        void OnTriggerExit(Collider Ground)
-        {
+    void OnTriggerExit(Collider Ground)
+    {
 
-            if (Ground.gameObject.tag == "Ground")
-            {
-                isGrounded = false;
-            }
-        animator.SetBool("isJumping", false);
+       if (Ground.gameObject.tag == "Ground")
+       {
+           isGrounded = false;
+       }
+       //animator.SetBool("isJumping", false);
 
     }
 
@@ -119,7 +156,7 @@ public class MainCharactor : MonoBehaviour
         {
             NPCPic.color = new Color32 (0,0,0,0); //* (圖片變透明)
             Carrying = true; //* (正在搬運)
-            speed = 0.15f;
+            runSpeed = 0.15f;
             CharactorChange();
         }
         if(Carrying == true && NPC.gameObject.tag == "NPC" && Input.GetKey(KeyCode.LeftShift)) //* (如果碰到NPC而且按下F鍵)
@@ -129,7 +166,7 @@ public class MainCharactor : MonoBehaviour
             Charactor1.SetActive(false);
             Charactor2.SetActive(false);
             Charactor3.SetActive(false);
-            speed = 0.2f;
+            runSpeed = 0.2f;
         }
         if(Carrying == true && NPC.gameObject.tag == "NPC")
         {
