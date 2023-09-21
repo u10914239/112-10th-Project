@@ -73,7 +73,16 @@ public class FollowEnemy : MonoBehaviour
 
         D = transform.position - player.transform.position;
         
-        
+        if(currentHealth == 3)
+        {
+            SpriteRenderer.sprite = Blood3;
+        }else if(currentHealth == 2)
+        {
+            SpriteRenderer.sprite = Blood2;
+        }else if(currentHealth == 1)
+        {
+            SpriteRenderer.sprite = Blood1;
+        }
         
         //Dis = transform.position.x - player.position.x;
         //color = gameObject.GetComponent<SpriteRenderer>();
@@ -131,9 +140,9 @@ public class FollowEnemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-
-        //擊退效果跟受擊變紅寫這裡
-
+        rb.AddForce(D*Knockback,ForceMode.Impulse);
+        color.color = Color.red;
+        Invoke("colorwhite",0.3f);
 
         if (currentHealth <= 0)
         {
