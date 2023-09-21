@@ -24,6 +24,10 @@ public class FollowEnemy : MonoBehaviour
 
     public SpriteRenderer SpriteRenderer;
     public Sprite Blood1,Blood2,Blood3;
+    public Rigidbody rb;
+    public float Knockback;
+    public float Dis;
+    Vector3 D ;
 
     Vector3 scale;
 
@@ -34,7 +38,8 @@ public class FollowEnemy : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player").transform;
         color = gameObject.GetComponent<SpriteRenderer>();
-
+        rb = GetComponent<Rigidbody>();
+        Knockback = 10f;
     }
 
     private void Update()
@@ -83,7 +88,10 @@ public class FollowEnemy : MonoBehaviour
             SpriteRenderer.sprite = Blood1;
         }
         
-        
+        //Dis = transform.position.x - player.position.x;
+        D = transform.position - player.transform.position;
+
+        Debug.Log(player.position.x - transform.position.x);
     }
 
     private void Patrolling()
@@ -153,15 +161,20 @@ public class FollowEnemy : MonoBehaviour
 
     void OnTriggerStay(Collider Player)
     {
+        
+
         Debug.Log("Detect Player");
 
         if(FireCoolDown == false && Player.CompareTag("Player") && Input.GetButton("Fire1"))
         {
-            Debug.Log("dasdasdasdas");
+            //Debug.Log("dasdasdasdas");
+            rb.AddForce(D*Knockback,ForceMode.Impulse);
             Health = Health - 1;
             FireCoolDown = true;
             color.color = Color.red;
             Invoke("colorwhite",0.3f);
+
+            //rb.AddForce(player.position.x - transform.position.x,10f,player.position.z - transform.position.z,ForceMode.Impulse);
         }
         if(!Input.GetButton("Fire1") && FireCoolDown == true)
         {
