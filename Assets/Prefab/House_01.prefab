@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9076494529326903226}
   - component: {fileID: 5357581762287460383}
   - component: {fileID: 7907480316650034389}
-  - component: {fileID: 5551107067180670767}
+  - component: {fileID: 2341249768907545372}
   m_Layer: 0
   m_Name: House_01
   m_TagString: Untagged
@@ -27,13 +27,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8556275259601204480}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.8660254, z: -0.5, w: 0}
+  m_LocalRotation: {x: 0.4848096, y: 0, z: 0, w: 0.8746197}
   m_LocalPosition: {x: -18.09, y: 2.88, z: 4.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 60, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 58, y: 0, z: 0}
 --- !u!33 &5357581762287460383
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5551107067180670767
-MeshCollider:
+--- !u!65 &2341249768907545372
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -102,7 +102,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8829468777091971923, guid: 4c565e0ee6bf8e54c98b525432b115bb, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 13.694574, y: 9.079473, z: 8.988982}
+  m_Center: {x: 0, y: 0, z: 0}
