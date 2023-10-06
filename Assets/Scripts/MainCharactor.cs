@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
     //!
     //*
     //?
     ////
     //todo
-
-public class MainCharactor : MonoBehaviour
+    [RequireComponent(typeof(PhotonView))]
+    [RequireComponent(typeof(SpriteRenderer))]
+public class MainCharactor : MonoBehaviour, IPunObservable
 {
     //?【主角設定】
     public Rigidbody rb; //* (角色剛體)
@@ -21,7 +23,7 @@ public class MainCharactor : MonoBehaviour
     public float attackRange=0.5f;
     public LayerMask enemyLayers;
 
-    public int PosionType;
+    //public int PosionType;
     public int cType;
     public Text PosionTypeShow;
     public GameObject Charactor0;
@@ -42,22 +44,39 @@ public class MainCharactor : MonoBehaviour
     public Text KillGoal;
     public bool isGrounded;
 
-
+    private PhotonView _pv;
    
 
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>(); //* (尋找剛體)
         
-        PosionType = 1;
+        //PosionType = 1;
         isGrounded = true;
         cType = 0;
+
+        _pv = this.gameObject.GetComponent<PhotonView>();
+
+        if(!_pv.IsMine)
+        {
+            rb.isKinematic = false;
+        }
+
+        AddObservable();
+    }
+
+    private void AddObservable()
+    {
+        if(!_pv.ObservedComponents.Contains(this))
+        {
+            _pv.ObservedComponents.Add(this);
+        }
     }
 
     void Update()
     {
         Jump();
-        Posion();
+        //Posion();
         Mission();
         stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * runSpeed)+ Mathf.Abs(Input.GetAxisRaw("Vertical") * runSpeed);
         
@@ -76,14 +95,7 @@ public class MainCharactor : MonoBehaviour
 
         }
 
-        if (movement.x > 0)
-        {
-            Knight.flipX = false;
-        }
-        else if (movement.x < 0)
-        {
-            Knight.flipX = true;
-        }
+        
         
         CharactorChange();
 
@@ -92,12 +104,41 @@ public class MainCharactor : MonoBehaviour
         //Charactor1.transform.position = Charactor0.transform.position;
         //Charactor2.transform.position = Charactor0.transform.position;
         //Charactor3.transform.position = Charactor0.transform.position;
+
+        if(_pv.IsMine)
+        {
+            Movement();
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if(stream.IsWriting)
+        {
+            stream.SendNext(Knight.flipX);
+        }else
+        {
+            Knight.flipX = (bool) stream.ReceiveNext();
+        }
+    }
+
+    void Movement()
+    {
+        rb.MovePosition(rb.position + movement * runSpeed * Time.fixedDeltaTime);
+
+        if (movement.x > 0)
+        {
+            Knight.flipX = false;
+        }
+        else if (movement.x < 0)
+        {
+            Knight.flipX = true;
+        }
     }
 
     void FixedUpdate()
     {
-
-        rb.MovePosition(rb.position + movement * runSpeed * Time.fixedDeltaTime);
+        //rb.MovePosition(rb.position + movement * runSpeed * Time.fixedDeltaTime);
         
       
     }
@@ -197,28 +238,7 @@ public class MainCharactor : MonoBehaviour
             sign.SetActive(false);
         }
     }
-    void Posion()
-    {
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            PosionType = PosionType + 1;
-        }
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            PosionType = PosionType - 1;
-        }
-        if(PosionType<=0)
-        {
-            PosionType = 3;
-        }
-        if(PosionType>=4)
-        {
-            PosionType = 1;
-        }
-        PosionTypeShow.text = PosionType.ToString();
-
-        
-    }
+    
     void CharactorChange()
     {
         if(Input.GetKeyDown(KeyCode.T))
@@ -246,25 +266,7 @@ public class MainCharactor : MonoBehaviour
             cType = 0;
         }
     }
-    void FailCharactorChange()
-    {
-        if(PosionType == 1)
-        {
-            Charactor1.SetActive(true);
-            Charactor2.SetActive(false);
-            Charactor3.SetActive(false);
-        }else if(PosionType == 2)
-        {
-            Charactor2.SetActive(true);
-            Charactor1.SetActive(false);
-            Charactor3.SetActive(false);
-        }else if(PosionType == 3)
-        {
-            Charactor3.SetActive(true);
-            Charactor2.SetActive(false);
-            Charactor1.SetActive(false);
-        }
-    }
+    
     void Mission()
     {
         if(KillCount >= 3)

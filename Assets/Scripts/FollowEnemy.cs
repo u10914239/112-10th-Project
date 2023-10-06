@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 public class FollowEnemy : MonoBehaviour
 {
@@ -37,6 +38,8 @@ public class FollowEnemy : MonoBehaviour
     
     bool isAttacking;
 
+    private PhotonView _pv;
+
     void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
@@ -46,6 +49,9 @@ public class FollowEnemy : MonoBehaviour
 
         currentHealth = maxHealth;
         Knockback = 10f;
+
+        _pv = this.gameObject.GetComponent<PhotonView>();
+
     }
 
     private void Update()
