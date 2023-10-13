@@ -60,6 +60,7 @@ public class LobbyScenceManager : MonoBehaviourPunCallbacks
             print("Error");
         }
         
+        PhotonNetwork.NickName = playerName;
     }
 
     public void OnClickJoinRoom()
@@ -74,6 +75,7 @@ public class LobbyScenceManager : MonoBehaviourPunCallbacks
             print("Error");
         }
         
+        PhotonNetwork.NickName = playerName;
     }
     public override void OnJoinedRoom()
     {

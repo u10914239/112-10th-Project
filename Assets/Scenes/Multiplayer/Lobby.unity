@@ -667,7 +667,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RoomName
+  m_Text: PlayerName
 --- !u!222 &493876068
 CanvasRenderer:
   m_ObjectHideFlags: 0

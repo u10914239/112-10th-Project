@@ -1372,6 +1372,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slime 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3095772493407393885, guid: bc03efbf74bfcf94791cf8595b138065, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1774,7 +1778,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &963194226
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1842,7 +1846,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.053265613, y: -0.0002852554, z: 0.000015215905, w: 0.99858034}
+  m_LocalRotation: {x: 0.053265613, y: -0.00028522877, z: 0.000015214485, w: 0.99858034}
   m_LocalPosition: {x: -38.84, y: 2.216, z: 86.778}
   m_LocalScale: {x: 0.704951, y: 0.86694884, z: 4.560814}
   m_ConstrainProportionsScale: 0
@@ -3456,7 +3460,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1804228625
 Transform:
   m_ObjectHideFlags: 0
@@ -3465,7 +3469,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804228624}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.053265613, y: -0.0002852554, z: 0.000015215905, w: 0.99858034}
+  m_LocalRotation: {x: 0.053265613, y: -0.00028522877, z: 0.000015214485, w: 0.99858034}
   m_LocalPosition: {x: -38.84, y: 2.216, z: 86.778}
   m_LocalScale: {x: 1, y: 0, z: 1}
   m_ConstrainProportionsScale: 0
