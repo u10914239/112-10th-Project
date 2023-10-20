@@ -17,7 +17,7 @@ public class MainCharactor : MonoBehaviour, IPunObservable
     public float runSpeed;
     public float jumpPower;
     float stopSpeed = 0f;
-    public Animator animator;
+    //public Animator animator;
 
     public Transform attackPoint;
     public float attackRange=0.5f;
@@ -83,7 +83,7 @@ public class MainCharactor : MonoBehaviour, IPunObservable
 
         if(cType ==0)
         {
-            animator.SetFloat("Speed", Mathf.Abs(stopSpeed));
+            //animator.SetFloat("Speed", Mathf.Abs(stopSpeed));
         }
 
         movement.x = Input.GetAxisRaw("Horizontal");
@@ -148,12 +148,12 @@ public class MainCharactor : MonoBehaviour, IPunObservable
         if(isGrounded && Input.GetButtonDown("Jump"))
         {
             
-            animator.SetBool("isJumping", true);
+            //animator.SetBool("isJumping", true);
             rb.velocity = new Vector2(rb.velocity.y, jumpPower);
         }
         else
         {
-            animator.SetBool("isJumping", false);
+            //animator.SetBool("isJumping", false);
         }
        
     }
@@ -162,7 +162,7 @@ public class MainCharactor : MonoBehaviour, IPunObservable
     {
         if(cType ==0)
         {
-            animator.SetTrigger("Attack");
+            //animator.SetTrigger("Attack");
         }
         
 

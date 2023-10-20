@@ -450,7 +450,6 @@ MonoBehaviour:
   rb: {fileID: 5919041591509312962}
   runSpeed: 2
   jumpPower: 15
-  animator: {fileID: 8554835393630512235}
   attackPoint: {fileID: 3510141062747817651}
   attackRange: 1
   enemyLayers:
