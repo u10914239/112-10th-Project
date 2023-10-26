@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-    //!
-    //*
-    //?
-    ////
-    //todo
-    [RequireComponent(typeof(PhotonView))]
+using HashTable = ExitGames.Client.Photon.Hashtable;
+using Photon.Realtime;
+//!
+//*
+//?
+////
+//todo
+[RequireComponent(typeof(PhotonView))]
     [RequireComponent(typeof(SpriteRenderer))]
-public class MainCharactor : MonoBehaviour, IPunObservable
+public class MainCharactor : MonoBehaviourPunCallbacks, IPunObservable
 {
     //?【主角設定】
     public Rigidbody rb; //* (角色剛體)
@@ -95,11 +97,9 @@ public class MainCharactor : MonoBehaviour, IPunObservable
 
         }
 
-        
-        
         CharactorChange();
 
-        Debug.Log(cType);
+        //Debug.Log(cType);
         //Debug.Log(speed);
         //Charactor1.transform.position = Charactor0.transform.position;
         //Charactor2.transform.position = Charactor0.transform.position;
@@ -241,13 +241,11 @@ public class MainCharactor : MonoBehaviour, IPunObservable
     
     void CharactorChange()
     {
-        if(Input.GetKeyDown(KeyCode.T))
-        {
-            cType+=1;
-
-            if(cType==1)
+        if(cType==1)
         {
             Knight.sprite = C1;
+            Knight.transform.localScale = new Vector3 (0.35f,0.175f,17.5f);
+            Debug.Log("Translate Fail");
         }else if(cType==2)
         {
             Knight.sprite = C2;
@@ -257,13 +255,30 @@ public class MainCharactor : MonoBehaviour, IPunObservable
         }else if(cType==0)
         {
             Knight.sprite = C0;
-        }
-        }
 
+        }
         
+
         if(cType >=4)
         {
             cType = 0;
+        }
+
+        if(photonView.IsMine)
+        {
+            if(Input.GetKeyDown(KeyCode.T))
+        {
+            HashTable table = new HashTable();
+
+            cType+=1;
+
+            table.Add("cType",cType);
+
+            PhotonNetwork.LocalPlayer.SetCustomProperties(table);
+
+            
+        }
+
         }
     }
     
@@ -280,5 +295,14 @@ public class MainCharactor : MonoBehaviour, IPunObservable
     void Reset()
     {
         KillGoal.text = "";
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, HashTable changedProps)
+    {
+        if(targetPlayer == photonView.Owner)
+        {
+            print(targetPlayer.NickName + ":" + cType.ToString());
+            cType = (int)changedProps["cType"];
+        }
     }
 }
