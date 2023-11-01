@@ -8,6 +8,8 @@ TagManager:
   - Sign
   - stopPoint
   - Ground
+  - Main
+  - Second
   layers:
   - Default
   - TransparentFX
