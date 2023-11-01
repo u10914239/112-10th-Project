@@ -11,6 +11,7 @@ TagManager:
   - Main
   - Second
   - Enemy
+  - smallWave
   layers:
   - Default
   - TransparentFX

@@ -14,8 +14,10 @@ public class secondCharactor : MonoBehaviour
     Rigidbody rb; //*玩家剛體
     [SerializeField] public static bool isGrounded; //*是否在地上
     public SpriteRenderer KnightForm;
+    CapsuleCollider CapsuleCollider;
     //?【主角素質】
     public float jumpPower = 100f;
+    public float runSpeed = 2f;
     public float moveSpeed = 0.5f;
     //?【主角狀態】
     public int magicNumber;
@@ -23,6 +25,7 @@ public class secondCharactor : MonoBehaviour
     public Sprite Knight, Bow;
     public static bool isTransformed;
     public static bool isHolding;
+    Vector3 movement;
     public SpriteRenderer showTransformTime;
     public GameObject showTransformTimeObject;
     public Sprite T3,T2,T1;
@@ -39,6 +42,7 @@ public class secondCharactor : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>(); //*設定玩家剛體
         PowerTime = 0;
         showTransformTimeObject.SetActive(false);
+        CapsuleCollider = GetComponent<CapsuleCollider>();
     }
 
     // Update is called once per frame
@@ -46,7 +50,7 @@ public class secondCharactor : MonoBehaviour
     {
        Magic();
        Power();
-
+        Movement();
        if (Input.GetButtonDown("Fire1"))
         {
             Attack();
@@ -54,8 +58,51 @@ public class secondCharactor : MonoBehaviour
     }
     void FixedUpdate()
     {
-        playerMovement();
     }
+    void Movement()
+    {
+        //movement.x = Input.GetAxisRaw("Horizontal");
+        //movement.z = Input.GetAxisRaw("Vertical");
+
+        if(Input.GetKey(KeyCode.UpArrow))
+        {
+            movement.z = 1f;
+        }else if(Input.GetKey(KeyCode.DownArrow))
+        {
+            movement.z = -1f;
+        }else
+        {
+            movement.z = 0;
+        }
+
+        if(Input.GetKey(KeyCode.LeftArrow))
+        {
+            movement.x = -1f;
+        }else if(Input.GetKey(KeyCode.RightArrow))
+        {
+            movement.x = 1f;
+        }else
+        {
+            movement.x = 0;
+        }
+
+        rb.MovePosition(rb.position + movement * runSpeed * Time.fixedDeltaTime);
+
+        if (movement.x > 0)
+        {
+            KnightForm.flipX = false;
+        }
+        else if (movement.x < 0)
+        {
+            KnightForm.flipX = true;
+        }
+        //*《玩家跳躍》
+        if(isGrounded && Input.GetKey(KeyCode.L))
+        {
+            rb.AddForce(0,5,0,ForceMode.Impulse);
+        }
+    }
+
     void playerMovement() //? 【玩家移動】
     {
         //*《玩家移動》
@@ -101,6 +148,7 @@ public class secondCharactor : MonoBehaviour
             KnightForm.sprite = Bow;
             isTransformed = true;
             magicNumber = 0;
+            FollowEnemy.smallWaveActivate = true;
         }
         if(isTransformed == true)
         {
@@ -113,16 +161,19 @@ public class secondCharactor : MonoBehaviour
             {
                 showTransformTimeObject.SetActive(true);
                 showTransformTime.sprite = T3;
-            }else if(PowerTime <=2)
+                
+            }else if(PowerTime <=4)
             {
                 showTransformTime.sprite = T2;
-            }else if(PowerTime >= 3)
+                
+                FollowEnemy.smallWaveActivate = false;
+            }else if(PowerTime >= 7)
             {
                 showTransformTime.sprite = T1;
             }
 
 
-            if(PowerTime > 5)
+            if(PowerTime > 10)
             {
                 KnightForm.sprite = Knight;
                 KnightForm.transform.localScale = new Vector3 (0.06f,0.06f,0.06f);
@@ -135,9 +186,12 @@ public class secondCharactor : MonoBehaviour
         {
             KnightForm.color = new Color32 (0,0,0,0);
             this.transform.position = Main.transform.position;
+            CapsuleCollider.enabled = false;
         }else if(!mainCharactor.isHolding)
         {
+            KnightForm.transform.localScale = new Vector3 (0.15f,0.15f,0.15f);
             KnightForm.color = new Color32 (255,255,255,255);
+            CapsuleCollider.enabled = true;
         }
 
     }

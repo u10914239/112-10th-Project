@@ -20,7 +20,6 @@ public class mainGround : MonoBehaviour
     {
         if(Hit.gameObject.tag == "Ground")
         {
-            //Debug.Log("Fuck");
             mainCharactor.isGrounded = true;
         }
     }

@@ -22,5 +22,14 @@ public class secondGround : MonoBehaviour
         {
             secondCharactor.isGrounded = true;
         }
+        
+    }
+    void OnTriggerExit(Collider Hit)
+    {
+
+       if (Hit.gameObject.tag == "Ground")
+       {
+           secondCharactor.isGrounded = false;
+       }
     }
 }

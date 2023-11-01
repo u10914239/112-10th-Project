@@ -40,6 +40,11 @@ public class FollowEnemy : MonoBehaviour
 
     private PhotonView _pv;
 
+    public static bool smallWaveActivate;
+    public float knockBackForce;
+    public bool KnockbackInRange;
+    public GameObject HitTarget;
+
     void Start()
     {
         DetectTargetPlayer();
@@ -50,13 +55,14 @@ public class FollowEnemy : MonoBehaviour
 
         currentHealth = maxHealth;
         Knockback = 10f;
-
+        knockBackForce = 100f;
         _pv = this.gameObject.GetComponent<PhotonView>();
 
     }
 
     private void Update()
     {
+        Knockbacks();
         scale = transform.localScale;
 
         playerInSightRange = Physics.CheckSphere(transform.position, lookRadius, whatIsPlayer);
@@ -211,4 +217,35 @@ public class FollowEnemy : MonoBehaviour
     {
         color.color = Color.white;
     }
+
+    public void Knockbacks()
+    {
+        if(KnockbackInRange)
+        {
+            print(name + "OOO");
+        }
+
+        if(smallWaveActivate && KnockbackInRange)
+        {
+            Vector3 knockBack = (this.transform.position - HitTarget.transform.position).normalized;
+            rb.AddForce(knockBack * knockBackForce, ForceMode.Impulse);
+        }
+    }
+
+    void OnTriggerStay(Collider Hit)
+    {
+        if(Hit.gameObject.tag == "smallWave")
+        {
+             KnockbackInRange = true;
+             HitTarget = Hit.gameObject;
+        }
+    }
+    void OnTriggerExit(Collider Hit)
+    {
+        if(Hit.gameObject.tag == "smallWave")
+        {
+             KnockbackInRange = false;
+        }
+    }
+    
 }
