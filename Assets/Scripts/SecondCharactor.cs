@@ -12,7 +12,7 @@ using UnityEngine.UI;
 //todo
 //[RequireComponent(typeof(PhotonView))]
     //[RequireComponent(typeof(SpriteRenderer))]
-public class MainCharactor : MonoBehaviour
+public class SecondCharactor : MonoBehaviour
 {
     //?【主角設定】
     public Rigidbody rb; //* (角色剛體)

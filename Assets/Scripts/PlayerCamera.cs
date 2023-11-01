@@ -6,7 +6,7 @@ using Photon.Pun;
 public class PlayerCamera : MonoBehaviourPunCallbacks
 {
     // Start is called before the first frame update
-    void Start()
+    void ddd()
     {
         if(!photonView.IsMine)
         {
