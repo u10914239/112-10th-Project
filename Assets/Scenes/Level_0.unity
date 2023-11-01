@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 45909722}
   - component: {fileID: 45909730}
   - component: {fileID: 45909729}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SecondCharactor
   m_TagString: Second
   m_Icon: {fileID: 0}
@@ -233,7 +233,7 @@ MonoBehaviour:
   attackRange: 0.5
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
 --- !u!114 &45909723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -879,7 +879,7 @@ GameObject:
   - component: {fileID: 365718311}
   - component: {fileID: 365718310}
   - component: {fileID: 365718312}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: isGrounded
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2977,7 +2977,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 861118411}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09846102, y: 0.017716177, z: -0.0017531507, w: 0.99498165}
+  m_LocalRotation: {x: 0.09846104, y: 0.017716141, z: -0.0017531476, w: 0.99498165}
   m_LocalPosition: {x: -37.718643, y: -0.20000029, z: 81.799995}
   m_LocalScale: {x: 1.0008601, y: 1.7293762, z: 0.85319185}
   m_ConstrainProportionsScale: 0
@@ -3201,7 +3201,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09846102, y: 0.017716177, z: -0.0017531507, w: 0.99498165}
+  m_LocalRotation: {x: 0.09846104, y: 0.017716141, z: -0.0017531476, w: 0.99498165}
   m_LocalPosition: {x: -37.718643, y: -0.20000029, z: 81.799995}
   m_LocalScale: {x: 0.704951, y: 0.86694884, z: 4.560814}
   m_ConstrainProportionsScale: 0
@@ -3298,7 +3298,7 @@ GameObject:
   - component: {fileID: 964535208}
   - component: {fileID: 964535207}
   - component: {fileID: 964535209}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: isGrounded
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5775,7 +5775,7 @@ GameObject:
   - component: {fileID: 1953427076}
   - component: {fileID: 1953427078}
   - component: {fileID: 1953427077}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MainCharactor
   m_TagString: Main
   m_Icon: {fileID: 0}
@@ -5959,7 +5959,7 @@ MonoBehaviour:
   attackRange: 0.5
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
 --- !u!114 &1953427077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6980,7 +6980,7 @@ Transform:
   m_GameObject: {fileID: 3095772492595068456}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.13052641, z: -0, w: 0.9914449}
-  m_LocalPosition: {x: -41.2, y: -3.74, z: 90.97}
+  m_LocalPosition: {x: -30.65, y: -3.74, z: 91.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
