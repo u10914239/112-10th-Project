@@ -108,7 +108,7 @@ NavMeshSettings:
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
-    agentSlope: 45
+    agentSlope: 0
     agentClimb: 0.4
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
@@ -408,7 +408,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!212 &45909727
 SpriteRenderer:
@@ -3223,7 +3223,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 861118411}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09846102, y: 0.017716177, z: -0.0017531507, w: 0.99498165}
+  m_LocalRotation: {x: 0.09846104, y: 0.017716141, z: -0.0017531476, w: 0.99498165}
   m_LocalPosition: {x: -37.718643, y: -0.20000029, z: 81.799995}
   m_LocalScale: {x: 1.0008601, y: 1.7293762, z: 0.85319185}
   m_ConstrainProportionsScale: 0
@@ -3447,7 +3447,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09846102, y: 0.017716177, z: -0.0017531507, w: 0.99498165}
+  m_LocalRotation: {x: 0.09846104, y: 0.017716141, z: -0.0017531476, w: 0.99498165}
   m_LocalPosition: {x: -37.718643, y: -0.20000029, z: 81.799995}
   m_LocalScale: {x: 0.704951, y: 0.86694884, z: 4.560814}
   m_ConstrainProportionsScale: 0
@@ -4443,6 +4443,7 @@ GameObject:
   - component: {fileID: 1282711392}
   - component: {fileID: 1282711391}
   - component: {fileID: 1282711390}
+  - component: {fileID: 1282711393}
   m_Layer: 0
   m_Name: Road Lamp (1)
   m_TagString: Untagged
@@ -4515,6 +4516,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!64 &1282711393
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282711389}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3398870462769257117, guid: 4f744a2866cdeff4db848b67fd4bf359, type: 3}
 --- !u!1 &1283668356
 GameObject:
   m_ObjectHideFlags: 0
@@ -6169,7 +6192,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &1953427075
 MonoBehaviour:
@@ -6971,6 +6994,7 @@ GameObject:
   - component: {fileID: 1850089349227477569}
   - component: {fileID: 3315509009508791780}
   - component: {fileID: 713814671117779246}
+  - component: {fileID: 3315509009508791781}
   m_Layer: 0
   m_Name: Medieval House Design_03
   m_TagString: Untagged
@@ -7061,6 +7085,7 @@ GameObject:
   - component: {fileID: 1179683494213609403}
   - component: {fileID: 2878020571121149982}
   - component: {fileID: 5699043374243028}
+  - component: {fileID: 2878020571121149983}
   m_Layer: 0
   m_Name: Medieval House Design_04
   m_TagString: Untagged
@@ -7079,6 +7104,7 @@ GameObject:
   - component: {fileID: 1597176176108135259}
   - component: {fileID: 2415500397749431550}
   - component: {fileID: 459758148714731572}
+  - component: {fileID: 2415500397749431551}
   m_Layer: 0
   m_Name: Medieval House Design_02
   m_TagString: Untagged
@@ -7093,6 +7119,28 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2117149125166512609}
+  m_Mesh: {fileID: -7829595633395954974, guid: 906b8fd78dfe51147b395e3a9a3fcd76, type: 3}
+--- !u!64 &2415500397749431551
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117149125166512609}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -7829595633395954974, guid: 906b8fd78dfe51147b395e3a9a3fcd76, type: 3}
 --- !u!4 &2873539805458000412
 Transform:
@@ -7116,6 +7164,28 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1951399286273883393}
+  m_Mesh: {fileID: -967256325118091763, guid: 5899a25723f5d36419cbab16b1772f99, type: 3}
+--- !u!64 &2878020571121149983
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951399286273883393}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -967256325118091763, guid: 5899a25723f5d36419cbab16b1772f99, type: 3}
 --- !u!23 &2909545780365166457
 MeshRenderer:
@@ -7397,6 +7467,7 @@ GameObject:
   - component: {fileID: 2873539805458000412}
   - component: {fileID: 1175165377501193657}
   - component: {fileID: 4011565866811068787}
+  - component: {fileID: 4011565866811068788}
   m_Layer: 0
   m_Name: Medieval House Design_01
   m_TagString: Untagged
@@ -7411,6 +7482,28 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362064943089688827}
+  m_Mesh: {fileID: -5708066447020054089, guid: 4089ef5b9d826c64797f99bd3ebb2eac, type: 3}
+--- !u!64 &3315509009508791781
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362064943089688827}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -5708066447020054089, guid: 4089ef5b9d826c64797f99bd3ebb2eac, type: 3}
 --- !u!33 &3469287836955273988
 MeshFilter:
@@ -7516,6 +7609,7 @@ GameObject:
   - component: {fileID: 4047580084833942550}
   - component: {fileID: 1118088087758959539}
   - component: {fileID: 2909545780365166457}
+  - component: {fileID: 4047580084833942551}
   m_Layer: 0
   m_Name: Road Lamp
   m_TagString: Untagged
@@ -7565,6 +7659,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4011565866811068788
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3218681300390293670}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4368778821047388129, guid: 54c86f6ebccd97a4fa3a2860bdd4c6e3, type: 3}
 --- !u!4 &4047580084833942550
 Transform:
   m_ObjectHideFlags: 0
@@ -7580,6 +7696,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!64 &4047580084833942551
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3702016106937493164}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3398870462769257117, guid: 4f744a2866cdeff4db848b67fd4bf359, type: 3}
 --- !u!1001 &4914782624890232822
 PrefabInstance:
   m_ObjectHideFlags: 0
