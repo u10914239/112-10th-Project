@@ -12,7 +12,7 @@ public class FollowEnemy : MonoBehaviour
 
     public Animator animator;
 
-    public Transform player;
+    public Transform player, player1, player2;
 
     public LayerMask whatIsPlayer;
     public float lookRadius, attackRadius;
@@ -30,7 +30,7 @@ public class FollowEnemy : MonoBehaviour
     public Sprite Blood1,Blood2,Blood3;
     public Rigidbody rb;
     public float Knockback;
-    public float Dis;
+    public float Dis1,Dis2;
     Vector3 D ;
 
     Vector3 scale;
@@ -42,7 +42,8 @@ public class FollowEnemy : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.FindWithTag("Player").transform;
+        DetectTargetPlayer();
+        //player = GameObject.FindWithTag("Player").transform;
         color = gameObject.GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody>();
         spawner = GameObject.Find("Spawner");
@@ -95,6 +96,22 @@ public class FollowEnemy : MonoBehaviour
         //Dis = transform.position.x - player.position.x;
         //color = gameObject.GetComponent<SpriteRenderer>();
         //Debug.Log(player.position.x - transform.position.x);
+        
+    }
+
+    void DetectTargetPlayer()
+    {
+        Dis1 = Vector3.Distance(this.transform.position,player1.transform.position);
+        Dis2 = Vector3.Distance(this.transform.position,player2.transform.position);
+        print(Dis1.ToString() + "+" + Dis2.ToString());
+        if(Dis1<Dis2)
+        {
+            player = player1;
+        }else if(Dis2<Dis1)
+        {
+            player = player2;
+        }
+
 
     }
 

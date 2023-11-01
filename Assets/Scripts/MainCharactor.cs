@@ -94,7 +94,6 @@ public class MainCharactor : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             Attack();
-
         }
 
         CharactorChange();

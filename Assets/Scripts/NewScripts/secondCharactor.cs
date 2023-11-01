@@ -12,7 +12,7 @@ public class secondCharactor : MonoBehaviour
 {
     //?【主角設定】
     Rigidbody rb; //*玩家剛體
-    [SerializeField] bool isGrounded; //*是否在地上
+    [SerializeField] public static bool isGrounded; //*是否在地上
     public SpriteRenderer KnightForm;
     //?【主角素質】
     public float jumpPower = 100f;
@@ -27,6 +27,9 @@ public class secondCharactor : MonoBehaviour
     float MagicTime;
     float PowerTime;
 
+    public Transform attackPoint;
+    public float attackRange=0.5f;
+    public LayerMask enemyLayers;
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>(); //*設定玩家剛體
@@ -35,11 +38,18 @@ public class secondCharactor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       playerMovement();
        Magic();
        Power();
+
+       if (Input.GetButtonDown("Fire1"))
+        {
+            Attack();
+        }
     }
-    
+    void FixedUpdate()
+    {
+        playerMovement();
+    }
     void playerMovement() //? 【玩家移動】
     {
         //*《玩家移動》
@@ -62,9 +72,9 @@ public class secondCharactor : MonoBehaviour
             KnightForm.flipX = false;
         }
         //*《玩家跳躍》
-        if(isGrounded && Input.GetKeyDown(KeyCode.RightAlt))
+        if(isGrounded && Input.GetKey(KeyCode.RightAlt))
         {
-            rb.AddForce(0,15,0,ForceMode.Impulse);
+            rb.AddForce(0,5,0,ForceMode.Impulse);
         }
     }
     void Magic()
@@ -105,14 +115,40 @@ public class secondCharactor : MonoBehaviour
             KnightForm.color = new Color32 (255,255,255,255);
         }
     }
+    public void Attack()
+    {
+
+    }
+    void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
     void OnTriggerEnter(Collider Hit)
     {   
-        if (Hit.gameObject.tag == "Ground")
-        {
-            isGrounded = true;
-        }
-    }
 
+    }
+    void OnTriggerStay(Collider Hit)
+    {
+        
+        if(mainCharactor.isTransformed)
+        {
+            if(Hit.gameObject.tag == "Second")
+        {
+            if(secondCharactor.isTransformed && Input.GetKeyDown(KeyCode.E))
+            {
+                isHolding = true;
+            }
+            if(!secondCharactor.isTransformed)
+            {
+                isHolding = false;
+            }
+        }
+        }
+        
+    }
     void OnTriggerExit(Collider Hit)
     {
 

@@ -12,7 +12,7 @@ public class mainCharactor : MonoBehaviour
 {
     //?【主角設定】
     Rigidbody rb; //*玩家剛體
-    [SerializeField] bool isGrounded; //*是否在地上
+    [SerializeField] public static bool isGrounded; //*是否在地上
     public SpriteRenderer KnightForm;
     //?【主角素質】
     public float jumpPower = 100f;
@@ -27,6 +27,10 @@ public class mainCharactor : MonoBehaviour
     float MagicTime;
     float PowerTime;
 
+
+    public Transform attackPoint;
+    public float attackRange=0.5f;
+    public LayerMask enemyLayers;
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>(); //*設定玩家剛體
@@ -35,9 +39,18 @@ public class mainCharactor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerMovement();
+        
         Magic();
         Power();
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Attack();
+        }
+    }
+    void FixedUpdate()
+    {
+        playerMovement();
         
     }
 
@@ -63,9 +76,9 @@ public class mainCharactor : MonoBehaviour
             KnightForm.flipX = false;
         }
         //*《玩家跳躍》
-        if(isGrounded && Input.GetKeyDown(KeyCode.Space))
+        if(isGrounded && Input.GetKey(KeyCode.Space))
         {
-            rb.AddForce(0,15,0,ForceMode.Impulse);
+            rb.AddForce(0,5,0,ForceMode.Impulse);
         }
     }
 
@@ -100,22 +113,31 @@ public class mainCharactor : MonoBehaviour
             }
         }
     }
+    public void Attack()
+    {
+
+    }
+    void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
     void OnTriggerEnter(Collider Hit)
     {   
-        if (Hit.gameObject.tag == "Ground")
-        {
-            isGrounded = true;
-        }
         
     }
 
     void OnTriggerStay(Collider Hit)
     {
-        if(Hit.gameObject.tag == "Second")
+        
+        if(secondCharactor.isTransformed)
+        {
+            if(Hit.gameObject.tag == "Second")
         {
             if(secondCharactor.isTransformed && Input.GetKeyDown(KeyCode.E))
             {
-                
                 isHolding = true;
             }
             if(!secondCharactor.isTransformed)
@@ -123,6 +145,8 @@ public class mainCharactor : MonoBehaviour
                 isHolding = false;
             }
         }
+        }
+        
     }
 
     void OnTriggerExit(Collider Hit)
