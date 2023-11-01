@@ -23,9 +23,13 @@ public class secondCharactor : MonoBehaviour
     public Sprite Knight, Bow;
     public static bool isTransformed;
     public static bool isHolding;
+    public SpriteRenderer showTransformTime;
+    public GameObject showTransformTimeObject;
+    public Sprite T3,T2,T1;
     //?【環境狀態】
     float MagicTime;
     float PowerTime;
+    public Transform Main;
 
     public Transform attackPoint;
     public float attackRange=0.5f;
@@ -33,6 +37,8 @@ public class secondCharactor : MonoBehaviour
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>(); //*設定玩家剛體
+        PowerTime = 0;
+        showTransformTimeObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -99,21 +105,41 @@ public class secondCharactor : MonoBehaviour
         if(isTransformed == true)
         {
             PowerTime += Time.deltaTime;
+
+            if(PowerTime == 0)
+            {
+                showTransformTimeObject.SetActive(false);
+            }else if(PowerTime <=1)
+            {
+                showTransformTimeObject.SetActive(true);
+                showTransformTime.sprite = T3;
+            }else if(PowerTime <=2)
+            {
+                showTransformTime.sprite = T2;
+            }else if(PowerTime >= 3)
+            {
+                showTransformTime.sprite = T1;
+            }
+
+
             if(PowerTime > 5)
             {
                 KnightForm.sprite = Knight;
                 KnightForm.transform.localScale = new Vector3 (0.06f,0.06f,0.06f);
                 isTransformed = false;
                 PowerTime = 0;
+                showTransformTimeObject.SetActive(false);
             }
         }
         if(mainCharactor.isHolding)
         {
             KnightForm.color = new Color32 (0,0,0,0);
-        }else
+            this.transform.position = Main.transform.position;
+        }else if(!mainCharactor.isHolding)
         {
             KnightForm.color = new Color32 (255,255,255,255);
         }
+
     }
     public void Attack()
     {

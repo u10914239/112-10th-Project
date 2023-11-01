@@ -35,7 +35,7 @@ public class FollowEnemy : MonoBehaviour
 
     Vector3 scale;
 
-    
+    public static bool isAttacked;
     bool isAttacking;
 
     private PhotonView _pv;
@@ -96,9 +96,12 @@ public class FollowEnemy : MonoBehaviour
         //Dis = transform.position.x - player.position.x;
         //color = gameObject.GetComponent<SpriteRenderer>();
         //Debug.Log(player.position.x - transform.position.x);
-        
+        if(isAttacked)
+        {
+            TakeDamage(1);
+            isAttacked = false;
+        }
     }
-
     void DetectTargetPlayer()
     {
         Dis1 = Vector3.Distance(this.transform.position,player1.transform.position);
@@ -174,7 +177,7 @@ public class FollowEnemy : MonoBehaviour
         {
             Die();
             Destroy(this.gameObject);
-            spawner.GetComponent<GenerateEnemies>().enemyCount--;
+            //spawner.GetComponent<GenerateEnemies>().enemyCount--;
         }
     }
 

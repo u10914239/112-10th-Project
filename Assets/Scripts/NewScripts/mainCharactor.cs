@@ -31,6 +31,7 @@ public class mainCharactor : MonoBehaviour
     public Transform attackPoint;
     public float attackRange=0.5f;
     public LayerMask enemyLayers;
+    public bool inRange;
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>(); //*設定玩家剛體
@@ -112,6 +113,15 @@ public class mainCharactor : MonoBehaviour
                 PowerTime = 0;
             }
         }
+        if(inRange && secondCharactor.isTransformed && Input.GetKeyDown(KeyCode.E))
+            {
+                isHolding = true;
+            }
+            if(!secondCharactor.isTransformed)
+            {
+                isHolding = false;
+            }
+
     }
     public void Attack()
     {
@@ -132,21 +142,10 @@ public class mainCharactor : MonoBehaviour
     void OnTriggerStay(Collider Hit)
     {
         
-        if(secondCharactor.isTransformed)
-        {
             if(Hit.gameObject.tag == "Second")
         {
-            if(secondCharactor.isTransformed && Input.GetKeyDown(KeyCode.E))
-            {
-                isHolding = true;
-            }
-            if(!secondCharactor.isTransformed)
-            {
-                isHolding = false;
-            }
+            inRange = true;
         }
-        }
-        
     }
 
     void OnTriggerExit(Collider Hit)
