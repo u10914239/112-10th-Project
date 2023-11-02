@@ -220,10 +220,6 @@ public class FollowEnemy : MonoBehaviour
 
     public void Knockbacks()
     {
-        if(KnockbackInRange)
-        {
-            print(name + "OOO");
-        }
 
         if(smallWaveActivate && KnockbackInRange)
         {

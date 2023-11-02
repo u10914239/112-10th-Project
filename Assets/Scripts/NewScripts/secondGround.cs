@@ -24,12 +24,5 @@ public class secondGround : MonoBehaviour
         }
         
     }
-    void OnTriggerExit(Collider Hit)
-    {
-
-       if (Hit.gameObject.tag == "Ground")
-       {
-           secondCharactor.isGrounded = false;
-       }
-    }
+    
 }

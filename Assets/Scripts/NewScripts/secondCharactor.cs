@@ -19,6 +19,7 @@ public class secondCharactor : MonoBehaviour
     public float jumpPower = 100f;
     public float runSpeed = 2f;
     public float moveSpeed = 0.5f;
+    float stopSpeed = 0f;
     //?【主角狀態】
     public int magicNumber;
     public Text showMagicNumber;
@@ -37,12 +38,16 @@ public class secondCharactor : MonoBehaviour
     public Transform attackPoint;
     public float attackRange=0.5f;
     public LayerMask enemyLayers;
+
+    public Animator anim;
+    
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>(); //*設定玩家剛體
         PowerTime = 0;
         showTransformTimeObject.SetActive(false);
         CapsuleCollider = GetComponent<CapsuleCollider>();
+        runSpeed = 3f;
     }
 
     // Update is called once per frame
@@ -50,16 +55,46 @@ public class secondCharactor : MonoBehaviour
     {
        Magic();
        Power();
-        Movement();
-       if (Input.GetButtonDown("Fire1"))
+       if (Input.GetKeyDown(KeyCode.Joystick1Button0))
         {
             Attack();
         }
+        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * runSpeed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * runSpeed);
+        anim.SetFloat("Speed2", Mathf.Abs(stopSpeed));
+        
+
+        movement.x = Input.GetAxisRaw("Horizontal2");
+        movement.z = Input.GetAxisRaw("Vertical2");
     }
     void FixedUpdate()
-    {
+    {  
+        Movement();
     }
+
     void Movement()
+    {
+        rb.MovePosition(rb.position + movement * runSpeed * Time.fixedDeltaTime);
+
+        
+
+        if (movement.x > 0)
+        {
+            KnightForm.flipX = false;
+        }
+        else if (movement.x < 0)
+        {
+            KnightForm.flipX = true;
+        }
+
+        //*《玩家跳躍》
+        if(isGrounded && Input.GetKey(KeyCode.Joystick1Button0))
+        {
+            
+            print("fff");
+            rb.AddForce(0,jumpPower,0,ForceMode.Impulse);
+        }
+    }
+    void Movement2()
     {
         //movement.x = Input.GetAxisRaw("Horizontal");
         //movement.z = Input.GetAxisRaw("Vertical");
@@ -97,9 +132,11 @@ public class secondCharactor : MonoBehaviour
             KnightForm.flipX = true;
         }
         //*《玩家跳躍》
-        if(isGrounded && Input.GetKey(KeyCode.L))
+        if(isGrounded && Input.GetKey(KeyCode.Joystick1Button0))
         {
-            rb.AddForce(0,5,0,ForceMode.Impulse);
+            
+            print("fff");
+            rb.AddForce(0,jumpPower,0,ForceMode.Impulse);
         }
     }
 
@@ -143,7 +180,7 @@ public class secondCharactor : MonoBehaviour
     }
     void Power()
     {
-        if(magicNumber == 10 && Input.GetKeyDown(KeyCode.P))
+        if(magicNumber == 10 && Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             KnightForm.sprite = Bow;
             isTransformed = true;
@@ -176,7 +213,7 @@ public class secondCharactor : MonoBehaviour
             if(PowerTime > 10)
             {
                 KnightForm.sprite = Knight;
-                KnightForm.transform.localScale = new Vector3 (0.06f,0.06f,0.06f);
+                //KnightForm.transform.localScale = new Vector3 (0.06f,0.06f,0.06f);
                 isTransformed = false;
                 PowerTime = 0;
                 showTransformTimeObject.SetActive(false);
@@ -186,10 +223,11 @@ public class secondCharactor : MonoBehaviour
         {
             KnightForm.color = new Color32 (0,0,0,0);
             this.transform.position = Main.transform.position;
+            Debug.Log("fhdiufiuhdshfuidshuishdfui");
             CapsuleCollider.enabled = false;
         }else if(!mainCharactor.isHolding)
         {
-            KnightForm.transform.localScale = new Vector3 (0.15f,0.15f,0.15f);
+            KnightForm.transform.localScale = new Vector3 (3f,3f,3f);
             KnightForm.color = new Color32 (255,255,255,255);
             CapsuleCollider.enabled = true;
         }

@@ -13,7 +13,7 @@ public class secondAttack : MonoBehaviour
     }
     void Update()
     {
-        if(Input.GetButtonDown("Fire1"))
+        if(Input.GetKeyDown(KeyCode.Joystick1Button11))
         {
             Attack2 = true;
         }else

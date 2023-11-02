@@ -43,7 +43,7 @@ public class mainCharactor : MonoBehaviour
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>(); //*設定玩家剛體
-        runSpeed = 2f;
+        runSpeed = 3f;
     }
 
     // Update is called once per frame
@@ -55,9 +55,8 @@ public class mainCharactor : MonoBehaviour
 
         stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * runSpeed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * runSpeed);
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
-            Attack();
         }
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.z = Input.GetAxisRaw("Vertical");
@@ -89,7 +88,7 @@ public class mainCharactor : MonoBehaviour
         //*《玩家跳躍》
         if(isGrounded && Input.GetKey(KeyCode.Space))
         {
-            rb.AddForce(0,5,0,ForceMode.Impulse);
+            rb.AddForce(0,jumpPower,0,ForceMode.Impulse);
         }
     }
     
