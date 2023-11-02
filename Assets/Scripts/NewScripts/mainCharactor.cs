@@ -25,6 +25,7 @@ public class mainCharactor : MonoBehaviour
     public Sprite Knight, Sword;
     public static bool isTransformed;
     public static bool isHolding;
+    bool facingRight = true;
     Vector3 movement;
     //?【環境狀態】
     float MagicTime;
@@ -34,6 +35,7 @@ public class mainCharactor : MonoBehaviour
     public Transform SwordPos;
 
     public Animator anim;
+    //public Animator attackEffect;
 
 
     public Transform attackPoint;
@@ -73,15 +75,15 @@ public class mainCharactor : MonoBehaviour
         
 
 
-        if (movement.x > 0)
+        if (movement.x > 0&&!facingRight)
         {
-            KnightForm.flipX = false;
+            Flip();
             SowrdObj.transform.localRotation = Quaternion.Euler(0,0,-30);
             SwordPos.transform.localPosition = new Vector3 (9.3f,SwordPos.transform.localPosition.y,SwordPos.transform.localPosition.z);
         }
-        else if (movement.x < 0)
+        else if (movement.x < 0&&facingRight)
         {
-            KnightForm.flipX = true;
+            Flip();
             SowrdObj.transform.localRotation = Quaternion.Euler(0,0,30);
             SwordPos.transform.localPosition = new Vector3 (-8.3f,SwordPos.transform.localPosition.y,SwordPos.transform.localPosition.z);
         }
@@ -93,6 +95,14 @@ public class mainCharactor : MonoBehaviour
         }
     }
     
+    void Flip()
+    {
+        Vector3 currentScale = gameObject.transform.localScale;
+        currentScale.x *= -1;
+        gameObject.transform.localScale = currentScale;
+
+        facingRight = !facingRight;
+    }
 
     void Magic()
     {

@@ -5,26 +5,37 @@ using UnityEngine;
 public class secondAttack : MonoBehaviour
 {
     // Start is called before the first frame update
-    public bool Attack2;
+    public bool dealtDamage;
     public bool inRange2;
+
+    public Animator anim;
+
     void Start()
     {
-        Attack2 = false;
+        dealtDamage = false;
     }
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Joystick1Button11))
+        if (Input.GetKeyDown(KeyCode.Joystick1Button5))
         {
-            Attack2 = true;
-        }else
-        {
-            Attack2 = false;
+            Attack();
+            if (inRange2 && dealtDamage)
+            {
+                FollowEnemy.isAttacked = true;
+                dealtDamage = false;
+            }
         }
-        if(inRange2 && Attack2)
-        {
-            FollowEnemy.isAttacked = true;
-        }
+        
     }
+
+    void Attack()
+    {
+        dealtDamage = true;
+        anim.SetTrigger("Attack");
+
+
+    }
+
     void OnTriggerStay(Collider Hit)
     {
         if(Hit.gameObject.tag == ("Enemy"))

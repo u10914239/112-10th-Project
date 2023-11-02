@@ -5,11 +5,14 @@ using UnityEngine;
 public class mainAttack : MonoBehaviour
 {
     // Start is called before the first frame update
-    public bool Attack;
+    public bool dealtDamage;
     public bool inRange;
+
+    public Animator anim;
+
     void Start()
     {
-        Attack = false;
+        dealtDamage = false;
     }
 
     // Update is called once per frame
@@ -17,16 +20,23 @@ public class mainAttack : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Attack = true;
-        }else
-        {
-            Attack = false;
+            Attack();
+            if (inRange && dealtDamage)
+            {
+                FollowEnemy.isAttacked = true;
+                dealtDamage = false;
+            }
         }
-        if(inRange && Attack)
-        {
-            FollowEnemy.isAttacked = true;
-        }
+        
     }
+    void Attack()
+    {
+        dealtDamage = true;
+        anim.SetTrigger("Attack");
+
+       
+    }
+
     void OnTriggerStay(Collider Hit)
     {
         if(Hit.gameObject.tag == ("Enemy"))

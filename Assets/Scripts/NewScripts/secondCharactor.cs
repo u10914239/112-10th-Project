@@ -26,6 +26,7 @@ public class secondCharactor : MonoBehaviour
     public Sprite Knight, Bow;
     public static bool isTransformed;
     public static bool isHolding;
+    bool facingRight = true;
     Vector3 movement;
     public SpriteRenderer showTransformTime;
     public GameObject showTransformTimeObject;
@@ -79,13 +80,13 @@ public class secondCharactor : MonoBehaviour
         
 
 
-        if (movement.x > 0)
+        if (movement.x > 0&&!facingRight)
         {
-            KnightForm.flipX = false;
+            Flip();
         }
-        else if (movement.x < 0)
+        else if (movement.x < 0&& facingRight)
         {
-            KnightForm.flipX = true;
+            Flip();
         }
 
         //*《玩家跳躍》
@@ -96,9 +97,16 @@ public class secondCharactor : MonoBehaviour
             rb.AddForce(0,jumpPower,0,ForceMode.Impulse);
         }
     }
-   
 
-   
+    void Flip()
+    {
+        Vector3 currentScale = gameObject.transform.localScale;
+        currentScale.x *= -1;
+        gameObject.transform.localScale = currentScale;
+
+        facingRight = !facingRight;
+    }
+
     void Magic()
     {
         MagicTime += Time.deltaTime;
