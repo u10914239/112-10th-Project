@@ -293,7 +293,7 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 128
-  anim: {fileID: 0}
+  anim_02: {fileID: 0}
 --- !u!114 &45909723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,7 +567,7 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 0
-  anim: {fileID: 1819545908}
+  anim_02: {fileID: 1819545908}
 --- !u!136 &122411904
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3492,7 +3492,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 861118411}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09845556, y: 0.018373387, z: -0.0018181067, w: 0.9949702}
+  m_LocalRotation: {x: 0.09845556, y: 0.018373396, z: -0.0018181078, w: 0.9949702}
   m_LocalPosition: {x: -37.1831, y: -0.19999981, z: 80.22}
   m_LocalScale: {x: 1.0008601, y: 1.7293762, z: 0.85319185}
   m_ConstrainProportionsScale: 0
@@ -3716,7 +3716,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09845556, y: 0.018373387, z: -0.0018181067, w: 0.9949702}
+  m_LocalRotation: {x: 0.09845556, y: 0.018373396, z: -0.0018181078, w: 0.9949702}
   m_LocalPosition: {x: -37.1831, y: -0.19999981, z: 80.22}
   m_LocalScale: {x: 0.704951, y: 0.86694884, z: 4.560814}
   m_ConstrainProportionsScale: 0
@@ -5774,7 +5774,7 @@ GameObject:
   - component: {fileID: 1819545908}
   - component: {fileID: 1819545907}
   m_Layer: 7
-  m_Name: Sprite
+  m_Name: Sprite_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5865,7 +5865,7 @@ Animator:
   m_GameObject: {fileID: 1819545905}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: aedcd7cd740b99042b7ac22d692dad7f, type: 2}
+  m_Controller: {fileID: 9100000, guid: e6e5344baec621a4d94128358b3a7b86, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

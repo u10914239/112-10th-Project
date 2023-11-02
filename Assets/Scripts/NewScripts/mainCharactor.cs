@@ -55,6 +55,7 @@ public class mainCharactor : MonoBehaviour
 
         stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * runSpeed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * runSpeed);
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
+
         if (Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
         }
@@ -69,8 +70,8 @@ public class mainCharactor : MonoBehaviour
     void Movement()
     {
         rb.MovePosition(rb.position + movement * runSpeed * Time.fixedDeltaTime);
-
         
+
 
         if (movement.x > 0)
         {
