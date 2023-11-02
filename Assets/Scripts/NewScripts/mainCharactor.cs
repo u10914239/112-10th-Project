@@ -17,7 +17,8 @@ public class mainCharactor : MonoBehaviour
     //?【主角素質】
     public float jumpPower = 100f;
     public float runSpeed = 2f;
-    public float moveSpeed = 0.3f;
+    float stopSpeed = 0f;
+    
     //?【主角狀態】
     public int magicNumber;
     public Text showMagicNumber;
@@ -32,7 +33,7 @@ public class mainCharactor : MonoBehaviour
     public SpriteRenderer SowrdObj;
     public Transform SwordPos;
 
-
+    public Animator anim;
 
 
     public Transform attackPoint;
@@ -52,45 +53,25 @@ public class mainCharactor : MonoBehaviour
         Magic();
         Power();
 
+        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * runSpeed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * runSpeed);
+        anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
         if (Input.GetButtonDown("Fire1"))
         {
             Attack();
         }
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.z = Input.GetAxisRaw("Vertical");
         
-        Movement();
     }
     void FixedUpdate()
     {
-        
+        Movement();
     }
     void Movement()
     {
-        //movement.x = Input.GetAxisRaw("Horizontal");
-        //movement.z = Input.GetAxisRaw("Vertical");
-
-        if(Input.GetKey(KeyCode.W))
-        {
-            movement.z = 1f;
-        }else if(Input.GetKey(KeyCode.S))
-        {
-            movement.z = -1f;
-        }else
-        {
-            movement.z = 0;
-        }
-
-        if(Input.GetKey(KeyCode.A))
-        {
-            movement.x = -1f;
-        }else if(Input.GetKey(KeyCode.D))
-        {
-            movement.x = 1f;
-        }else
-        {
-            movement.x = 0;
-        }
-
         rb.MovePosition(rb.position + movement * runSpeed * Time.fixedDeltaTime);
+
+        
 
         if (movement.x > 0)
         {
@@ -111,33 +92,7 @@ public class mainCharactor : MonoBehaviour
             rb.AddForce(0,5,0,ForceMode.Impulse);
         }
     }
-    void playerMovement() //? 【玩家移動】
-    {
-        //*《玩家移動》
-        if(isGrounded && Input.GetKey(KeyCode.W))
-        {
-            rb.AddForce(0,0,moveSpeed,ForceMode.Impulse);
-        }
-        if(isGrounded && Input.GetKey(KeyCode.A))
-        {
-            rb.AddForce(-moveSpeed,0,0,ForceMode.Impulse);
-            KnightForm.flipX = true;
-        }
-        if(isGrounded && Input.GetKey(KeyCode.S))
-        {
-            rb.AddForce(0,0,-moveSpeed,ForceMode.Impulse);
-        }
-        if(isGrounded && Input.GetKey(KeyCode.D))
-        {
-            rb.AddForce(moveSpeed,0,0,ForceMode.Impulse);
-            KnightForm.flipX = false;
-        }
-        //*《玩家跳躍》
-        if(isGrounded && Input.GetKey(KeyCode.Space))
-        {
-            rb.AddForce(0,5,0,ForceMode.Impulse);
-        }
-    }
+    
 
     void Magic()
     {
