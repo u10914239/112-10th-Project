@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject GameOverScreen;
+    public GameObject DemoEnd;
     void Start()
     {
         
@@ -16,6 +17,13 @@ public class GameManager : MonoBehaviour
         if(mainCharactor.playerHealth <= 0 || secondCharactor.playerHealth <= 0)
         {
             GameOverScreen.SetActive(true);
+        }
+        if(mainEnd.ReachEnd && secondEnd.ReachEnd)
+        {
+            DemoEnd.SetActive(true);
+        }else
+        {
+            DemoEnd.SetActive(false);
         }
     }
 }

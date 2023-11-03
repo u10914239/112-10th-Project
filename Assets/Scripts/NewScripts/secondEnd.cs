@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class secondEnd : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public static bool ReachEnd;
     void Start()
     {
         
@@ -14,5 +14,19 @@ public class secondEnd : MonoBehaviour
     void Update()
     {
         
+    }
+    void OnTriggerStay(Collider Hit)
+    {
+        if(Hit.gameObject.tag == "End")
+        {
+            ReachEnd = true;
+        }
+    }
+    void OnTriggerExit(Collider Hit)
+    {
+        if(Hit.gameObject.tag == "End")
+        {
+            ReachEnd = false;
+        }
     }
 }

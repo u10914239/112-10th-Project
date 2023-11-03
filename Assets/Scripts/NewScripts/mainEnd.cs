@@ -15,8 +15,18 @@ public class mainEnd : MonoBehaviour
     {
         
     }
-    void OnTriggerStay()
+    void OnTriggerStay(Collider Hit)
     {
-        
+        if(Hit.gameObject.tag == "End")
+        {
+            ReachEnd = true;
+        }
+    }
+    void OnTriggerExit(Collider Hit)
+    {
+        if(Hit.gameObject.tag == "End")
+        {
+            ReachEnd = false;
+        }
     }
 }
