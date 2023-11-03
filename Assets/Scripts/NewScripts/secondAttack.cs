@@ -6,10 +6,10 @@ public class secondAttack : MonoBehaviour
 {
     // Start is called before the first frame update
     public bool dealtDamage;
-    public bool inRange2;
+    public static bool inRange2;
 
     public Animator anim;
-
+    public AudioSource Punch;
     void Start()
     {
         dealtDamage = false;
@@ -19,9 +19,11 @@ public class secondAttack : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Joystick1Button5))
         {
             Attack();
+            Punch.Play();
             if (inRange2 && dealtDamage)
             {
                 FollowEnemy.isAttacked = true;
+                secondCharactor.magicNumber +=1;
                 dealtDamage = false;
             }
         }

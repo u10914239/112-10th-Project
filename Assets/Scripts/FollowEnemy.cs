@@ -36,7 +36,9 @@ public class FollowEnemy : MonoBehaviour
     Vector3 scale;
 
     public static bool isAttacked;
+    public static bool isBigAttacked;
     bool isAttacking;
+    
 
     private PhotonView _pv;
 
@@ -55,7 +57,7 @@ public class FollowEnemy : MonoBehaviour
 
         currentHealth = maxHealth;
         Knockback = 10f;
-        knockBackForce = 100f;
+        knockBackForce = 5f;
         _pv = this.gameObject.GetComponent<PhotonView>();
 
     }
@@ -106,6 +108,11 @@ public class FollowEnemy : MonoBehaviour
         {
             TakeDamage(1);
             isAttacked = false;
+        }
+        if(isBigAttacked)
+        {
+            TakeDamage(2);
+            isBigAttacked = false;
         }
     }
     void DetectTargetPlayer()
@@ -189,6 +196,8 @@ public class FollowEnemy : MonoBehaviour
 
     void Die()
     {
+        mainAttack.inRange = false;
+        secondAttack.inRange2 = false;
         Debug.Log("I died");
         MainCharactor.KillCount += 1;
         Destroy(this);

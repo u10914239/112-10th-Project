@@ -21,7 +21,7 @@ public class secondCharactor : MonoBehaviour
     public float moveSpeed = 0.5f;
     float stopSpeed_02 = 0f;
     //?【主角狀態】
-    public int magicNumber;
+    public static int magicNumber;
     public Text showMagicNumber;
     public Sprite Knight, Bow;
     public static bool isTransformed;
@@ -31,9 +31,17 @@ public class secondCharactor : MonoBehaviour
     public SpriteRenderer showTransformTime;
     public GameObject showTransformTimeObject;
     public Sprite T3,T2,T1;
+    public static int playerHealth;
+    public int playerHealthSide;
+    public static bool GetAttacked;
+    public static bool unHurt;
+    public float dashCoolDown;
+
+    public GameObject bar1,bar2,bar3,bar4,bar5;
+
     //?【環境狀態】
     float MagicTime;
-    float PowerTime;
+    public static float PowerTime;
     public Transform Main;
 
     public Transform attackPoint;
@@ -41,6 +49,13 @@ public class secondCharactor : MonoBehaviour
     public LayerMask enemyLayers;
 
     public Animator anim_02;
+
+    //todo
+    public SpriteRenderer InvisibleWhenTransform;
+    public GameObject TransformObj;
+    public AudioSource Punch;
+    public AudioSource Pop;
+    
     
     void Start()
     {
@@ -48,7 +63,9 @@ public class secondCharactor : MonoBehaviour
         PowerTime = 0;
         showTransformTimeObject.SetActive(false);
         CapsuleCollider = GetComponent<CapsuleCollider>();
-        runSpeed = 3f;
+        runSpeed = 5f;
+        playerHealth = 5;
+
     }
 
     // Update is called once per frame
@@ -56,11 +73,12 @@ public class secondCharactor : MonoBehaviour
     {
        Magic();
        Power();
+       Health();
        if (Input.GetKeyDown(KeyCode.Joystick1Button0))
         {
-            Attack();
+            
         }
-
+        GotAttacked();
         stopSpeed_02 = Mathf.Abs(Input.GetAxisRaw("Horizontal2") * runSpeed) + Mathf.Abs(Input.GetAxisRaw("Vertical2") * runSpeed);
         anim_02.SetFloat("Speed_02", Mathf.Abs(stopSpeed_02));
 
@@ -68,17 +86,78 @@ public class secondCharactor : MonoBehaviour
 
         movement.x = Input.GetAxisRaw("Horizontal2");
         movement.z = Input.GetAxisRaw("Vertical2");
+
+        playerHealthSide = playerHealth;
     }
     void FixedUpdate()
     {  
         Movement_02();
+    }
+    void Health()
+    {
+        if(playerHealth>=5)
+        {
+            bar1.SetActive(true);
+            bar2.SetActive(true);
+            bar3.SetActive(true);
+            bar4.SetActive(true);
+            bar5.SetActive(true);
+        }else if(playerHealth == 4)
+        {
+            bar1.SetActive(true);
+            bar2.SetActive(true);
+            bar3.SetActive(true);
+            bar4.SetActive(true);
+            bar5.SetActive(false);
+        }
+        else if(playerHealth == 3)
+        {
+            bar1.SetActive(true);
+            bar2.SetActive(true);
+            bar3.SetActive(true);
+            bar4.SetActive(false);
+            bar5.SetActive(false);
+        }
+        else if(playerHealth == 2)
+        {
+            bar1.SetActive(true);
+            bar2.SetActive(true);
+            bar3.SetActive(false);
+            bar4.SetActive(false);
+            bar5.SetActive(false);
+        }
+        else if(playerHealth == 1)
+        {
+            bar1.SetActive(true);
+            bar2.SetActive(false);
+            bar3.SetActive(false);
+            bar4.SetActive(false);
+            bar5.SetActive(false);
+        }
     }
 
     void Movement_02()
     {
         rb.MovePosition(rb.position + movement * runSpeed * Time.fixedDeltaTime);
         
+        if(dashCoolDown ==0 && movement.x>0 && Input.GetKey(KeyCode.LeftControl))
+        {
+            rb.AddForce(20,0,0,ForceMode.Impulse);
+            dashCoolDown = 2;
+        }
+        if(dashCoolDown ==0 && movement.x<0 && Input.GetKey(KeyCode.Joystick1Button12))
+        {
+            rb.AddForce(-20,0,0,ForceMode.Impulse);
+            dashCoolDown = 2;
+        }
 
+        if(dashCoolDown>1)
+        {
+            dashCoolDown -= Time.deltaTime;
+        }else if(dashCoolDown<1)
+        {
+            dashCoolDown = 0;
+        }
 
         if (movement.x > 0&&!facingRight)
         {
@@ -96,6 +175,13 @@ public class secondCharactor : MonoBehaviour
             print("fff");
             rb.AddForce(0,jumpPower,0,ForceMode.Impulse);
         }
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            runSpeed = 10f;
+        }else
+        {
+            runSpeed = 5f;
+        }
     }
 
     void Flip()
@@ -110,7 +196,10 @@ public class secondCharactor : MonoBehaviour
     void Magic()
     {
         MagicTime += Time.deltaTime;
-
+        if(magicNumber >=10)
+        {
+            magicNumber = 10;
+        }
         if(MagicTime >=1 && magicNumber < 10)
         {
             magicNumber += 1;
@@ -120,12 +209,15 @@ public class secondCharactor : MonoBehaviour
     }
     void Power()
     {
-        if(magicNumber == 10 && Input.GetKeyDown(KeyCode.Joystick1Button1))
+        if(magicNumber == 10 && Input.GetKeyDown(KeyCode.Joystick1Button1) || magicNumber == 10 && Input.GetKeyDown(KeyCode.P))
         {
-            KnightForm.sprite = Bow;
+            //KnightForm.sprite = Bow;
+            InvisibleWhenTransform.enabled=false;
+            TransformObj.SetActive(true);
             isTransformed = true;
             magicNumber = 0;
             FollowEnemy.smallWaveActivate = true;
+            Pop.Play();
         }
         if(isTransformed == true)
         {
@@ -150,18 +242,22 @@ public class secondCharactor : MonoBehaviour
             }
 
 
-            if(PowerTime > 10)
+            if(PowerTime > 10 || isTransformed == false)
             {
-                KnightForm.sprite = Knight;
+                //KnightForm.sprite = Knight;
                 //KnightForm.transform.localScale = new Vector3 (0.06f,0.06f,0.06f);
+                InvisibleWhenTransform.enabled = true;
+                TransformObj.SetActive(false);
                 isTransformed = false;
                 PowerTime = 0;
                 showTransformTimeObject.SetActive(false);
+                Pop.Play();
             }
         }
         if(mainCharactor.isHolding)
         {
             KnightForm.color = new Color32 (0,0,0,0);
+            TransformObj.SetActive(false);
             this.transform.position = Main.transform.position;
             Debug.Log("fhdiufiuhdshfuidshuishdfui");
             CapsuleCollider.enabled = false;
@@ -173,9 +269,29 @@ public class secondCharactor : MonoBehaviour
         }
 
     }
-    public void Attack()
+    public void GotAttacked()
     {
+        if(GetAttacked)
+        {
+            if(!unHurt)
+            {
+                KnightForm.color = Color.red;
+                playerHealth -= 1;
+                Punch.Play();
+            }
+            unHurt = true;
+            
+            Invoke("colorwhite", 0.3f);
+            GetAttacked = false;
+        }
+        if(playerHealth<=0)
+        {
 
+        }
+    }
+    public void colorwhite()
+    {
+        KnightForm.color = Color.white;
     }
     void OnDrawGizmosSelected()
     {
