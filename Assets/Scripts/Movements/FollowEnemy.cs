@@ -35,8 +35,8 @@ public class FollowEnemy : MonoBehaviour
 
     Vector3 scale;
 
-    public static bool isAttacked;
-    public static bool isBigAttacked;
+    public bool isHit;
+    //public static bool isBigAttacked;
     bool isAttacking;
     
 
@@ -64,6 +64,7 @@ public class FollowEnemy : MonoBehaviour
 
     private void Update()
     {
+        
         Knockbacks();
         scale = transform.localScale;
 
@@ -101,19 +102,9 @@ public class FollowEnemy : MonoBehaviour
             SpriteRenderer.sprite = Blood1;
         }
         
-        //Dis = transform.position.x - player.position.x;
-        //color = gameObject.GetComponent<SpriteRenderer>();
-        //Debug.Log(player.position.x - transform.position.x);
-        if(isAttacked)
-        {
-            TakeDamage(1);
-            isAttacked = false;
-        }
-        if(isBigAttacked)
-        {
-            TakeDamage(2);
-            isBigAttacked = false;
-        }
+        
+        
+        
     }
     void DetectTargetPlayer()
     {
@@ -177,7 +168,20 @@ public class FollowEnemy : MonoBehaviour
         isAttacking = false;
         
     }
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "PlayerHitBox" && isHit == false)
+        {
+            TakeDamage(1);
+            isHit = true;
+        }
+        else
+        {
+            isHit = false;
+        }
 
+
+    }
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
@@ -196,8 +200,8 @@ public class FollowEnemy : MonoBehaviour
 
     void Die()
     {
-        mainAttack.inRange = false;
-        secondAttack.inRange2 = false;
+        
+        
         Debug.Log("I died");
         MainCharactor.KillCount += 1;
         Destroy(this);
