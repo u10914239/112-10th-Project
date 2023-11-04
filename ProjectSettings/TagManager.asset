@@ -13,6 +13,7 @@ TagManager:
   - Enemy
   - smallWave
   - End
+  - PlayerHitBox
   layers:
   - Default
   - TransparentFX
