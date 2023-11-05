@@ -203,7 +203,7 @@ public class FollowEnemy : MonoBehaviour
         
         
         Debug.Log("I died");
-        MainCharactor.KillCount += 1;
+        
         Destroy(this);
         
     }

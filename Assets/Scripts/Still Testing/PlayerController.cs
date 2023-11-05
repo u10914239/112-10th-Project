@@ -5,21 +5,33 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
+    float stopSpeed = 0f;
     public float horizontalValue;
     public float groundDist;
 
     public LayerMask terrainLayer;
     public Rigidbody rb;
+    public Animator anim;
 
     public bool facingRight;
+
+    
 
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-
+        
+        facingRight = true;
     }
 
     void Update()
+    {
+        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * speed);
+        anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
+
+
+    }
+    void FixedUpdate()
     {
 
         RaycastHit hit;
@@ -44,23 +56,29 @@ public class PlayerController : MonoBehaviour
         Vector3 moveDir = new Vector3(x, 0, y);
         rb.velocity = moveDir * speed;
 
-        horizontalValue = x*speed*Time.deltaTime;
+        if (x > 0 && !facingRight)
+        {
+            Flip();
+            
+        }
+        else if (x < 0 && facingRight)
+        {
+            Flip();
+            
+        }
 
 
-        Flip();
+       
 
     }
 
     void Flip()
     {
-        if ((horizontalValue < 0 && facingRight) || (horizontalValue > 0 && !facingRight))
-        {
+        Vector3 currentScale = gameObject.transform.localScale;
+        currentScale.x *= -1;
+        gameObject.transform.localScale = currentScale;
 
-            facingRight = !facingRight;
-            transform.Rotate(new Vector3(0, 180, 0));
-
-        }
-
+        facingRight = !facingRight;
     }
 
 }
