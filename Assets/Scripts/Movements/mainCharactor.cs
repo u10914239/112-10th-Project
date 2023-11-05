@@ -172,13 +172,7 @@ public class mainCharactor : MonoBehaviour
             rb.AddForce(0,jumpPower,0,ForceMode.Impulse);
         }
 
-        if(Input.GetKey(KeyCode.LeftShift))
-        {
-            runSpeed = 10f;
-        }else
-        {
-            runSpeed = 5f;
-        }
+        
     }
     
     void Flip()
