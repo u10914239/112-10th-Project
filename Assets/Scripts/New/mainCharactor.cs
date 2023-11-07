@@ -186,7 +186,7 @@ public class mainCharactor : MonoBehaviour
 
     void Magic()
     {
-        //MagicTime += Time.deltaTime;
+        //magicTime += Time.deltaTime;
         if(magicNumber >=10)
         {
             magicNumber = 10;

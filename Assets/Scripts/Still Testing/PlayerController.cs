@@ -14,14 +14,16 @@ public class PlayerController : MonoBehaviour
     public Animator anim;
 
     public bool facingRight;
-
     
+    float powerTime;
+    public bool isTransformed;
 
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-        
+        isTransformed = false;
         facingRight = true;
+        
     }
 
     void Update()
@@ -29,16 +31,28 @@ public class PlayerController : MonoBehaviour
         stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * speed);
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
 
+        TurnIntoWeapon();
+
 
     }
     void FixedUpdate()
     {
+        
 
+
+        if (isTransformed==false)
+        {
+            Movement();
+
+        }
+        
+    }
+
+    private void Movement()
+    {
         RaycastHit hit;
         Vector3 castPos = transform.position;
         castPos.y += 1;
-
-        
 
         if (Physics.Raycast(castPos, -transform.up, out hit, Mathf.Infinity, terrainLayer))
         {
@@ -49,9 +63,9 @@ public class PlayerController : MonoBehaviour
                 transform.position = movePos;
 
             }
-            
+
         }
-        float x = Input.GetAxis("Horizontal") ;
+        float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
         Vector3 moveDir = new Vector3(x, 0, y);
         rb.velocity = moveDir * speed;
@@ -59,16 +73,15 @@ public class PlayerController : MonoBehaviour
         if (x > 0 && !facingRight)
         {
             Flip();
-            
+
         }
         else if (x < 0 && facingRight)
         {
             Flip();
-            
+
         }
 
 
-       
 
     }
 
@@ -80,6 +93,32 @@ public class PlayerController : MonoBehaviour
 
         facingRight = !facingRight;
     }
+
+    
+
+    void TurnIntoWeapon()
+    {
+        if (isTransformed == false && Input.GetKeyDown(KeyCode.E))
+        {
+            anim.SetBool("Transform", true);
+            isTransformed = true;
+            
+
+        }
+        if (isTransformed)
+        {
+            powerTime += Time.deltaTime;
+            if (powerTime >= 10)
+            {
+                anim.SetBool("Transform", false);
+                isTransformed = false;
+                powerTime = 0;
+            }
+
+        }
+
+    }
+
 
 }
 
