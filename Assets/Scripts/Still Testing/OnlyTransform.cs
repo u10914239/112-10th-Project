@@ -27,10 +27,11 @@ public class OnlyTransform : MonoBehaviour
     {
         if (isTransformed == false && Input.GetKeyDown(KeyCode.T))
         {
-            anim.SetBool("Transform", true);
-            isTransformed = true;
-            
 
+            isTransformed = true;
+            anim.SetBool("Transform", true);
+
+            
         }
         if (isTransformed)
         {
@@ -39,11 +40,13 @@ public class OnlyTransform : MonoBehaviour
             {
                 anim.SetBool("Transform", false);
                 isTransformed = false;
-                
+
                 powerTime = 0;
             }
 
         }
 
     }
+
+    
 }

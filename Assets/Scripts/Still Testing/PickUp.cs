@@ -7,11 +7,20 @@ public class PickUp : MonoBehaviour
     private Transform weaponHolder;
     public Rigidbody rb;
 
-    void Start()
+    OnlyTransform onlyTransform;
+
+
+    void Awake()
     {
+        onlyTransform = gameObject.GetComponent<OnlyTransform>();
         weaponHolder = GameObject.Find("Weapon Holder").GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
 
+    }
+    void Start()
+    {
+        
+        
     }
 
    
@@ -22,13 +31,15 @@ public class PickUp : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Player")
+
+
+        if (collision.gameObject.tag == "Player" && onlyTransform.isTransformed == true)
         {
             rb.isKinematic = true;
             rb.interpolation = RigidbodyInterpolation.None;
             transform.SetParent(weaponHolder);
             transform.localPosition = Vector3.zero;
-            transform.localRotation = Quaternion.Euler(0, 0, 120);
+            transform.localRotation= Quaternion.Euler (0, 0, 100);
         }
 
         
