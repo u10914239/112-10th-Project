@@ -5,11 +5,13 @@ using UnityEngine;
 public class PickUp : MonoBehaviour
 {
     private Transform weaponHolder;
-
+    public Rigidbody rb;
 
     void Start()
     {
         weaponHolder = GameObject.Find("Weapon Holder").GetComponent<Transform>();
+        rb = gameObject.GetComponent<Rigidbody>();
+
     }
 
    
@@ -22,9 +24,11 @@ public class PickUp : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            rb.isKinematic = true;
+            rb.interpolation = RigidbodyInterpolation.None;
             transform.SetParent(weaponHolder);
             transform.localPosition = Vector3.zero;
-            transform.rotation = Quaternion.Euler(0, 0, -60);
+            transform.localRotation = Quaternion.Euler(0, 0, 120);
         }
 
         
