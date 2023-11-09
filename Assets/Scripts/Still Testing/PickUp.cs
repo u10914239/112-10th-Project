@@ -5,17 +5,18 @@ using UnityEngine;
 public class PickUp : MonoBehaviour
 {
     private Transform weaponHolder;
-    public Rigidbody rb;
+    
     public bool isHeld;
     
-    PlayerController player;
-
+    PlayerController player1;
+    PlayerController_Joystick player2;
 
     void Awake()
     {
-        player = gameObject.GetComponent<PlayerController>();
+        player1 = gameObject.GetComponent<PlayerController>();
+        player2 = GameObject.Find("Player 2").GetComponent<PlayerController_Joystick>();
         weaponHolder = GameObject.Find("Weapon Holder 2").GetComponent<Transform>();
-        rb = gameObject.GetComponent<Rigidbody>();
+        
 
     }
     void Start()
@@ -27,15 +28,26 @@ public class PickUp : MonoBehaviour
    
     void FixedUpdate()
     {
-        
-        if(player.isTransformed == false)
+
+        if (player1.isTransformed == false)
         {
-            rb.isKinematic = false;
-            this.transform.SetParent(null);
-            rb.interpolation = RigidbodyInterpolation.Interpolate;
             
+            this.transform.SetParent(null);
+            isHeld = false;
 
 
+
+        }
+        if (player1.isTransformed == true)
+        {
+            if (player2.facingRight == true)
+            {
+                player1.facingRight = true;
+            }
+            else
+            {
+                player1.facingRight = false;
+            }
         }
 
 
@@ -45,19 +57,15 @@ public class PickUp : MonoBehaviour
     {
 
 
-        if (collision.gameObject.tag == "Player" && player.isTransformed == true)
+        if (collision.gameObject.tag == "Player" && player1.isTransformed == true)
         {
-            rb.isKinematic = true;
-            rb.interpolation = RigidbodyInterpolation.None;
+            
             this.transform.SetParent(weaponHolder);
             transform.localPosition = Vector3.zero;
             isHeld = true;
 
         }
-        else
-        {
-            isHeld = false;
-        }
+        
 
     }
 

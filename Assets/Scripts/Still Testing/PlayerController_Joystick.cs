@@ -15,8 +15,9 @@ public class PlayerController_Joystick : MonoBehaviour
 
     public bool facingRight;
 
-    float powerTime;
+    public float powerTime;
     public bool isTransformed;
+    bool canMove;
 
     //PickUp_Joystick pickUp;
     PickUp pickUp;
@@ -27,31 +28,28 @@ public class PlayerController_Joystick : MonoBehaviour
         pickUp = GameObject.Find("Player 1").GetComponent<PickUp>();
         isTransformed = false;
         facingRight = true;
-
+        canMove = true;
     }
 
     void Update()
     {
         stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal2") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical2") * speed);
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
-
         TurnIntoWeapon();
+
 
 
     }
     void FixedUpdate()
     {
-
-
-
-        if (isTransformed == false)
+        
+        if (canMove)
         {
             Movement();
-
         }
-
+        
     }
-
+    
     private void Movement()
     {
         RaycastHit hit;
@@ -69,10 +67,15 @@ public class PlayerController_Joystick : MonoBehaviour
             }
 
         }
-        float x = Input.GetAxis("Horizontal2");
-        float y = Input.GetAxis("Vertical2");
+
+        float x = Input.GetAxisRaw("Horizontal2");
+        float y = Input.GetAxisRaw("Vertical2");
+       
+        
         Vector3 moveDir = new Vector3(x, 0, y);
         rb.velocity = moveDir * speed;
+        
+        
        
         if (x > 0 && !facingRight)
         {
@@ -103,19 +106,24 @@ public class PlayerController_Joystick : MonoBehaviour
     {
         if (pickUp.isHeld == false && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
+            rb.isKinematic = true;
+            rb.interpolation = RigidbodyInterpolation.None;
             anim.SetBool("Transform", true);
             isTransformed = true;
+            canMove = false;
             
-
         }
         if (isTransformed)
         {
             powerTime += Time.deltaTime;
             if (powerTime >= 10)
             {
+                rb.isKinematic = false;
+                rb.interpolation = RigidbodyInterpolation.Interpolate;
                 anim.SetBool("Transform", false);
                 isTransformed = false;
                 powerTime = 0;
+                canMove = true;
             }
 
         }

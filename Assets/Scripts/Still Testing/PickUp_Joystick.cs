@@ -5,17 +5,19 @@ using UnityEngine;
 public class PickUp_Joystick : MonoBehaviour
 {
     private Transform weaponHolder;
-    public Rigidbody rb;
+    
     public bool isHeld;
 
+    PlayerController player1;
     PlayerController_Joystick player2;
 
 
     void Awake()
     {
+        player1 = GameObject.Find("Player 1").GetComponent<PlayerController>();
         player2 = gameObject.GetComponent<PlayerController_Joystick>();
         weaponHolder = GameObject.Find("Weapon Holder 1").GetComponent<Transform>();
-        rb = gameObject.GetComponent<Rigidbody>();
+        
 
     }
     void Start()
@@ -30,16 +32,28 @@ public class PickUp_Joystick : MonoBehaviour
 
         if (player2.isTransformed == false)
         {
-            rb.isKinematic = false;
+            
             this.transform.SetParent(null);
-            rb.interpolation = RigidbodyInterpolation.Interpolate;
-            //transform.Rotate(new Vector3(0, 180, 0));
-
+            isHeld = false;
+            
+            
 
         }
-
-
+        if (player2.isTransformed == true)
+        {
+            if (player1.facingRight==true)
+            {
+                player2.facingRight = false;
+            }
+            else
+            {
+                player2.facingRight = true;
+            }
+        }
+        
     }
+
+    
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -47,17 +61,13 @@ public class PickUp_Joystick : MonoBehaviour
 
         if (collision.gameObject.tag == "Player" && player2.isTransformed == true)
         {
-            rb.isKinematic = true;
-            rb.interpolation = RigidbodyInterpolation.None;
+            
             this.transform.SetParent(weaponHolder);
             transform.localPosition = Vector3.zero;
             isHeld = true;
 
         }
-        else
-        {
-            isHeld = false;
-        }
+       
 
 
     }
