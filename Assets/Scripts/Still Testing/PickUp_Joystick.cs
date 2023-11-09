@@ -2,38 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUp : MonoBehaviour
+public class PickUp_Joystick : MonoBehaviour
 {
     private Transform weaponHolder;
     public Rigidbody rb;
     public bool isHeld;
-    
-    PlayerController player;
+
+    PlayerController_Joystick player2;
 
 
     void Awake()
     {
-        player = gameObject.GetComponent<PlayerController>();
-        weaponHolder = GameObject.Find("Weapon Holder 2").GetComponent<Transform>();
+        player2 = gameObject.GetComponent<PlayerController_Joystick>();
+        weaponHolder = GameObject.Find("Weapon Holder 1").GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
 
     }
     void Start()
     {
         isHeld = false;
-        
+
     }
 
-   
+
     void FixedUpdate()
     {
-        
-        if(player.isTransformed == false)
+
+        if (player2.isTransformed == false)
         {
             rb.isKinematic = false;
             this.transform.SetParent(null);
             rb.interpolation = RigidbodyInterpolation.Interpolate;
-            
+            //transform.Rotate(new Vector3(0, 180, 0));
 
 
         }
@@ -45,7 +45,7 @@ public class PickUp : MonoBehaviour
     {
 
 
-        if (collision.gameObject.tag == "Player" && player.isTransformed == true)
+        if (collision.gameObject.tag == "Player" && player2.isTransformed == true)
         {
             rb.isKinematic = true;
             rb.interpolation = RigidbodyInterpolation.None;
@@ -59,7 +59,10 @@ public class PickUp : MonoBehaviour
             isHeld = false;
         }
 
+
     }
 
     
+
+
 }

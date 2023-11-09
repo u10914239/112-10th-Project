@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController_Joystick : MonoBehaviour
 {
     public float speed;
     float stopSpeed = 0f;
-    
+
     public float groundDist;
 
     public LayerMask terrainLayer;
@@ -14,27 +14,25 @@ public class PlayerController : MonoBehaviour
     public Animator anim;
 
     public bool facingRight;
-    
+
     float powerTime;
     public bool isTransformed;
 
-
-    //PickUp pickUp;
-    PickUp_Joystick pickUp;
-
+    //PickUp_Joystick pickUp;
+    PickUp pickUp;
 
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-        pickUp = GameObject.Find("Player 2").GetComponent<PickUp_Joystick>();
+        pickUp = GameObject.Find("Player 1").GetComponent<PickUp>();
         isTransformed = false;
         facingRight = true;
-        
+
     }
 
     void Update()
     {
-        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * speed);
+        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal2") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical2") * speed);
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
 
         TurnIntoWeapon();
@@ -43,15 +41,15 @@ public class PlayerController : MonoBehaviour
     }
     void FixedUpdate()
     {
-        
 
 
-        if (isTransformed==false)
+
+        if (isTransformed == false)
         {
             Movement();
 
         }
-        
+
     }
 
     private void Movement()
@@ -71,11 +69,11 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
+        float x = Input.GetAxis("Horizontal2");
+        float y = Input.GetAxis("Vertical2");
         Vector3 moveDir = new Vector3(x, 0, y);
         rb.velocity = moveDir * speed;
-
+       
         if (x > 0 && !facingRight)
         {
             Flip();
@@ -94,23 +92,20 @@ public class PlayerController : MonoBehaviour
     void Flip()
     {
 
-        transform.Rotate(new Vector3(0, 180, 0));
+       
         facingRight = !facingRight;
-
-        
-
-        
+        transform.Rotate(new Vector3(0, 180, 0));
     }
 
-    
+
 
     void TurnIntoWeapon()
     {
-        if (pickUp.isHeld == false && isTransformed == false && Input.GetKeyDown(KeyCode.E))
+        if (pickUp.isHeld == false && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             anim.SetBool("Transform", true);
             isTransformed = true;
-            facingRight = true;
+            
 
         }
         if (isTransformed)
@@ -126,8 +121,4 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
-
 }
-
-   
