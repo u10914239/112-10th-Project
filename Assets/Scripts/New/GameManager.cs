@@ -14,14 +14,20 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(mainCharactor.playerHealth <= 0 || secondCharactor.playerHealth <= 0)
+        
+    }
+
+    void Trash()
+    {
+        if (mainCharactor.playerHealth <= 0 || secondCharactor.playerHealth <= 0)
         {
             GameOverScreen.SetActive(true);
         }
-        if(mainEnd.ReachEnd && secondEnd.ReachEnd)
+        if (mainEnd.ReachEnd && secondEnd.ReachEnd)
         {
             DemoEnd.SetActive(true);
-        }else
+        }
+        else
         {
             DemoEnd.SetActive(false);
         }
