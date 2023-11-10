@@ -38,17 +38,8 @@ public class PickUp : MonoBehaviour
 
 
         }
-        if (player1.isTransformed == true)
-        {
-            if (player2.facingRight == true)
-            {
-                player1.facingRight = true;
-            }
-            else
-            {
-                player1.facingRight = false;
-            }
-        }
+        
+
 
 
     }

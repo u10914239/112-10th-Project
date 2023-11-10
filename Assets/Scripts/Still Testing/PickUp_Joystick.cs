@@ -39,18 +39,8 @@ public class PickUp_Joystick : MonoBehaviour
             
 
         }
-        if (player2.isTransformed == true)
-        {
-            if (player1.facingRight==true)
-            {
-                player2.facingRight = false;
-            }
-            else
-            {
-                player2.facingRight = true;
-            }
-        }
         
+
     }
 
     

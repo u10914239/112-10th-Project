@@ -74,31 +74,27 @@ public class PlayerController_Joystick : MonoBehaviour
         
         Vector3 moveDir = new Vector3(x, 0, y);
         rb.velocity = moveDir * speed;
-        
-        
-       
-        if (x > 0 && !facingRight)
+
+
+
+        Vector3 charactorScale = transform.localScale;
+        if (x > 0)
         {
-            Flip();
+            charactorScale.x = 1;
+
 
         }
-        else if (x < 0 && facingRight)
+        if (x < 0)
         {
-            Flip();
-
+            charactorScale.x = -1;
         }
+        transform.localScale = charactorScale;
 
 
 
     }
 
-    void Flip()
-    {
-
-       
-        facingRight = !facingRight;
-        transform.Rotate(new Vector3(0, 180, 0));
-    }
+    
 
 
 
@@ -121,6 +117,9 @@ public class PlayerController_Joystick : MonoBehaviour
                 rb.isKinematic = false;
                 rb.interpolation = RigidbodyInterpolation.Interpolate;
                 anim.SetBool("Transform", false);
+
+              
+
                 isTransformed = false;
                 powerTime = 0;
                 canMove = true;
