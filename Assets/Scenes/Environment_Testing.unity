@@ -715,7 +715,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &934702171
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -796,6 +796,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashEffect: {fileID: 934702176}
+  animator: {fileID: 0}
   maxHealth: 100
 --- !u!114 &934702176
 MonoBehaviour:
@@ -911,6 +912,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  isDodging: 0
+  dodgeForce: 2
+  dodgeDuration: 1
   groundDist: 0.5
   terrainLayer:
     serializedVersion: 2
@@ -973,6 +977,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  dodgeForce: 2
+  dodgeDuration: 1
   groundDist: 0.5
   terrainLayer:
     serializedVersion: 2
@@ -980,7 +986,6 @@ MonoBehaviour:
   rb: {fileID: 0}
   anim: {fileID: 6340504363199058961}
   facingRight: 0
-  powerTime: 0
   isTransformed: 0
 --- !u!1 &2862377298719319432
 GameObject:
@@ -1315,6 +1320,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   attackDamage: 40
+  attackRate: 2
 --- !u!54 &7865025502870492547
 Rigidbody:
   m_ObjectHideFlags: 0
