@@ -42,6 +42,7 @@ public class PlayerController_Joystick : MonoBehaviour
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
         TurnIntoWeapon();
 
+
        
 
     }
@@ -91,12 +92,13 @@ public class PlayerController_Joystick : MonoBehaviour
         if (x > 0)
         {
             charactorScale.x = 1;
-
+            facingRight = true;
 
         }
         if (x < 0)
         {
             charactorScale.x = -1;
+            facingRight = false;
         }
         transform.localScale = charactorScale;
 

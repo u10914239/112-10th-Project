@@ -4867,7 +4867,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!54 &5408512190100774022
@@ -5059,6 +5059,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 7751463215352447062}
+  arrowPrefab: {fileID: 4805661519754056234, guid: 80dcccf2b08340b43aad48a9e5dbbcde, type: 3}
   attackPoint: {fileID: 479235435}
   halfExtents: {x: 0.5, y: 1, z: 0.1}
   enemyLayers:
@@ -5282,6 +5283,8 @@ MonoBehaviour:
   flashEffect: {fileID: 8035195979958101045}
   animator: {fileID: 2916857343428451874}
   maxHealth: 1000
+  agent: {fileID: 1746383304177917461}
+  player: {fileID: 6887283207588837999}
 --- !u!114 &8484526551130065476
 MonoBehaviour:
   m_ObjectHideFlags: 0

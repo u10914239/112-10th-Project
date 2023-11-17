@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
@@ -9,12 +10,38 @@ public class Enemy : MonoBehaviour
     public Animator animator;
     public int maxHealth;
     int currentHealth;
+
+    public NavMeshAgent agent;
+    
+    
+
+    public Transform player;
+   
+    
     
 
     void Start()
     {
         currentHealth = maxHealth;
     }
+
+    void Update()
+    {
+        Chasing();
+
+    }
+
+    
+    
+    private void Chasing()
+    {
+
+        agent.SetDestination(player.position);
+        animator.SetFloat("Speed", 1);
+       
+    }
+
+   
 
     public void TakeDamage(int damage)
     {
