@@ -8,17 +8,15 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private SimpleFlash flashEffect;
     public Animator animator;
+
     public int maxHealth;
     int currentHealth;
 
     public NavMeshAgent agent;
-    
-    
+    private Transform targetPlayer;
 
-    public Transform player;
-   
-    
-    
+
+
 
     void Start()
     {
@@ -27,16 +25,34 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        Chasing();
+        FindNearestPlayer();
+        if (targetPlayer != null)
+        {
+            Chasing();
+        }
 
     }
 
-    
-    
+    void FindNearestPlayer()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        float closestDistance = Mathf.Infinity;
+
+        foreach (GameObject player in players)
+        {
+            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+            if (distanceToPlayer < closestDistance)
+            {
+                closestDistance = distanceToPlayer;
+                targetPlayer = player.transform;
+            }
+        }
+    }
+
     private void Chasing()
     {
 
-        agent.SetDestination(player.position);
+        agent.SetDestination(targetPlayer.position);
         animator.SetFloat("Speed", 1);
        
     }

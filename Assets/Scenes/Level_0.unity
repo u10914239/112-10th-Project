@@ -5012,7 +5012,6 @@ MonoBehaviour:
   animator: {fileID: 2916857343428451874}
   maxHealth: 1000
   agent: {fileID: 1746383304177917461}
-  player: {fileID: 6887283207588837999}
 --- !u!20 &8735934925863707576
 Camera:
   m_ObjectHideFlags: 0
