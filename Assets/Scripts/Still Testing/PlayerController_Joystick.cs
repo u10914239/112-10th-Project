@@ -24,8 +24,13 @@ public class PlayerController_Joystick : MonoBehaviour
     public bool isTransformed;
     bool canMove;
 
-    //PickUp_Joystick pickUp;
+    
     PickUp pickUp;
+
+
+    private Camera mainCamera;
+    private float minWorldX, maxWorldX, minWorldY, maxWorldY;
+    private float boundaryPadding = 1.0f;
 
     void Start()
     {
@@ -34,6 +39,9 @@ public class PlayerController_Joystick : MonoBehaviour
         isTransformed = false;
         facingRight = true;
         canMove = true;
+
+        mainCamera = Camera.main;
+        UpdateBoundaries();
     }
 
     void Update()
@@ -55,7 +63,26 @@ public class PlayerController_Joystick : MonoBehaviour
         }
         
     }
-    
+
+    private void UpdateBoundaries()
+    {
+        float distance = Mathf.Abs(mainCamera.transform.position.z - transform.position.z);
+
+        Vector3 lowerLeft = mainCamera.ScreenToWorldPoint(new Vector3(0 + boundaryPadding, 0 + boundaryPadding, distance));
+        Vector3 upperRight = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width - boundaryPadding, Screen.height - boundaryPadding, distance));
+
+        minWorldX = lowerLeft.x;
+        maxWorldX = upperRight.x;
+        minWorldY = lowerLeft.y;
+        maxWorldY = upperRight.y;
+    }
+
+    private void LateUpdate()
+    {
+        // Call UpdateBoundaries in LateUpdate to ensure it runs after the camera has moved
+        UpdateBoundaries();
+    }
+
     private void Movement()
     {
         RaycastHit hit;
@@ -73,20 +100,20 @@ public class PlayerController_Joystick : MonoBehaviour
             }
 
         }
-
         float x = Input.GetAxisRaw("Horizontal2");
         float y = Input.GetAxisRaw("Vertical2");
-       
-        
+
         Vector3 moveDir = new Vector3(x, 0, y);
-        rb.velocity = moveDir * speed;
+        rb.velocity = moveDir * speed * Time.deltaTime;
 
-        if (Input.GetKey(KeyCode.Joystick1Button0) && moveDir != Vector3.zero)
-        {
+        Vector3 newPosition = transform.position + rb.velocity;
 
-            StartCoroutine(PerformDodgeRoll());
+        newPosition.x = Mathf.Clamp(newPosition.x, minWorldX, maxWorldX);
+        newPosition.y = Mathf.Clamp(newPosition.y, minWorldY, maxWorldY);
 
-        }
+        transform.position = newPosition;
+
+       
 
         Vector3 charactorScale = transform.localScale;
         if (x > 0)
@@ -106,7 +133,7 @@ public class PlayerController_Joystick : MonoBehaviour
 
     }
 
-    IEnumerator PerformDodgeRoll()
+    /*IEnumerator PerformDodgeRoll()
     {
         isDodging = true;
 
@@ -123,7 +150,7 @@ public class PlayerController_Joystick : MonoBehaviour
         // Enable player control after the dodge roll
         isDodging = false;
         canMove = true;
-    }
+    }*/
 
 
 

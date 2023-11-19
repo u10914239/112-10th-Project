@@ -18,19 +18,18 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     public Animator anim;
 
-
-    
-    
-    
+        
     float powerTime;
     public bool facingRight;
     public bool isTransformed;
     bool canMove;
 
-    //PickUp pickUp;
+    
     PickUp_Joystick pickUp;
 
-
+    private Camera mainCamera;
+    private float minWorldX, maxWorldX, minWorldY, maxWorldY;
+    private float boundaryPadding = 1.0f;
 
 
     void Start()
@@ -42,7 +41,8 @@ public class PlayerController : MonoBehaviour
         facingRight = true;
         canMove = true;
 
-        
+        mainCamera = Camera.main;
+        UpdateBoundaries();
     }
 
     void Update()
@@ -69,7 +69,25 @@ public class PlayerController : MonoBehaviour
 
 
     }
-    
+    private void UpdateBoundaries()
+    {
+        float distance = Mathf.Abs(mainCamera.transform.position.z - transform.position.z);
+
+        Vector3 lowerLeft = mainCamera.ScreenToWorldPoint(new Vector3(0 + boundaryPadding, 0 + boundaryPadding, distance));
+        Vector3 upperRight = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width - boundaryPadding, Screen.height - boundaryPadding, distance));
+
+        minWorldX = lowerLeft.x;
+        maxWorldX = upperRight.x;
+        minWorldY = lowerLeft.y;
+        maxWorldY = upperRight.y;
+    }
+
+    private void LateUpdate()
+    {
+        // Call UpdateBoundaries in LateUpdate to ensure it runs after the camera has moved
+        UpdateBoundaries();
+    }
+
     private void Movement()
     {
         RaycastHit hit;
@@ -96,15 +114,16 @@ public class PlayerController : MonoBehaviour
         float y = Input.GetAxisRaw("Vertical");
 
         Vector3 moveDir = new Vector3(x, 0, y);
-        rb.velocity = moveDir * speed;
+        rb.velocity = moveDir * speed*Time.deltaTime;
+
+        Vector3 newPosition = transform.position + rb.velocity;
+
+        newPosition.x = Mathf.Clamp(newPosition.x, minWorldX, maxWorldX);
+        newPosition.y = Mathf.Clamp(newPosition.y, minWorldY, maxWorldY);
+
+        transform.position = newPosition;
+
         
-
-        if (Input.GetKey(KeyCode.LeftShift) && moveDir!=Vector3.zero)
-        {
-
-            StartCoroutine(PerformDodgeRoll());
-
-        }
 
 
 
@@ -126,7 +145,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    IEnumerator PerformDodgeRoll()
+    /*IEnumerator PerformDodgeRoll()
     {
         isDodging = true;
 
@@ -145,7 +164,7 @@ public class PlayerController : MonoBehaviour
         canMove = true;
         isDodging = false;
         
-    }
+    }*/
 
 
 
