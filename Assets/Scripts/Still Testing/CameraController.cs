@@ -5,27 +5,28 @@ using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
-    public CinemachineVirtualCamera cmV;
     
-    
-    
+    public GameObject bounds;
+
+
     // Start is called before the first frame update
     void Start()
     {
         
     }
-    
+
     // Update is called once per frame
     void LateUpdate()
     {
-        if (Camera.main.fieldOfView >= 30f)
+        if (Camera.main.fieldOfView >= 14f)
         {
-            cmV.gameObject.SetActive(false);
+            bounds.GetComponent<BoxCollider>().enabled=true;
 
         }
-        else if (Camera.main.fieldOfView <= 30f)
+        else
         {
-            cmV.gameObject.SetActive(true);
+            bounds.GetComponent<BoxCollider>().enabled=false;
         }
+
     }
 }

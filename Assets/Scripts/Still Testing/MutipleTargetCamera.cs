@@ -22,6 +22,15 @@ public class MutipleTargetCamera : MonoBehaviour
 
 
     }
+
+    void Update()
+    {
+
+
+
+
+    }
+
     void LateUpdate()
     {
         if (targets.Count == 0)

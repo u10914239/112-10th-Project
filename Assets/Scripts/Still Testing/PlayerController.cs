@@ -18,14 +18,19 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     public Animator anim;
 
-    public bool facingRight;
+
+    
+    
     
     float powerTime;
+    public bool facingRight;
     public bool isTransformed;
     bool canMove;
 
     //PickUp pickUp;
     PickUp_Joystick pickUp;
+
+
 
 
     void Start()
@@ -64,7 +69,7 @@ public class PlayerController : MonoBehaviour
 
 
     }
-
+    
     private void Movement()
     {
         RaycastHit hit;
@@ -82,11 +87,17 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+
+        
+
+        
+
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
         Vector3 moveDir = new Vector3(x, 0, y);
         rb.velocity = moveDir * speed;
+        
 
         if (Input.GetKey(KeyCode.LeftShift) && moveDir!=Vector3.zero)
         {
