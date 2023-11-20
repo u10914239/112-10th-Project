@@ -1076,7 +1076,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 479235435}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: attackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1367,7 +1367,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 680141706}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: attackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3883,7 +3883,7 @@ GameObject:
   - component: {fileID: 6878987417283703806}
   - component: {fileID: 323646677360642144}
   - component: {fileID: 7751463215352447062}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3899,7 +3899,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2369268560465479517}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Weapon Holder 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4065,7 +4065,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 60
   avoidancePriority: 50
   m_AngularSpeed: 50
@@ -4334,7 +4334,7 @@ GameObject:
   - component: {fileID: 8947623753132304163}
   - component: {fileID: 4802360892817074703}
   - component: {fileID: 5271316052988360463}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4395,7 +4395,7 @@ GameObject:
   - component: {fileID: 2114284013273956704}
   - component: {fileID: 6887283207588838000}
   - component: {fileID: 1133366864761644698}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player 2
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4512,7 +4512,7 @@ Transform:
   m_GameObject: {fileID: 2856656724177164150}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -42.85273, y: 1.7999997, z: 87.32659}
+  m_LocalPosition: {x: -42.99847, y: 1.7999997, z: 87.080574}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4819,7 +4819,7 @@ Transform:
   m_GameObject: {fileID: 8035195979958101044}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.13052641, z: -0, w: 0.9914449}
-  m_LocalPosition: {x: -41.23, y: 1.56, z: 87.22}
+  m_LocalPosition: {x: -40.64, y: 1.56, z: 85.16}
   m_LocalScale: {x: 0.49999997, y: 0.5, z: 0.49999997}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -4849,7 +4849,7 @@ Transform:
   m_GameObject: {fileID: 3742094156761603410}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -43.424, y: 1.8, z: 87.254}
+  m_LocalPosition: {x: -43.73, y: 1.8, z: 86.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4888,7 +4888,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5988071800529821750}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Weapon Holder 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4909,7 +4909,7 @@ GameObject:
   - component: {fileID: 3172363161514562490}
   - component: {fileID: 7409686278505551262}
   - component: {fileID: 2037844743781738031}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player 1
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -5011,7 +5011,12 @@ MonoBehaviour:
   flashEffect: {fileID: 8035195979958101045}
   animator: {fileID: 2916857343428451874}
   maxHealth: 1000
-  agent: {fileID: 1746383304177917461}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  detectionRange: 2.5
+  patrolRadius: 3
+  chaseCooldown: 0.5
 --- !u!20 &8735934925863707576
 Camera:
   m_ObjectHideFlags: 0
