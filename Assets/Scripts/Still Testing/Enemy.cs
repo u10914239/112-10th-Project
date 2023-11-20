@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
     
     public float detectionRange = 10f;
     public float patrolRadius = 10f; 
-    private int currentPatrolIndex = 0;
+    
     public float chaseCooldown = 1.0f;
 
     private NavMeshAgent agent;
@@ -28,6 +28,8 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        currentHealth = maxHealth;
+
         agent = GetComponent<NavMeshAgent>();
         agent.stoppingDistance = 0f;
         SetRandomPatrolPoint();
@@ -35,8 +37,9 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        SpriteFlipCheck();
 
-        
+
         if (isPatrolling)
         {
             Patrol();
@@ -106,14 +109,7 @@ public class Enemy : MonoBehaviour
         if (nearestPlayer != null)
         {
             SetTargetPlayer(nearestPlayer);
-            if (nearestPlayer.position.x > transform.position.x && !isFacingRight)
-            {
-                Flip();
-            }
-            else if (nearestPlayer.position.x < transform.position.x && isFacingRight)
-            {
-                Flip();
-            }
+            
         }
     }
 
@@ -132,6 +128,19 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    void SpriteFlipCheck()
+    {
+        if (agent.velocity.x < 0 && isFacingRight)
+        {
+            Flip();
+        }
+        else if (agent.velocity.x > 0 && !isFacingRight)
+        {
+            Flip();
+        }
+
+
+    }
 
     void Flip()
     {

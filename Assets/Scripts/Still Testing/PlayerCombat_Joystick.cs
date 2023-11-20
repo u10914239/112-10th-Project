@@ -28,7 +28,7 @@ public class PlayerCombat_Joystick : MonoBehaviour
     {
         if (Time.time >= nextAttackTime)
         {
-            if (Input.GetKeyDown(KeyCode.Joystick1Button5))
+            if (Input.GetKeyDown(KeyCode.Joystick1Button5)&&movement.isTransformed==false)
             {
                 Attack();
                 nextAttackTime = Time.time + 1f / attackRate;

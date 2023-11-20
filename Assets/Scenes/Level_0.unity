@@ -3984,7 +3984,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: af7c997deec6b614985ed00fcf78d072, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4280,9 +4280,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  isDodging: 0
-  dodgeForce: 2
-  dodgeDuration: 1
   groundDist: 0.5
   terrainLayer:
     serializedVersion: 2
@@ -4558,7 +4555,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: ac2a305a94b47c64ba9f4ee7115bdba6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4631,7 +4628,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: af7c997deec6b614985ed00fcf78d072, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4930,7 +4927,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 5271316052988360463}
   attackPoint: {fileID: 680141706}
-  halfExtents: {x: 0.5, y: 1, z: 0.1}
+  halfExtents: {x: 0.05, y: 1, z: 0.5}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 512

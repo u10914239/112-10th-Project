@@ -7,10 +7,8 @@ public class PlayerController : MonoBehaviour
     public float speed;
     float stopSpeed = 0f;
 
-    public bool isDodging = false;
+    
 
-    public float dodgeForce = 5f;
-    public float dodgeDuration = 0.5f;
 
     public float groundDist;
 
@@ -123,7 +121,7 @@ public class PlayerController : MonoBehaviour
 
         transform.position = newPosition;
 
-        
+     
 
 
 
@@ -144,27 +142,9 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    
 
-    /*IEnumerator PerformDodgeRoll()
-    {
-        isDodging = true;
 
-        // Apply a force to the player in the desired direction
-        rb.AddForce(rb.velocity * dodgeForce, ForceMode.Impulse);
-
-        // Disable player control during the dodge roll
-        canMove = false;
-        // You can add animation or other effects here
-        anim.SetTrigger("isDodging");
-        // to make the dodge roll visually appealing
-        yield return new WaitForSeconds(dodgeDuration);
-
-        // Enable player control after the dodge roll
-
-        canMove = true;
-        isDodging = false;
-        
-    }*/
 
 
 

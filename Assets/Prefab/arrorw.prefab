@@ -127,9 +127,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 40
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 512
 --- !u!135 &3697019321368303125
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -149,5 +146,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.16
+  m_Radius: 0.2
   m_Center: {x: 0.3, y: 0, z: 0}
