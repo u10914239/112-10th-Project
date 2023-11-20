@@ -59,15 +59,14 @@ public class PlayerController_Joystick : MonoBehaviour
         stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal2") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical2") * speed);
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
         TurnIntoWeapon();
-<<<<<<< HEAD
+
         Health();
-=======
+
 
         if (Input.GetKeyDown(KeyCode.Joystick1Button0) && !isDodging && !isTransformed)
         {
             StartCoroutine(StartDodge());
         }
->>>>>>> 8438c7d70f7e703e29860b3777d4caf141440b9e
 
 
     }
@@ -171,11 +170,11 @@ public class PlayerController_Joystick : MonoBehaviour
 
     void TurnIntoWeapon()
     {
-<<<<<<< HEAD
+
         if (pickUp.isHeld == false && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1) || pickUp.isHeld == false && isTransformed == false && Input.GetKeyDown(KeyCode.P))
-=======
+
         if (pickUp.isHeld == false && isDodging==false && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1))
->>>>>>> 8438c7d70f7e703e29860b3777d4caf141440b9e
+
         {
             rb.isKinematic = true;
             rb.interpolation = RigidbodyInterpolation.None;

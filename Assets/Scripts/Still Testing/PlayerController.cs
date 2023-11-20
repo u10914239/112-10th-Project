@@ -32,18 +32,18 @@ public class PlayerController : MonoBehaviour
     private float minWorldX, maxWorldX, minWorldY, maxWorldY;
     private float boundaryPadding = 1.0f;
 
-<<<<<<< HEAD
+
     public static int playerHealth;
     public int playerHealthSide;
     public static bool GetAttacked;
     public static bool unHurt;
     public GameObject HealthBar1,HealthBar2,HealthBar3,HealthBar4,HealthBar5;
     public SpriteRenderer Knight;
-=======
+
     private void Awake()
     {
         
->>>>>>> 8438c7d70f7e703e29860b3777d4caf141440b9e
+
 
 
     }
@@ -67,16 +67,16 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
 
         TurnIntoWeapon();
-<<<<<<< HEAD
+
         Health();
         
-=======
+
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDodging)
         {
             StartCoroutine(StartDodge());
         }
->>>>>>> 8438c7d70f7e703e29860b3777d4caf141440b9e
+
 
     }
     void FixedUpdate()
