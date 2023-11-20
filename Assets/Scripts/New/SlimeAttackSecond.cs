@@ -14,11 +14,11 @@ public class SlimeAttackSecond : MonoBehaviour
     {
         if(Target && TimeInRange <= 0.3)
         {
-            secondCharactor.GetAttacked = true;
+            PlayerController_Joystick.GetAttacked = true;
         }else if(TimeInRange >=2)
         {
             TimeInRange = 0;
-            secondCharactor.unHurt = false;
+            PlayerController_Joystick.unHurt = false;
         }
         
         if(Target)

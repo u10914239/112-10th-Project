@@ -15,6 +15,7 @@ TagManager:
   - End
   - PlayerHitBox
   - Player2
+  - Target
   layers:
   - Default
   - TransparentFX

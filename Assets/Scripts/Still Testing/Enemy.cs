@@ -26,6 +26,8 @@ public class Enemy : MonoBehaviour
     private bool isFacingRight = false; // Flag to track the enemy's facing direction
     private float lastPlayerMovementTime = Mathf.NegativeInfinity;
 
+    public Transform attackRange;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -58,6 +60,7 @@ public class Enemy : MonoBehaviour
             // If there's no player, resume patrolling to a new random point
             isPatrolling = true;
         }
+        attackRange.transform.position = this.transform.position;
     }
 
     
