@@ -7,8 +7,9 @@ public class PlayerController : MonoBehaviour
     public float speed;
     float stopSpeed = 0f;
 
-    
-
+    public float dodgeForce = 10f;
+    public float dodgeDuration = 0.5f;
+    private bool isDodging = false;
 
     public float groundDist;
 
@@ -29,7 +30,12 @@ public class PlayerController : MonoBehaviour
     private float minWorldX, maxWorldX, minWorldY, maxWorldY;
     private float boundaryPadding = 1.0f;
 
+    private void Awake()
+    {
+        
 
+
+    }
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
@@ -50,7 +56,10 @@ public class PlayerController : MonoBehaviour
 
         TurnIntoWeapon();
 
-        
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDodging)
+        {
+            StartCoroutine(StartDodge());
+        }
 
     }
     void FixedUpdate()
@@ -104,9 +113,6 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        
-
-        
 
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
@@ -121,8 +127,7 @@ public class PlayerController : MonoBehaviour
 
         transform.position = newPosition;
 
-     
-
+        
 
 
         Vector3 charactorScale = transform.localScale;
@@ -142,7 +147,22 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    
+    IEnumerator StartDodge()
+    {
+        isDodging = true;
+
+        canMove = false;
+
+        rb.AddForce(rb.velocity * dodgeForce, ForceMode.Impulse);
+
+        anim.SetTrigger("isDodging");
+
+        yield return new WaitForSeconds(dodgeDuration);
+
+        canMove = true;
+
+        isDodging = false;
+    }
 
 
 
@@ -151,7 +171,7 @@ public class PlayerController : MonoBehaviour
 
     void TurnIntoWeapon()
     {
-        if (pickUp.isHeld == false && isTransformed == false && Input.GetKeyDown(KeyCode.E))
+        if (pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.E))
         {
             rb.isKinematic = true;
             rb.interpolation = RigidbodyInterpolation.None;

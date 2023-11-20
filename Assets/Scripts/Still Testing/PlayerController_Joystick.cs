@@ -7,10 +7,9 @@ public class PlayerController_Joystick : MonoBehaviour
     public float speed;
     float stopSpeed = 0f;
 
-   
-
-    public float dodgeForce = 5f;
+    public float dodgeForce = 10f;
     public float dodgeDuration = 0.5f;
+    private bool isDodging = false;
 
     public float groundDist;
 
@@ -50,8 +49,11 @@ public class PlayerController_Joystick : MonoBehaviour
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
         TurnIntoWeapon();
 
+        if (Input.GetKeyDown(KeyCode.Joystick1Button0) && !isDodging && !isTransformed)
+        {
+            StartCoroutine(StartDodge());
+        }
 
-       
 
     }
     void FixedUpdate()
@@ -133,13 +135,28 @@ public class PlayerController_Joystick : MonoBehaviour
 
     }
 
-    
+    IEnumerator StartDodge()
+    {
+        isDodging = true;
+
+        canMove = false;
+
+        rb.AddForce(rb.velocity * dodgeForce, ForceMode.Impulse);
+
+        anim.SetTrigger("isDodging");
+
+        yield return new WaitForSeconds(dodgeDuration);
+
+        canMove = true;
+
+        isDodging = false;
+    }
 
 
 
     void TurnIntoWeapon()
     {
-        if (pickUp.isHeld == false && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1))
+        if (pickUp.isHeld == false && isDodging==false && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             rb.isKinematic = true;
             rb.interpolation = RigidbodyInterpolation.None;

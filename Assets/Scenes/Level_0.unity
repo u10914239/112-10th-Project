@@ -4103,7 +4103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  dodgeForce: 2
+  dodgeForce: 50
   dodgeDuration: 1
   groundDist: 0.5
   terrainLayer:
@@ -4280,6 +4280,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  dodgeForce: 50
+  dodgeDuration: 1
   groundDist: 0.5
   terrainLayer:
     serializedVersion: 2
