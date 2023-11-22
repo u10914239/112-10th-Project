@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SlimeAttackMain : MonoBehaviour
 {
-    public bool Target;
+    /*public bool Target;
     public float TimeInRange; //! COLD DOWN
     
     void Start()
@@ -41,5 +41,5 @@ public class SlimeAttackMain : MonoBehaviour
     public void OnTriggerExit(Collider Hit)
     {
         Target = false;
-    }
+    }*/
 }

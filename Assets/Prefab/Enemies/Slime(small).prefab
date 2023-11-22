@@ -14,11 +14,13 @@ GameObject:
   - component: {fileID: 8856221775492700278}
   - component: {fileID: 8630790878750259747}
   - component: {fileID: 5530671473621435489}
+  - component: {fileID: 7742281807891187847}
   - component: {fileID: 5208331068242053259}
   - component: {fileID: 8730101049609077346}
+  - component: {fileID: 3272903971645745585}
   m_Layer: 9
   m_Name: Slime(small)
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -146,8 +148,22 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   detectionRange: 10
-  separationDistance: 1
-  separationFactor: 1
+--- !u!114 &7742281807891187847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7929699015667335322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6532426c39971848b986e44a533c238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 5208331068242053259}
+  maxHealth: 1
+  currentHealth: 0
+  flashEffect: {fileID: 8630790878750259747}
 --- !u!95 &5208331068242053259
 Animator:
   serializedVersion: 5
@@ -191,3 +207,26 @@ NavMeshAgent:
   m_BaseOffset: 0.2
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &3272903971645745585
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7929699015667335322}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 0
+  m_Center: {x: 0, y: 0, z: 0}

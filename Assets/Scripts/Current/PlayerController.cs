@@ -34,24 +34,23 @@ public class PlayerController : MonoBehaviour
 
 
     public static int playerHealth;
-    public int playerHealthSide;
-    public static bool GetAttacked;
-    public static bool unHurt;
+    int currentHealth;
+    [SerializeField] private SimpleFlash flashEffect;
+   
     public GameObject HealthBar1,HealthBar2,HealthBar3,HealthBar4,HealthBar5;
-    public SpriteRenderer Knight;
+    
 
     private void Awake()
     {
-        
+        rb = gameObject.GetComponent<Rigidbody>();
+        pickUp = GameObject.Find("Player 2").GetComponent<PickUp_Joystick>();
 
 
 
     }
     void Start()
     {
-        rb = gameObject.GetComponent<Rigidbody>();
-        pickUp = GameObject.Find("Player 2").GetComponent<PickUp_Joystick>();
-
+        
         isTransformed = false;
         facingRight = true;
         canMove = true;
@@ -59,6 +58,7 @@ public class PlayerController : MonoBehaviour
         mainCamera = Camera.main;
         UpdateBoundaries();
         playerHealth = 5;
+        currentHealth = playerHealth;
     }
 
     void Update()
@@ -269,21 +269,27 @@ public class PlayerController : MonoBehaviour
             HealthBar5.SetActive(false);
         }
 
-        if(GetAttacked && !unHurt)
+        
+    }
+
+   
+    public void TakeDamage(int damage)
+    {
+        flashEffect.Flash();
+        currentHealth -= damage;
+        
+        if (currentHealth <= 0)
         {
-            unHurt = true;
-            playerHealth -=1;
-            Knight.color = Color.red;
-            Invoke("colorwhite",0.3f);
+
+            Die();
         }
     }
 
-    void colorwhite()
+    private void Die()
     {
-        Knight.color = Color.white;
+        Debug.Log("I Died");
+        gameObject.SetActive(false);
     }
-
-
 }
 
    

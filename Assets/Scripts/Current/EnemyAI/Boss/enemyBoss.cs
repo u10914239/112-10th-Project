@@ -8,13 +8,13 @@ public class enemyBoss : MonoBehaviour
 
     public enemyBossAttack enemyShooting;
     public LayerMask playerLayer;
-    public Animator animator;
+    
     public float chaseCooldown = 1.0f;
     public float detectionRange = 10f;
-    public int maxHealth;
-    int currentHealth;
+    
+    
 
-    [SerializeField] private SimpleFlash flashEffect;
+    
     private NavMeshAgent agent;
     private Transform target;
     private float lastPlayerMovementTime = Mathf.NegativeInfinity;
@@ -22,7 +22,7 @@ public class enemyBoss : MonoBehaviour
 
     void Start()
     {
-        currentHealth = maxHealth;
+        
         agent = GetComponent<NavMeshAgent>();
 
         if (target == null)
@@ -146,21 +146,5 @@ public class enemyBoss : MonoBehaviour
         transform.localScale = newScale;
     }
 
-    public void TakeDamage(int damage)
-    {
-        flashEffect.Flash();
-        currentHealth -= damage;
-        animator.SetTrigger("Hit");
-        if (currentHealth <= 0)
-        {
-
-            Die();
-        }
-    }
-
-    private void Die()
-    {
-        Debug.Log("Enemy Died");
-
-    }
+   
 }

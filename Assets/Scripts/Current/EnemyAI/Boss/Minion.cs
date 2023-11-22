@@ -8,6 +8,7 @@ public class Minion : MonoBehaviour
     public Transform target; // Reference to the player's transform
     public LayerMask playerLayer;
     public float detectionRange = 10f;
+    
 
     private NavMeshAgent agent;
     private float lastPlayerMovementTime = Mathf.NegativeInfinity;
@@ -105,4 +106,6 @@ public class Minion : MonoBehaviour
         newScale.x *= -1;
         transform.localScale = newScale;
     }
+
+   
 }

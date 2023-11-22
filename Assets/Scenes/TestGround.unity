@@ -5355,13 +5355,12 @@ MonoBehaviour:
   facingRight: 0
   isTransformed: 0
   Sync: {fileID: 2124249797}
-  playerHealthSide: 0
+  flashEffect: {fileID: 8947623753132304164}
   HealthBar1: {fileID: 109493643}
   HealthBar2: {fileID: 2071623234}
   HealthBar3: {fileID: 1539477026}
   HealthBar4: {fileID: 742008148}
   HealthBar5: {fileID: 535019453}
-  Knight: {fileID: 4802360892817074703}
 --- !u!1 &3218681300390293670
 GameObject:
   m_ObjectHideFlags: 0
@@ -5404,6 +5403,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8947623753132304163}
   - component: {fileID: 4802360892817074703}
+  - component: {fileID: 8947623753132304164}
   - component: {fileID: 5271316052988360463}
   m_Layer: 0
   m_Name: Player Sprite
@@ -6001,7 +6001,6 @@ GameObject:
   - component: {fileID: 3172363161514562490}
   - component: {fileID: 7409686278505551262}
   - component: {fileID: 2037844743781738031}
-  - component: {fileID: 7409686278505551263}
   m_Layer: 7
   m_Name: Player 1
   m_TagString: Player
@@ -6022,29 +6021,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 5271316052988360463}
-  attackPoint: {fileID: 680141706}
-  halfExtents: {x: 0.05, y: 1, z: 0.5}
-  enemyLayers:
+  baseDamage: 10
+  attackRange: 10
+  enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   attackDamage: 1
   attackRate: 4
---- !u!208 &7409686278505551263
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7409686278505551261}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 0.1, y: 1, z: 0.1}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!95 &7751463215352447062
 Animator:
   serializedVersion: 5
@@ -6081,6 +6064,7 @@ GameObject:
   - component: {fileID: 3409381487038247919}
   - component: {fileID: 8035195979958101045}
   - component: {fileID: 8035195979958101047}
+  - component: {fileID: 8035195979958101049}
   - component: {fileID: 8035195979958101046}
   - component: {fileID: 8035195979958101048}
   - component: {fileID: 2916857343428451874}
@@ -6121,7 +6105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 315981810436374660, guid: 1a21749a0e1575148b6fb51f943e76ed, type: 3}
   firePoint: {fileID: 104621925}
-  projectileForce: 5
+  projectileForce: 7
   projectileWeight: 1
   projectileLifetime: 1
   fireRate: 1
@@ -6145,11 +6129,8 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  animator: {fileID: 2916857343428451874}
   chaseCooldown: 1
   detectionRange: 10
-  maxHealth: 0
-  flashEffect: {fileID: 8035195979958101045}
 --- !u!114 &8035195979958101048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6166,6 +6147,22 @@ MonoBehaviour:
   spawnPoint: {fileID: 779169714}
   numberOfMinions: 5
   minDistanceBetweenMinions: 2
+--- !u!114 &8035195979958101049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8035195979958101044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c387fada33ebc54f97b9175e848054c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2916857343428451874}
+  maxHealth: 100
+  currentHealth: 0
+  flashEffect: {fileID: 8035195979958101045}
 --- !u!20 &8735934925863707576
 Camera:
   m_ObjectHideFlags: 0
@@ -6252,6 +6249,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1220899736986441484}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8947623753132304164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3432753578552270478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8820473bb698a314c8c958f28b6de260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: 0605f3a53b6d6bb46ae610e1c7edb338, type: 2}
+  duration: 0.1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
