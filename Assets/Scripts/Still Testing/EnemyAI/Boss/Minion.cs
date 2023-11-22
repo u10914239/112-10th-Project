@@ -25,7 +25,7 @@ public class Minion : MonoBehaviour
     void Update()
     {
         FindNearestPlayer();
-        SpriteFlipCheck();
+        //SpriteFlipCheck();
 
 
         if (target != null)
@@ -37,6 +37,21 @@ public class Minion : MonoBehaviour
             direction.y = 0; // Ensure direction is on the XZ plane
             Quaternion rotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
+
+            if (direction.x > 0 && !isFacingRight)
+            {
+                // If player is on the right side of the enemy
+                // Flip the sprite to face right
+                // Replace 'YourSpriteRenderer' with your actual SpriteRenderer component
+                Flip();
+            }
+            else if(direction.x < 0 && isFacingRight)
+            {
+                // If player is on the left side of the enemy
+                // Flip the sprite to face left
+                // Replace 'YourSpriteRenderer' with your actual SpriteRenderer component
+                Flip();
+            }
         }
     }
 

@@ -46,7 +46,7 @@ public class enemyBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SpriteFlipCheck();
+        //SpriteFlipCheck();
 
         ChasePlayer();
 
@@ -99,8 +99,28 @@ public class enemyBoss : MonoBehaviour
     {
         if (target != null)
         {
-            agent.stoppingDistance = 0.5f; // Set a stopping distance for chasing
+            //agent.stoppingDistance = 0.5f; // Set a stopping distance for chasing
             agent.SetDestination(target.position);
+
+            Vector3 direction = target.position - transform.position;
+            direction.y = 0; // Ensure direction is on the XZ plane
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
+
+            if (direction.x > 0 && !isFacingRight)
+            {
+                // If player is on the right side of the enemy
+                // Flip the sprite to face right
+                // Replace 'YourSpriteRenderer' with your actual SpriteRenderer component
+                Flip();
+            }
+            else if (direction.x < 0 && isFacingRight)
+            {
+                // If player is on the left side of the enemy
+                // Flip the sprite to face left
+                // Replace 'YourSpriteRenderer' with your actual SpriteRenderer component
+                Flip();
+            }
         }
     }
 
