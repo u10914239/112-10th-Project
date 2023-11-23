@@ -259,8 +259,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b77f43e7fd6572498fe3d3abef3ad3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: 0
-  TimeInRange: 0
 --- !u!54 &104621929
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5404,13 +5402,12 @@ MonoBehaviour:
   facingRight: 0
   isTransformed: 0
   Sync: {fileID: 2124249797}
-  playerHealthSide: 0
+  flashEffect: {fileID: 0}
   HealthBar1: {fileID: 109493643}
   HealthBar2: {fileID: 2071623234}
   HealthBar3: {fileID: 1539477026}
   HealthBar4: {fileID: 742008148}
   HealthBar5: {fileID: 535019453}
-  Knight: {fileID: 4802360892817074703}
 --- !u!1 &3218681300390293670
 GameObject:
   m_ObjectHideFlags: 0
@@ -6052,9 +6049,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 5271316052988360463}
-  attackPoint: {fileID: 680141706}
-  halfExtents: {x: 0.05, y: 1, z: 0.5}
-  enemyLayers:
+  baseDamage: 10
+  attackRange: 10
+  enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   attackDamage: 1
