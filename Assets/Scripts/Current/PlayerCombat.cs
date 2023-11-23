@@ -21,12 +21,20 @@ public class PlayerCombat : MonoBehaviour
     float nextAttackTime = 0f;
 
     private Collider nearestEnemyCollider;
+    PlayerController movement;
+
+
+    void Start()
+    {
+        movement = GetComponent<PlayerController>();
+
+    }
 
     void Update()
     {
         if (Time.time >= nextAttackTime)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse0) && movement.isTransformed == false)
             {
                 Attack();
                 nextAttackTime = Time.time + 1f / attackRate;
@@ -59,59 +67,17 @@ public class PlayerCombat : MonoBehaviour
         if (nearestEnemyCollider != null)
         {
             EnemyHealth enemyHealth1 = nearestEnemyCollider.GetComponent<EnemyHealth>();
-            SlimeBossHealth enemyHealth2 = nearestEnemyCollider.GetComponent<SlimeBossHealth>();
+           
 
             if (enemyHealth1 != null)
             {
-                // Apply damage to EnemyHealth1
+                
                 enemyHealth1.TakeDamage(baseDamage);
-
-                // Perform specific actions for Enemy Type 1
-                // Example: Enemy Type 1 specific behavior
                 Debug.Log("Enemy Type 1 hit!");
             }
-            else if (enemyHealth2 != null)
-            {
-                // Apply damage to EnemyHealth2
-                enemyHealth2.TakeDamage(baseDamage);
-
-                // Perform specific actions for Enemy Type 2
-                // Example: Enemy Type 2 specific behavior
-                Debug.Log("Boss hit!");
-            }
+            
         }
 
     }
-   /* void Attack()
-    {
-        animator.SetTrigger("Attack");
-
-       
-        Collider[] hitEnemies = Physics.OverlapBox(attackPoint.position, halfExtents, Quaternion.identity, enemyLayers);
-
-        foreach (Collider enemy in hitEnemies)
-        {
-            if (enemy.transform.CompareTag("Boss_Slime"))
-            {
-                enemy.GetComponent<enemyBoss>().TakeDamage(attackDamage);
-
-            }
-            else if (enemy.transform.CompareTag("Minion_Slime"))
-            {
-
-                enemy.GetComponent<Minion>().TakeDamage(attackDamage);
-            }
-            
-            
-        }
-    }*/
-
-    /*void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        
-        
-           
-        Gizmos.DrawWireCube(transform.position, attackRange);
-    }*/
+   
 }

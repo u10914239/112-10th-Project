@@ -10,11 +10,11 @@ public class spawnMinions : MonoBehaviour
     public float minDistanceBetweenMinions = 2f; // Minimum distance between minions
 
     private bool minionsSpawned = false;
-    SlimeBossHealth bossHealth;
+    EnemyHealth bossHealth;
 
     void Start()
     {
-       bossHealth = GetComponent<SlimeBossHealth>();
+       bossHealth = GetComponent<EnemyHealth>();
     }
 
     void FixedUpdate()

@@ -4,32 +4,41 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public int attackDamage = 40;
-    Enemy em;
+    public float arrowSpeed = 10f;
+    public int damageAmount = 10; // Set your desired damage amount here
+    public float arrowLifetime = 5f; // Adjust the lifetime of the arrow
+
+    private Vector3 targetPosition;
+    private Rigidbody rb;
 
     void Start()
     {
-        em = GameObject.FindWithTag("Enemy").GetComponent<Enemy>();
+        rb = GetComponent<Rigidbody>();
+        rb.velocity = transform.forward * arrowSpeed;
+        Destroy(gameObject, arrowLifetime); // Destroy the arrow after a specified time
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ShootTowards(Vector3 target)
     {
-        //this.transform.position = em.transform.position;
+        targetPosition = target;
+        // Rotate the arrow towards the target
+        transform.LookAt(targetPosition);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag=="Enemy")
+        // Check if the arrow collided with an enemy
+        if (other.CompareTag("Enemy"))
         {
+            EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                // Apply damage to the enemy
+                enemyHealth.TakeDamage(damageAmount);
+            }
 
-
-            em.TakeDamage(attackDamage);
-
-
-
+            // Destroy the arrow upon hitting the enemy
+            Destroy(gameObject);
         }
-
-
     }
 }

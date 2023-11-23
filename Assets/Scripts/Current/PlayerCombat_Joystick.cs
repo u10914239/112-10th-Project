@@ -10,9 +10,9 @@ public class PlayerCombat_Joystick : MonoBehaviour
     public Transform attackPoint;
     public Vector3 halfExtents;
 
-    public LayerMask enemyLayers;
+    public LayerMask enemyLayer;
 
-    public int attackDamage = 40;
+    public float shootingDistance = 10f;
     public float attackRate = 2f;
     float nextAttackTime = 0f;
 
@@ -20,7 +20,7 @@ public class PlayerCombat_Joystick : MonoBehaviour
 
     void Start()
     {
-        movement = GameObject.Find("Player 2").GetComponent<PlayerController_Joystick>();
+        movement = GetComponent<PlayerController_Joystick>();
 
     }
 
@@ -28,7 +28,7 @@ public class PlayerCombat_Joystick : MonoBehaviour
     {
         if (Time.time >= nextAttackTime)
         {
-            if (Input.GetKeyDown(KeyCode.Joystick1Button5)&&movement.isTransformed==false)
+            if (Input.GetKeyDown(KeyCode.Joystick1Button5) && movement.isTransformed==false)
             {
                 Attack();
                 nextAttackTime = Time.time + 1f / attackRate;
@@ -43,38 +43,45 @@ public class PlayerCombat_Joystick : MonoBehaviour
 
     void Attack()
     {
-        
-        float dir = 0f;
-        if (movement.facingRight==true)
+
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, shootingDistance, enemyLayer);
+
+        float nearestDistance = Mathf.Infinity;
+        GameObject nearestEnemy = null;
+
+        foreach (Collider collider in hitColliders)
         {
-            dir = 1f;
+            float distance = Vector3.Distance(transform.position, collider.transform.position);
 
+            if (distance < nearestDistance)
+            {
+                nearestDistance = distance;
+                nearestEnemy = collider.gameObject;
+            }
         }
-        if (movement.facingRight == false)
+
+        if (nearestEnemy != null)
         {
+            // Calculate direction towards the nearest enemy
+            Vector3 direction = nearestEnemy.transform.position - transform.position;
 
-            dir = -1f;
+            // Instantiate arrowPrefab and set its initial position and rotation
+            GameObject arrow = Instantiate(arrowPrefab, transform.position, Quaternion.LookRotation(direction));
+            Projectile arrowScript = arrow.GetComponent<Projectile>();
+
+            if (arrowScript != null)
+            {
+                arrowScript.ShootTowards(nearestEnemy.transform.position);
+            }
+            // You'll need to have a script (e.g., ArrowScript) on your arrow prefab to handle its behavior.
         }
-
-        Vector2 shootingDirection = new Vector2(dir,0);
-        shootingDirection.Normalize();
-        GameObject arrow = Instantiate(arrowPrefab, attackPoint.position, Quaternion.identity);
-        arrow.GetComponent<Rigidbody>().velocity = shootingDirection*5.0f;
-        
-        Vector3 origScale = arrow.transform.localScale;
-        arrow.transform.localScale = new Vector3(origScale.x * transform.localScale.x > 0 ? 1 : -1, origScale.y, origScale.z);
-        Destroy(arrow, 2.0f);
-
-
-       
-
-         
         
 
         
 
+        
+        
+
+        
     }
-
-   
-    
 }
