@@ -5007,7 +5007,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4264197870555088498}
-  - component: {fileID: 5948871878810334416}
   m_Layer: 0
   m_Name: TargetGroup
   m_TagString: Untagged
@@ -5435,28 +5434,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 116
   m_CollisionDetection: 1
---- !u!114 &5948871878810334416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2856656724177164150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5eb80d8e62d9d145bb50fb783c0f731, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PositionMode: 0
-  m_RotationMode: 0
-  m_UpdateMethod: 2
-  m_Targets:
-  - target: {fileID: 1220899736986441484}
-    weight: 1
-    radius: 1
-  - target: {fileID: 6887283207588837999}
-    weight: 1
-    radius: 1
 --- !u!4 &5988071800529821750
 Transform:
   m_ObjectHideFlags: 0
@@ -5806,7 +5783,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 23.777338
+  field of view: 24.31
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
