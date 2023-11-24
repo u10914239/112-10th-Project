@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
         float y = Input.GetAxisRaw("Vertical");
 
         Vector3 moveDir = new Vector3(x, 0, y);
-        rb.velocity = moveDir * speed*Time.deltaTime;
+        rb.velocity = moveDir * speed;
 
         Vector3 newPosition = transform.position + rb.velocity;
 
@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
 
         transform.position = newPosition;
 
-        
+
 
 
         Vector3 charactorScale = transform.localScale;

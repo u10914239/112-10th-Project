@@ -4814,13 +4814,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6340769565796053574}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.11485045, y: 0, z: 0, w: 0.9933828}
-  m_LocalPosition: {x: -43.08473, y: 2.86, z: 80.72}
+  m_LocalRotation: {x: 0.06975647, y: 0, z: 0, w: 0.9975641}
+  m_LocalPosition: {x: -43, y: 3, z: 80}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 13.19, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 8, y: 0, z: 0}
 --- !u!212 &323646677360642144
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5070,7 +5070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5765312cac9f324e95faabdb6a8d845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 0.05
   dodgeForce: 50
   dodgeDuration: 1
   groundDist: 0.5
@@ -5842,9 +5842,9 @@ MonoBehaviour:
   targets:
   - {fileID: 1220899736986441484}
   - {fileID: 6887283207588837999}
-  offset: {x: 0, y: 3, z: -15}
+  offset: {x: 0, y: 1, z: -7}
   smoothTime: 0.5
-  minZoom: 20
+  minZoom: 60
   maxZoom: 10
   zoomLimiter: 10
 --- !u!4 &8947623753132304163
