@@ -11,7 +11,7 @@ public class SlimeBossBall : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // If the collider is the player, apply damage
-            PlayerController playerHealth = other.GetComponent<PlayerController>();
+            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
 
             if (playerHealth != null)
             {

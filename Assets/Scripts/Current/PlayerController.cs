@@ -33,12 +33,8 @@ public class PlayerController : MonoBehaviour
     private float boundaryPadding = 1.0f;
 
 
-    public static int playerHealth;
-    int currentHealth;
     [SerializeField] private SimpleFlash flashEffect;
    
-    public GameObject HealthBar1,HealthBar2,HealthBar3,HealthBar4,HealthBar5;
-    
 
     private void Awake()
     {
@@ -57,8 +53,6 @@ public class PlayerController : MonoBehaviour
 
         mainCamera = Camera.main;
         UpdateBoundaries();
-        playerHealth = 5;
-        currentHealth = playerHealth;
     }
 
     void Update()
@@ -68,7 +62,6 @@ public class PlayerController : MonoBehaviour
 
         TurnIntoWeapon();
 
-        Health();
         
 
 
@@ -222,74 +215,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void Health()
-    {
-        if(playerHealth >= 5)
-        {
-            HealthBar1.SetActive(true);
-            HealthBar2.SetActive(true);
-            HealthBar3.SetActive(true);
-            HealthBar4.SetActive(true);
-            HealthBar5.SetActive(true);
-        }else if(playerHealth == 4)
-        {
-            HealthBar1.SetActive(true);
-            HealthBar2.SetActive(true);
-            HealthBar3.SetActive(true);
-            HealthBar4.SetActive(true);
-            HealthBar5.SetActive(false);
-        }else if(playerHealth == 3)
-        {
-            HealthBar1.SetActive(true);
-            HealthBar2.SetActive(true);
-            HealthBar3.SetActive(true);
-            HealthBar4.SetActive(false);
-            HealthBar5.SetActive(false);
-        }else if(playerHealth == 2)
-        {
-            HealthBar1.SetActive(true);
-            HealthBar2.SetActive(true);
-            HealthBar3.SetActive(false);
-            HealthBar4.SetActive(false);
-            HealthBar5.SetActive(false);
-        }else if(playerHealth == 1)
-        {
-            HealthBar1.SetActive(true);
-            HealthBar2.SetActive(false);
-            HealthBar3.SetActive(false);
-            HealthBar4.SetActive(false);
-            HealthBar5.SetActive(false);
-        }
-        else if(playerHealth == 0)
-        {
-            HealthBar1.SetActive(false);
-            HealthBar2.SetActive(false);
-            HealthBar3.SetActive(false);
-            HealthBar4.SetActive(false);
-            HealthBar5.SetActive(false);
-        }
-
-        
-    }
-
-   
-    public void TakeDamage(int damage)
-    {
-        flashEffect.Flash();
-        currentHealth -= damage;
-        
-        if (currentHealth <= 0)
-        {
-
-            Die();
-        }
-    }
-
-    private void Die()
-    {
-        Debug.Log("I Died");
-        gameObject.SetActive(false);
-    }
+    
 }
 
    

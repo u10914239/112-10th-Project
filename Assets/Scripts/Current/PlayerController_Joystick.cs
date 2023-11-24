@@ -33,11 +33,6 @@ public class PlayerController_Joystick : MonoBehaviour
     private float minWorldX, maxWorldX, minWorldY, maxWorldY;
     private float boundaryPadding = 1.0f;
     
-    public static int playerHealth;
-    public int playerHealthSide;
-    public static bool GetAttacked;
-    public static bool unHurt;
-    public GameObject HealthBar1,HealthBar2,HealthBar3,HealthBar4,HealthBar5;
     public SpriteRenderer Knight;
 
     void Start()
@@ -51,7 +46,6 @@ public class PlayerController_Joystick : MonoBehaviour
         mainCamera = Camera.main;
         UpdateBoundaries();
 
-        playerHealth = 5;
     }
 
     void Update()
@@ -60,7 +54,6 @@ public class PlayerController_Joystick : MonoBehaviour
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
         TurnIntoWeapon();
 
-        Health();
 
 
         if (Input.GetKeyDown(KeyCode.Joystick1Button0) && !isDodging && !isTransformed)
@@ -206,64 +199,5 @@ public class PlayerController_Joystick : MonoBehaviour
 
     }
 
-    void Health()
-    {
-        if(playerHealth >= 5)
-        {
-            HealthBar1.SetActive(true);
-            HealthBar2.SetActive(true);
-            HealthBar3.SetActive(true);
-            HealthBar4.SetActive(true);
-            HealthBar5.SetActive(true);
-        }else if(playerHealth == 4)
-        {
-            HealthBar1.SetActive(true);
-            HealthBar2.SetActive(true);
-            HealthBar3.SetActive(true);
-            HealthBar4.SetActive(true);
-            HealthBar5.SetActive(false);
-        }else if(playerHealth == 3)
-        {
-            HealthBar1.SetActive(true);
-            HealthBar2.SetActive(true);
-            HealthBar3.SetActive(true);
-            HealthBar4.SetActive(false);
-            HealthBar5.SetActive(false);
-        }else if(playerHealth == 2)
-        {
-            HealthBar1.SetActive(true);
-            HealthBar2.SetActive(true);
-            HealthBar3.SetActive(false);
-            HealthBar4.SetActive(false);
-            HealthBar5.SetActive(false);
-        }else if(playerHealth == 1)
-        {
-            HealthBar1.SetActive(true);
-            HealthBar2.SetActive(false);
-            HealthBar3.SetActive(false);
-            HealthBar4.SetActive(false);
-            HealthBar5.SetActive(false);
-        }
-        else if(playerHealth == 0)
-        {
-            HealthBar1.SetActive(false);
-            HealthBar2.SetActive(false);
-            HealthBar3.SetActive(false);
-            HealthBar4.SetActive(false);
-            HealthBar5.SetActive(false);
-        }
-
-        if(GetAttacked && !unHurt)
-        {
-            unHurt = true;
-            playerHealth -=1;
-            Knight.color = Color.red;
-            Invoke("colorwhite",0.3f);
-        }
-    }
-
-    void colorwhite()
-    {
-        Knight.color = Color.white;
-    }
+       
 }
