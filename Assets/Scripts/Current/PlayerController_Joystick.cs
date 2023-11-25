@@ -124,22 +124,30 @@ public class PlayerController_Joystick : MonoBehaviour
 
        
 
+        
+        if (x > 0&&!facingRight)
+        {
+            
+            Flip();
+
+        }
+        if (x < 0&&facingRight)
+        {
+           Flip();
+        }
+        
+
+
+
+    }
+
+    public void Flip()
+    {
         Vector3 charactorScale = transform.localScale;
-        if (x > 0)
-        {
-            charactorScale.x = 1;
-            facingRight = true;
+        charactorScale.x *= -1;
+        gameObject.transform.localScale = charactorScale;
 
-        }
-        if (x < 0)
-        {
-            charactorScale.x = -1;
-            facingRight = false;
-        }
-        transform.localScale = charactorScale;
-
-
-
+        facingRight=!facingRight;
     }
 
     IEnumerator StartDodge()

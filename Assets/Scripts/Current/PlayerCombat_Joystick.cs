@@ -13,30 +13,52 @@ public class PlayerCombat_Joystick : MonoBehaviour
     public LayerMask enemyLayer;
 
     public float shootingDistance = 10f;
-    public float attackRate = 2f;
-    float nextAttackTime = 0f;
+    public float maxChargeTime = 2f;
+    //public float attackRate = 2f;
+    //float nextAttackTime = 0f;
+
+    private float currentChargeTime = 0f; // Current charge time
+    private bool isCharging; // Flag to track charging state
 
     PlayerController_Joystick movement;
+    DetectRightLeftSide detect;
 
     void Start()
     {
         movement = GetComponent<PlayerController_Joystick>();
+        detect = GetComponent<DetectRightLeftSide>();
 
+        isCharging = false; 
     }
 
     void Update()
     {
-        if (Time.time >= nextAttackTime)
+        SpriteFlip();
+        
+        if (Input.GetKey(KeyCode.Joystick1Button5) && movement.isTransformed==false)
         {
-            if (Input.GetKeyDown(KeyCode.Joystick1Button5) && movement.isTransformed==false)
+            if(detect.isOnRight==true||detect.isOnLeft==true)
             {
-                Attack();
-                nextAttackTime = Time.time + 1f / attackRate;
+                isCharging=true;
+                currentChargeTime += Time.deltaTime;
+                currentChargeTime = Mathf.Clamp(currentChargeTime, 0f, maxChargeTime);
+                
+                
 
             }
-
+            
 
         }
+
+        if(Input.GetKeyUp(KeyCode.Joystick1Button5) && movement.isTransformed==false && currentChargeTime==maxChargeTime)
+        {
+            Attack();
+            isCharging = false;
+            currentChargeTime = 0f;
+            //nextAttackTime = Time.time + 1f / attackRate;
+
+        }
+        
 
         
     }
@@ -76,12 +98,29 @@ public class PlayerCombat_Joystick : MonoBehaviour
             // You'll need to have a script (e.g., ArrowScript) on your arrow prefab to handle its behavior.
         }
         
-
-        
-
         
         
 
         
+        
+
+        
+    }
+
+    void SpriteFlip()
+    {
+
+        if(isCharging)
+        {
+            if(detect.isOnRight==true&&!movement.facingRight)
+            {
+                movement.Flip();
+            }
+            if(detect.isOnLeft==true&&movement.facingRight)
+            {
+                movement.Flip();
+            }
+
+        }
     }
 }

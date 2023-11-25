@@ -5151,7 +5151,7 @@ GameObject:
   - component: {fileID: 2114284013273956704}
   - component: {fileID: 6887283207588838000}
   - component: {fileID: 1133366864761644698}
-  - component: {fileID: 6887283207588838001}
+  - component: {fileID: 6887283207588838003}
   - component: {fileID: 6887283207588838002}
   m_Layer: 7
   m_Name: Player 2
@@ -5502,23 +5502,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   shootingDistance: 5
-  attackRate: 4
---- !u!208 &6887283207588838001
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3742094156761603410}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 0.1, y: 1, z: 0.1}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
+  maxChargeTime: 1
 --- !u!114 &6887283207588838002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5544,6 +5528,27 @@ MonoBehaviour:
   Health4: 0
   Health5: 0
   flashEffect: {fileID: 7751463215352447063}
+--- !u!114 &6887283207588838003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3742094156761603410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbadc139f8e3b4f45a5dceb76b111e4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOnRight: 0
+  isOnLeft: 0
+  player: {fileID: 6887283207588837999}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  rightAngleThreshold: 45
+  leftAngleThreshold: 45
+  detectionRange: 3
 --- !u!1 &7084175182875026889
 GameObject:
   m_ObjectHideFlags: 0
@@ -5842,10 +5847,10 @@ MonoBehaviour:
   targets:
   - {fileID: 1220899736986441484}
   - {fileID: 6887283207588837999}
-  offset: {x: 0, y: 1, z: -7}
+  offset: {x: 0, y: 1.8, z: -10}
   smoothTime: 0.5
-  minZoom: 60
-  maxZoom: 10
+  minZoom: 30
+  maxZoom: 15
   zoomLimiter: 10
 --- !u!4 &8947623753132304163
 Transform:
