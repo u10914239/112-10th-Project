@@ -4965,8 +4965,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6857207287a78ad4fa069b5bcaf0c264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  dodgeForce: 50
+  speed: 3
+  dodgeForce: 60
   dodgeDuration: 1
   groundDist: 0.5
   terrainLayer:
@@ -5070,8 +5070,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5765312cac9f324e95faabdb6a8d845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.05
-  dodgeForce: 50
+  speed: 3
+  dodgeForce: 60
   dodgeDuration: 1
   groundDist: 0.5
   terrainLayer:
@@ -5723,7 +5723,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 315981810436374660, guid: 1a21749a0e1575148b6fb51f943e76ed, type: 3}
   firePoint: {fileID: 104621925}
-  projectileForce: 7
+  projectileForce: 8
   projectileWeight: 1
   projectileLifetime: 1
   fireRate: 1

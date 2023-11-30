@@ -21,8 +21,8 @@ public class PlayerController : MonoBehaviour
     public static float powerTime;
     public bool facingRight;
     public bool isTransformed;
-    bool canMove;
-
+    bool canMove , isMoving;
+    
     
     PickUp_Joystick pickUp;
 
@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
         isTransformed = false;
         facingRight = true;
         canMove = true;
+       
 
         mainCamera = Camera.main;
         UpdateBoundaries();
@@ -62,30 +63,45 @@ public class PlayerController : MonoBehaviour
 
         TurnIntoWeapon();
 
-        
 
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDodging)
+        if (canMove)
         {
+            Movement();
+            
+        }
+
+        if (stopSpeed > 0.1f)
+        {
+            isMoving = true;
+
+        }
+        else if (stopSpeed < 0.1f)
+        {
+
+            isMoving = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDodging && isMoving)
+        {
+
             StartCoroutine(StartDodge());
         }
+
 
 
     }
     void FixedUpdate()
     {
+
         
 
-        if (canMove)
-        {
-           Movement();
 
-           
-        }
-        
+
 
 
     }
+
+
     private void UpdateBoundaries()
     {
         float distance = Mathf.Abs(mainCamera.transform.position.z - transform.position.z);
@@ -128,7 +144,7 @@ public class PlayerController : MonoBehaviour
         float y = Input.GetAxisRaw("Vertical");
 
         Vector3 moveDir = new Vector3(x, 0, y);
-        rb.velocity = moveDir * speed;
+        rb.velocity = moveDir * speed * Time.deltaTime;
 
         Vector3 newPosition = transform.position + rb.velocity;
 
@@ -137,7 +153,7 @@ public class PlayerController : MonoBehaviour
 
         transform.position = newPosition;
 
-
+        isMoving = true;
 
 
         Vector3 charactorScale = transform.localScale;
@@ -154,6 +170,7 @@ public class PlayerController : MonoBehaviour
         }
         transform.localScale = charactorScale;
 
+        
 
     }
 
@@ -169,9 +186,9 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(dodgeDuration);
 
-        canMove = true;
-
         isDodging = false;
+
+        canMove = true;
     }
 
 

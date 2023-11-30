@@ -21,7 +21,7 @@ public class PlayerController_Joystick : MonoBehaviour
 
     public static float powerTime;
     public bool isTransformed;
-    bool canMove;
+    bool canMove, isMoving;
 
     
     PickUp pickUp;
@@ -55,22 +55,36 @@ public class PlayerController_Joystick : MonoBehaviour
         TurnIntoWeapon();
 
 
-
-        if (Input.GetKeyDown(KeyCode.Joystick1Button0) && !isDodging && !isTransformed)
+        if (canMove)
         {
-            StartCoroutine(StartDodge());
+            Movement();
         }
 
+        if (stopSpeed > 0.1f)
+        {
+            isMoving = true;
+
+        }
+        else if (stopSpeed < 0.1f)
+        {
+
+            isMoving = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Joystick1Button0) && !isDodging && isMoving)
+        {
+
+            StartCoroutine(StartDodge());
+        }
 
     }
     void FixedUpdate()
     {
         
-        if (canMove)
-        {
-            Movement();
-        }
+
         
+
+
     }
 
     private void UpdateBoundaries()
