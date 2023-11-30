@@ -9,7 +9,6 @@ public class PlayerController_Joystick : MonoBehaviour
 
     public float dodgeForce = 10f;
     public float dodgeDuration = 0.5f;
-    private bool isDodging = false;
 
     public float groundDist;
 
@@ -17,32 +16,44 @@ public class PlayerController_Joystick : MonoBehaviour
     public Rigidbody rb;
     public Animator anim;
 
-    public bool facingRight;
+    
 
     public static float powerTime;
     public bool isTransformed;
-    bool canMove, isMoving;
+    public bool facingRight;
 
+
+    public SpriteRenderer Knight;
     
     PickUp pickUp;
+    PlayerHealth playerHealth;
+    Collider col;
 
     public GameObject Sync;
 
 
+    bool canMove, isMoving, isDodging;
     private Camera mainCamera;
     private float minWorldX, maxWorldX, minWorldY, maxWorldY;
     private float boundaryPadding = 1.0f;
     
-    public SpriteRenderer Knight;
 
-    void Start()
+    void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody>();
         pickUp = GameObject.Find("Player 1").GetComponent<PickUp>();
+        playerHealth = GetComponent<PlayerHealth>();
+        col = GetComponent<Collider>();
+
+    }
+
+    void Start()
+    {
+        
+
         isTransformed = false;
         facingRight = true;
         canMove = true;
-
         mainCamera = Camera.main;
         UpdateBoundaries();
 
@@ -166,6 +177,8 @@ public class PlayerController_Joystick : MonoBehaviour
 
     IEnumerator StartDodge()
     {
+        playerHealth.enabled = false;
+
         isDodging = true;
 
         canMove = false;
@@ -175,6 +188,8 @@ public class PlayerController_Joystick : MonoBehaviour
         anim.SetTrigger("isDodging");
 
         yield return new WaitForSeconds(dodgeDuration);
+
+        playerHealth.enabled = true;
 
         canMove = true;
 
@@ -201,7 +216,7 @@ public class PlayerController_Joystick : MonoBehaviour
         if (isTransformed)
         {
             Sync.SetActive(true);
-
+            col.enabled = false;
             powerTime += Time.deltaTime;
             if (powerTime >= 10)
             {
@@ -213,6 +228,7 @@ public class PlayerController_Joystick : MonoBehaviour
 
                 isTransformed = false;
                 powerTime = 0;
+                col.enabled = true;
                 canMove = true;
                 Sync.SetActive(false);
             }

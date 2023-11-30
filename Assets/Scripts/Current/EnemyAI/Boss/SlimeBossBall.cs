@@ -5,22 +5,32 @@ using UnityEngine;
 public class SlimeBossBall : MonoBehaviour
 {
     public int damageAmount = 10;
+    public float ballLifetime = 2f;
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            // If the collider is the player, apply damage
+            
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
 
-            if (playerHealth != null)
+
+            if (playerHealth.enabled == true)
             {
-                // Apply damage to the player
+                
                 playerHealth.TakeDamage(damageAmount);
+
+                Destroy(gameObject);
             }
 
-            // Destroy the projectile after hitting the player
-            Destroy(gameObject);
+            
+            
         }
+        else
+        {
+            Destroy(gameObject, ballLifetime);
+
+
+        } 
     }
 }

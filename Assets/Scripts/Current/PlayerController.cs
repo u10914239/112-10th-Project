@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     public float dodgeForce = 10f;
     public float dodgeDuration = 0.5f;
-    private bool isDodging = false;
+    
 
     public float groundDist;
 
@@ -17,21 +17,24 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     public Animator anim;
 
-        
     public static float powerTime;
-    public bool facingRight;
+    
     public bool isTransformed;
-    bool canMove , isMoving;
-    
-    
-    PickUp_Joystick pickUp;
+    public bool facingRight;
 
     public GameObject Sync;
+    
+    
 
+
+    bool canMove , isMoving, isDodging;
     private Camera mainCamera;
     private float minWorldX, maxWorldX, minWorldY, maxWorldY;
     private float boundaryPadding = 1.0f;
 
+    PickUp_Joystick pickUp;
+    PlayerHealth playerHealth;
+    Collider col;   
 
     [SerializeField] private SimpleFlash flashEffect;
    
@@ -40,8 +43,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody>();
         pickUp = GameObject.Find("Player 2").GetComponent<PickUp_Joystick>();
-
-
+        playerHealth = GetComponent<PlayerHealth>();
+        col = GetComponent<Collider>();
 
     }
     void Start()
@@ -58,6 +61,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        
         stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * speed);
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
 
@@ -176,9 +180,13 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator StartDodge()
     {
+        
+        
         isDodging = true;
 
         canMove = false;
+
+        playerHealth.enabled = false;
 
         rb.AddForce(rb.velocity * dodgeForce, ForceMode.Impulse);
 
@@ -186,9 +194,13 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(dodgeDuration);
 
+        
+
         isDodging = false;
 
         canMove = true;
+
+        playerHealth.enabled = true;
     }
 
 
@@ -211,6 +223,7 @@ public class PlayerController : MonoBehaviour
         if (isTransformed)
         {
             Sync.SetActive(true);
+            col.enabled = false;
             powerTime += Time.deltaTime;
             if (powerTime >= 10)
             {
@@ -223,6 +236,7 @@ public class PlayerController : MonoBehaviour
 
                 isTransformed = false;
                 powerTime = 0;
+                col.enabled = true;
                 canMove = true;
                 Sync.SetActive(false);
                

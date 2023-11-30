@@ -10,7 +10,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth;
-    public int currentHealth;
+    int currentHealth;
     public GameObject HealthBar1,HealthBar2,HealthBar3,HealthBar4,HealthBar5;
     public float Health1,Health2,Health3,Health4,Health5;
     [SerializeField] private SimpleFlash flashEffect;
@@ -28,6 +28,8 @@ public class PlayerHealth : MonoBehaviour
         Health4 = maxHealth*0.4f;
         Health5 = maxHealth*0.2f;
         HealthBar();
+
+        
     }
     public void TakeDamage(int damage)
     {
