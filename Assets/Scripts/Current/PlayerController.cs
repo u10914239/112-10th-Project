@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
 
     PickUp_Joystick pickUp;
     PlayerHealth playerHealth;
+    PlayerCombat playerCombat;
     Collider col;   
 
     [SerializeField] private SimpleFlash flashEffect;
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         pickUp = GameObject.Find("Player 2").GetComponent<PickUp_Joystick>();
         playerHealth = GetComponent<PlayerHealth>();
+        playerCombat = GetComponent<PlayerCombat>();
         col = GetComponent<Collider>();
 
     }
@@ -69,7 +71,7 @@ public class PlayerController : MonoBehaviour
         TurnIntoWeapon();
 
 
-        if (canMove)
+        if (canMove && !playerCombat.isAttacking)
         {
             Movement();
             

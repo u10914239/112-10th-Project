@@ -6,21 +6,22 @@ public class PlayerCombat : MonoBehaviour
 {
 
 
-    public Animator animator;
+    public Animator anim;
 
-    //public Transform attackPoint;
-    //public Vector3 halfExtents;
-
+    public Transform attackPoint;
+    
     public int baseDamage = 10;
+    public int attackDamage = 40;
     public float attackRange = 10f;
+    public bool isAttacking;
 
     public LayerMask enemyLayer;
 
-    public int attackDamage = 40;
+
     public float attackRate = 2f;
     float nextAttackTime = 0f;
 
-    private Collider nearestEnemyCollider;
+    
     PlayerController movement;
 
 
@@ -36,8 +37,10 @@ public class PlayerCombat : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Mouse0) && movement.isTransformed == false)
             {
-                Attack();
+
+                StartCoroutine(Attack());
                 nextAttackTime = Time.time + 1f / attackRate;
+               
 
             }
         }
@@ -45,39 +48,37 @@ public class PlayerCombat : MonoBehaviour
         
     }
 
-    void Attack()
-    {
-        
-        Collider[] hitEnemies = Physics.OverlapSphere(transform.position, attackRange, enemyLayer);
-
-        float closestDistance = Mathf.Infinity;
-
-        foreach (Collider enemyCollider in hitEnemies)
-        {
-            float distanceToEnemy = Vector3.Distance(transform.position, enemyCollider.transform.position);
-
-            if (distanceToEnemy < closestDistance)
-            {
-                closestDistance = distanceToEnemy;
-                nearestEnemyCollider = enemyCollider;
-            }
-        }
-
-        // If a nearest enemy is found, attack it
-        if (nearestEnemyCollider != null)
-        {
-            EnemyHealth enemyHealth1 = nearestEnemyCollider.GetComponent<EnemyHealth>();
-           
-
-            if (enemyHealth1 != null)
-            {
-                
-                enemyHealth1.TakeDamage(baseDamage);
-                Debug.Log("Enemy Type 1 hit!");
-            }
-            
-        }
-
-    }
+    
    
+   
+
+    void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+
+
+    }
+
+    IEnumerator Attack()
+    {
+
+        isAttacking = true;
+
+        anim.SetTrigger("Attack");
+
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
+
+        foreach (Collider enemy in hitEnemies)
+        {
+            enemy.GetComponent<EnemyHealth>().TakeDamage(baseDamage);
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        isAttacking = false;
+
+    }
 }
