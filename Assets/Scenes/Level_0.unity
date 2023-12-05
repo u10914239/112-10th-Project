@@ -4665,7 +4665,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!4 &1491695531561029414
 Transform:
@@ -4676,7 +4676,7 @@ Transform:
   m_GameObject: {fileID: 2083843489966492140}
   serializedVersion: 2
   m_LocalRotation: {x: 0.10452846, y: 0, z: 0, w: 0.9945219}
-  m_LocalPosition: {x: -43.277863, y: 2.2250988, z: 83.00721}
+  m_LocalPosition: {x: -43.27511, y: 2.2328506, z: 83.00885}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4821,7 +4821,7 @@ Transform:
   m_GameObject: {fileID: 2951965563461144058}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -42.638, y: 1.487, z: 86.963}
+  m_LocalPosition: {x: -42.638, y: 1.565, z: 86.963}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5184,7 +5184,7 @@ Transform:
   m_GameObject: {fileID: 5145599126451034111}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -42.844357, y: 1.4883227, z: 86.86228}
+  m_LocalPosition: {x: -42.844578, y: 1.5515689, z: 86.862175}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5538,7 +5538,7 @@ Transform:
   m_GameObject: {fileID: 4947899795231161547}
   serializedVersion: 2
   m_LocalRotation: {x: 0.10452846, y: -0, z: -0, w: 0.9945219}
-  m_LocalPosition: {x: -43.277863, y: 2.2250988, z: 83.00721}
+  m_LocalPosition: {x: -43.27511, y: 2.2328506, z: 83.00885}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5729,11 +5729,11 @@ MonoBehaviour:
   speed: 3
   dodgeForce: 60
   dodgeDuration: 1
+  jumpForce: 50
   groundDist: 0.5
   terrainLayer:
     serializedVersion: 2
     m_Bits: 8
-  rb: {fileID: 0}
   anim: {fileID: 4001023408270102866}
   isTransformed: 0
   facingRight: 0
