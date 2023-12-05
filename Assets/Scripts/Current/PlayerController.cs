@@ -10,12 +10,13 @@ public class PlayerController : MonoBehaviour
 
     public float dodgeForce = 10f;
     public float dodgeDuration = 0.5f;
-    
+
+    public float jumpForce;
 
     public float groundDist;
 
     public LayerMask terrainLayer;
-    public Rigidbody rb;
+    
     public Animator anim;
 
     public static float powerTime;
@@ -36,18 +37,19 @@ public class PlayerController : MonoBehaviour
     PickUp_Joystick pickUp;
     PlayerHealth playerHealth;
     PlayerCombat playerCombat;
-    Collider col;   
+    Collider col;
+    Rigidbody rb;
 
     [SerializeField] private SimpleFlash flashEffect;
    
 
     private void Awake()
     {
-        rb = gameObject.GetComponent<Rigidbody>();
         pickUp = GameObject.Find("Player 2").GetComponent<PickUp_Joystick>();
         playerHealth = GetComponent<PlayerHealth>();
         playerCombat = GetComponent<PlayerCombat>();
         col = GetComponent<Collider>();
+        rb = GetComponent<Rigidbody>();
 
     }
     void Start()
@@ -69,6 +71,8 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
 
         TurnIntoWeapon();
+
+       
 
 
         if (canMove && !playerCombat.isAttacking)
@@ -94,7 +98,9 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(StartDodge());
         }
 
+        
 
+        
 
     }
     void FixedUpdate()
@@ -128,6 +134,7 @@ public class PlayerController : MonoBehaviour
         UpdateBoundaries();
     }
 
+    
     private void Movement()
     {
         RaycastHit hit;
@@ -136,6 +143,8 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(castPos, -transform.up, out hit, Mathf.Infinity, terrainLayer))
         {
+
+
             if (hit.collider != null)
             {
                 Vector3 movePos = transform.position;
@@ -145,7 +154,6 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-
 
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
@@ -175,11 +183,14 @@ public class PlayerController : MonoBehaviour
         {
             charactorScale.x = -1;
         }
+
         transform.localScale = charactorScale;
 
         
 
     }
+
+    
 
     IEnumerator StartDodge()
     {
