@@ -58,8 +58,7 @@ public class PlayerController : MonoBehaviour
         isTransformed = false;
         facingRight = true;
         canMove = true;
-       
-
+        
         mainCamera = Camera.main;
         UpdateBoundaries();
     }
@@ -67,14 +66,14 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         
+        TurnIntoWeapon();
+        
         stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * speed);
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
 
-        TurnIntoWeapon();
-        Jump();
+
        
-
-
+        
         if (canMove && !playerCombat.isAttacking)
         {
             Movement();
@@ -92,28 +91,14 @@ public class PlayerController : MonoBehaviour
             isMoving = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDodging && isMoving)
-        {
-
-            StartCoroutine(StartDodge());
-        }
+        
 
         
 
         
 
     }
-    void FixedUpdate()
-    {
-
-        
-
-
-
-
-
-    }
-
+    
 
     private void UpdateBoundaries()
     {
@@ -137,23 +122,7 @@ public class PlayerController : MonoBehaviour
     
     private void Movement()
     {
-        RaycastHit hit;
-        Vector3 castPos = transform.position;
-        castPos.y += 1;
-
-        if (Physics.Raycast(castPos, -transform.up, out hit, Mathf.Infinity, terrainLayer))
-        {
-
-
-            if (hit.collider != null)
-            {
-                Vector3 movePos = transform.position;
-                movePos.y = hit.point.y + groundDist;
-                transform.position = movePos;
-
-            }
-
-        }
+        
 
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
@@ -167,8 +136,6 @@ public class PlayerController : MonoBehaviour
         newPosition.y = Mathf.Clamp(newPosition.y, minWorldY, maxWorldY);
 
         transform.position = newPosition;
-
-        isMoving = true;
 
 
         Vector3 charactorScale = transform.localScale;
@@ -186,7 +153,11 @@ public class PlayerController : MonoBehaviour
 
         transform.localScale = charactorScale;
 
-        
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDodging && isMoving)
+        {
+
+            StartCoroutine(StartDodge());
+        }
 
     }
 
@@ -232,13 +203,43 @@ public class PlayerController : MonoBehaviour
             isTransformed = true;
             facingRight = true;
             canMove = false;
-            
+            col.isTrigger = true;
+
+
+            RaycastHit hit;
+            Vector3 castPos = transform.position;
+            castPos.y += 1;
+
+            if (Physics.Raycast(castPos, -transform.up, out hit, Mathf.Infinity, terrainLayer))
+            {
+                if (hit.collider != null)
+                {
+                    Vector3 movePos = transform.position;
+                    movePos.y = hit.point.y + groundDist;
+                    transform.position = movePos;
+                    
+                }
+               
+            }
+
+
         }
+        if (pickUp.isHeld == true)
+        {
+            col.enabled = false;
+
+        }
+        else
+        {
+            col.enabled = true;
+
+        }
+
         if (isTransformed)
         {
             Sync.SetActive(true);
-            col.enabled = false;
             powerTime += Time.deltaTime;
+            
             if (powerTime >= 10)
             {
                 rb.isKinematic = false;
@@ -246,11 +247,11 @@ public class PlayerController : MonoBehaviour
 
                 anim.SetBool("Transform", false);
 
-                
-
-                isTransformed = false;
                 powerTime = 0;
-                col.enabled = true;
+
+
+                col.isTrigger = false;
+                isTransformed = false;
                 canMove = true;
                 Sync.SetActive(false);
                
@@ -264,6 +265,7 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce(0,jumpForce,0,ForceMode.Impulse);
+            
         }
     }
 

@@ -5729,7 +5729,7 @@ MonoBehaviour:
   speed: 3
   dodgeForce: 60
   dodgeDuration: 1
-  jumpForce: 50
+  jumpForce: 600
   groundDist: 0.5
   terrainLayer:
     serializedVersion: 2

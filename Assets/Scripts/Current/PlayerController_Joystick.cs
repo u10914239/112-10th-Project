@@ -82,11 +82,7 @@ public class PlayerController_Joystick : MonoBehaviour
             isMoving = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.Joystick1Button0) && !isDodging && isMoving)
-        {
-
-            StartCoroutine(StartDodge());
-        }
+       
 
     }
     void FixedUpdate()
@@ -119,21 +115,7 @@ public class PlayerController_Joystick : MonoBehaviour
 
     private void Movement()
     {
-        RaycastHit hit;
-        Vector3 castPos = transform.position;
-        castPos.y += 1;
-
-        if (Physics.Raycast(castPos, -transform.up, out hit, Mathf.Infinity, terrainLayer))
-        {
-            if (hit.collider != null)
-            {
-                Vector3 movePos = transform.position;
-                movePos.y = hit.point.y + groundDist;
-                transform.position = movePos;
-
-            }
-
-        }
+        
         float x = Input.GetAxisRaw("Horizontal2");
         float y = Input.GetAxisRaw("Vertical2");
 
@@ -160,8 +142,12 @@ public class PlayerController_Joystick : MonoBehaviour
         {
            Flip();
         }
-        
 
+        if (Input.GetKeyDown(KeyCode.Joystick1Button0) && !isDodging && isMoving)
+        {
+
+            StartCoroutine(StartDodge());
+        }
 
 
     }
@@ -198,44 +184,70 @@ public class PlayerController_Joystick : MonoBehaviour
 
 
 
+    
     void TurnIntoWeapon()
     {
-
-        if (pickUp.isHeld == false && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1) || pickUp.isHeld == false && isTransformed == false && Input.GetKeyDown(KeyCode.P))
-
-        if (pickUp.isHeld == false && isDodging==false && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1))
-
+        if (pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             rb.isKinematic = true;
             rb.interpolation = RigidbodyInterpolation.None;
             anim.SetBool("Transform", true);
             isTransformed = true;
+            facingRight = true;
             canMove = false;
-            
+            col.isTrigger = true;
+
+            RaycastHit hit;
+            Vector3 castPos = transform.position;
+            castPos.y += 1;
+
+            if (Physics.Raycast(castPos, -transform.up, out hit, Mathf.Infinity, terrainLayer))
+            {
+                if (hit.collider != null)
+                {
+                    Vector3 movePos = transform.position;
+                    movePos.y = hit.point.y + groundDist;
+                    transform.position = movePos;
+
+                }
+
+            }
         }
+        if (pickUp.isHeld == true)
+        {
+            col.enabled = false;
+
+        }
+        else
+        {
+            col.enabled = true;
+
+        }
+
         if (isTransformed)
         {
             Sync.SetActive(true);
-            col.enabled = false;
             powerTime += Time.deltaTime;
+            
             if (powerTime >= 10)
             {
                 rb.isKinematic = false;
                 rb.interpolation = RigidbodyInterpolation.Interpolate;
+
+
                 anim.SetBool("Transform", false);
 
-              
-
+                col.isTrigger = false;
                 isTransformed = false;
                 powerTime = 0;
-                col.enabled = true;
                 canMove = true;
                 Sync.SetActive(false);
+                
+
             }
 
         }
 
     }
 
-       
 }
