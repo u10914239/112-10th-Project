@@ -5297,11 +5297,11 @@ MonoBehaviour:
   speed: 3
   dodgeForce: 60
   dodgeDuration: 1
+  jumpForce: 0
   groundDist: 0.5
   terrainLayer:
     serializedVersion: 2
     m_Bits: 8
-  rb: {fileID: 0}
   anim: {fileID: 5271316052988360463}
   isTransformed: 0
   facingRight: 0
@@ -5769,6 +5769,7 @@ GameObject:
   - component: {fileID: 7409686278505551262}
   - component: {fileID: 2037844743781738031}
   - component: {fileID: 7409686278505551263}
+  - component: {fileID: 7409686278505551264}
   m_Layer: 7
   m_Name: Player 1
   m_TagString: Player
@@ -5788,13 +5789,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6679e0748016d1c45820dc3e4b385542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 5271316052988360463}
+  anim: {fileID: 0}
+  attackPoint: {fileID: 0}
   baseDamage: 10
+  attackDamage: 1
   attackRange: 0.5
+  isAttacking: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
-  attackDamage: 1
   attackRate: 4
 --- !u!114 &7409686278505551263
 MonoBehaviour:
@@ -5820,6 +5823,19 @@ MonoBehaviour:
   Health4: 0
   Health5: 0
   flashEffect: {fileID: 8947623753132304164}
+--- !u!114 &7409686278505551264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7409686278505551261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee6024913df17ca44b97e282e0163202, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravityScale: 1
 --- !u!95 &7751463215352447062
 Animator:
   serializedVersion: 5

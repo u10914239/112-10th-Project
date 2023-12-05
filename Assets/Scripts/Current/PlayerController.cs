@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
 
         TurnIntoWeapon();
-
+        Jump();
        
 
 
@@ -258,6 +258,13 @@ public class PlayerController : MonoBehaviour
 
         }
 
+    }
+    void Jump()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(0,jumpForce,0,ForceMode.Impulse);
+        }
     }
 
     
