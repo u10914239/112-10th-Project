@@ -20,7 +20,7 @@ public class PlayerController_Joystick : MonoBehaviour
 
     public static float powerTime;
     public bool isTransformed;
-    public bool facingRight;
+    
 
 
     public SpriteRenderer Knight;
@@ -52,7 +52,7 @@ public class PlayerController_Joystick : MonoBehaviour
         
 
         isTransformed = false;
-        facingRight = true;
+        
         canMove = true;
         mainCamera = Camera.main;
         UpdateBoundaries();
@@ -129,19 +129,20 @@ public class PlayerController_Joystick : MonoBehaviour
 
         transform.position = newPosition;
 
-       
+        Vector3 charactorScale = transform.localScale;
 
-        
-        if (x > 0&&!facingRight)
+        if (x > 0)
         {
-            
-            Flip();
+            charactorScale.x = 1;
+
 
         }
-        if (x < 0&&facingRight)
+        if (x < 0)
         {
-           Flip();
+            charactorScale.x = -1;
         }
+
+        transform.localScale = charactorScale;
 
         if (Input.GetKeyDown(KeyCode.Joystick1Button0) && !isDodging && isMoving)
         {
@@ -152,14 +153,7 @@ public class PlayerController_Joystick : MonoBehaviour
 
     }
 
-    public void Flip()
-    {
-        Vector3 charactorScale = transform.localScale;
-        charactorScale.x *= -1;
-        gameObject.transform.localScale = charactorScale;
-
-        facingRight=!facingRight;
-    }
+   
 
     IEnumerator StartDodge()
     {
@@ -183,8 +177,8 @@ public class PlayerController_Joystick : MonoBehaviour
     }
 
 
-
     
+
     void TurnIntoWeapon()
     {
         if (pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1))
@@ -193,9 +187,10 @@ public class PlayerController_Joystick : MonoBehaviour
             rb.interpolation = RigidbodyInterpolation.None;
             anim.SetBool("Transform", true);
             isTransformed = true;
-            facingRight = true;
+            
             canMove = false;
             col.isTrigger = true;
+
 
             RaycastHit hit;
             Vector3 castPos = transform.position;
@@ -212,8 +207,10 @@ public class PlayerController_Joystick : MonoBehaviour
                 }
 
             }
+
+
         }
-        if (pickUp.isHeld == true)
+        /*if (pickUp.isHeld == true)
         {
             col.enabled = false;
 
@@ -222,27 +219,27 @@ public class PlayerController_Joystick : MonoBehaviour
         {
             col.enabled = true;
 
-        }
+        }*/
 
         if (isTransformed)
         {
             Sync.SetActive(true);
             powerTime += Time.deltaTime;
-            
+
             if (powerTime >= 10)
             {
                 rb.isKinematic = false;
                 rb.interpolation = RigidbodyInterpolation.Interpolate;
 
-
                 anim.SetBool("Transform", false);
+
+                powerTime = 0;
+
 
                 col.isTrigger = false;
                 isTransformed = false;
-                powerTime = 0;
                 canMove = true;
                 Sync.SetActive(false);
-                
 
             }
 

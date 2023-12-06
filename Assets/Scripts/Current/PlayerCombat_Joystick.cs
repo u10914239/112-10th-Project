@@ -33,7 +33,7 @@ public class PlayerCombat_Joystick : MonoBehaviour
 
     void Update()
     {
-        SpriteFlip();
+        //SpriteFlip();
         
         if (Input.GetKey(KeyCode.Joystick1Button5) && movement.isTransformed==false)
         {
@@ -107,20 +107,20 @@ public class PlayerCombat_Joystick : MonoBehaviour
         
     }
 
-    void SpriteFlip()
+    /*void SpriteFlip()
     {
 
         if(isCharging)
         {
             if(detect.isOnRight==true&&!movement.facingRight)
             {
-                movement.Flip();
+                movement.charactorScale.x = 1;
             }
             if(detect.isOnLeft==true&&movement.facingRight)
             {
-                movement.Flip();
+                movement.charactorScale.x = -1;
             }
 
         }
-    }
+    }*/
 }

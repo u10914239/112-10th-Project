@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     public static float powerTime;
     
     public bool isTransformed;
-    public bool facingRight;
+    
 
     public GameObject Sync;
     
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
     {
         
         isTransformed = false;
-        facingRight = true;
+        
         canMove = true;
         
         mainCamera = Camera.main;
@@ -201,7 +201,7 @@ public class PlayerController : MonoBehaviour
             rb.interpolation = RigidbodyInterpolation.None;
             anim.SetBool("Transform", true);
             isTransformed = true;
-            facingRight = true;
+            
             canMove = false;
             col.isTrigger = true;
 
@@ -217,14 +217,14 @@ public class PlayerController : MonoBehaviour
                     Vector3 movePos = transform.position;
                     movePos.y = hit.point.y + groundDist;
                     transform.position = movePos;
-                    
+
                 }
-               
+
             }
 
 
         }
-        if (pickUp.isHeld == true)
+        /*if (pickUp.isHeld == true)
         {
             col.enabled = false;
 
@@ -233,7 +233,7 @@ public class PlayerController : MonoBehaviour
         {
             col.enabled = true;
 
-        }
+        }*/
 
         if (isTransformed)
         {
