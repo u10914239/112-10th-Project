@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
 
     public float groundDist;
 
+    public float raycastDistance = 0.5f;
+    
+
     public LayerMask terrainLayer;
     
     public Animator anim;
@@ -68,17 +71,31 @@ public class PlayerController : MonoBehaviour
         
         TurnIntoWeapon();
         
-        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * speed);
-        anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
-
+        
 
        
         
+        
+
+
+        
+
+        
+
+        
+
+    }
+    
+    private void FixedUpdate()
+    {
         if (canMove && !playerCombat.isAttacking)
         {
             Movement();
-            
+
         }
+
+        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * speed);
+        anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
 
         if (stopSpeed > 0.1f)
         {
@@ -91,14 +108,7 @@ public class PlayerController : MonoBehaviour
             isMoving = false;
         }
 
-        
-
-        
-
-        
-
     }
-    
 
     private void UpdateBoundaries()
     {
@@ -122,14 +132,23 @@ public class PlayerController : MonoBehaviour
     
     private void Movement()
     {
-        
 
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
 
-        Vector3 moveDir = new Vector3(x, 0, y);
-        rb.velocity = moveDir * speed * Time.deltaTime;
+        float x = Input.GetAxis("Horizontal");
+        float y = Input.GetAxis("Vertical");
 
+        Vector3 movement = new Vector3(x, 0, y) * speed * Time.fixedDeltaTime;
+
+        RaycastHit hit;
+        if (!Physics.Raycast(transform.position, movement.normalized, out hit, raycastDistance))
+        {
+            // If no obstacle detected in the movement direction, move the character
+            rb.MovePosition(rb.position + movement);
+        }
+
+
+
+        // 限制玩家在鏡頭內
         Vector3 newPosition = transform.position + rb.velocity;
 
         newPosition.x = Mathf.Clamp(newPosition.x, minWorldX, maxWorldX);
