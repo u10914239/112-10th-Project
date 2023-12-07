@@ -10,6 +10,8 @@ public class PlayerController_Joystick : MonoBehaviour
     public float dodgeForce = 10f;
     public float dodgeDuration = 0.5f;
 
+    public float rollSpeed = 10f;
+
     public float groundDist;
 
     public LayerMask terrainLayer;
@@ -27,6 +29,7 @@ public class PlayerController_Joystick : MonoBehaviour
     
     PickUp pickUp;
     PlayerHealth playerHealth;
+    PlayerCombat_Joystick playerCombat;
     Collider col;
 
     public GameObject Sync;
@@ -43,6 +46,7 @@ public class PlayerController_Joystick : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         pickUp = GameObject.Find("Player 1").GetComponent<PickUp>();
         playerHealth = GetComponent<PlayerHealth>();
+        playerCombat = GetComponent<PlayerCombat_Joystick>();
         col = GetComponent<Collider>();
 
     }
@@ -61,15 +65,29 @@ public class PlayerController_Joystick : MonoBehaviour
 
     void Update()
     {
-        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal2") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical2") * speed);
-        anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
+        
         TurnIntoWeapon();
 
+        if (Input.GetKeyDown(KeyCode.Joystick1Button0) && !isDodging && isMoving)
+        {
 
+            RollForward();
+        }
+
+        
+       
+
+    }
+    void FixedUpdate()
+    {
         if (canMove)
         {
             Movement();
+
         }
+
+        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal2") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical2") * speed);
+        anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
 
         if (stopSpeed > 0.1f)
         {
@@ -81,16 +99,6 @@ public class PlayerController_Joystick : MonoBehaviour
 
             isMoving = false;
         }
-
-       
-
-    }
-    void FixedUpdate()
-    {
-        
-
-        
-
 
     }
 
@@ -144,18 +152,14 @@ public class PlayerController_Joystick : MonoBehaviour
 
         transform.localScale = charactorScale;
 
-        if (Input.GetKeyDown(KeyCode.Joystick1Button0) && !isDodging && isMoving)
-        {
-
-            StartCoroutine(StartDodge());
-        }
+        
 
 
     }
 
    
 
-    IEnumerator StartDodge()
+    /*IEnumerator StartDodge()
     {
         playerHealth.enabled = false;
 
@@ -174,10 +178,15 @@ public class PlayerController_Joystick : MonoBehaviour
         canMove = true;
 
         isDodging = false;
+    }*/
+
+    void RollForward()
+    {
+        anim.SetTrigger("isDodging");
+        Vector3 rollDirection = transform.forward * rollSpeed;
+        rb.velocity = rollDirection;
     }
 
-
-    
 
     void TurnIntoWeapon()
     {

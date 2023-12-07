@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
 
     public float dodgeForce = 10f;
     public float dodgeDuration = 0.5f;
+   
+    public float rollSpeed = 10f;
 
     public float jumpForce;
 
@@ -70,25 +72,29 @@ public class PlayerController : MonoBehaviour
     {
         
         TurnIntoWeapon();
-        
-        
-
-       
-        
-        
 
 
-        
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDodging && isMoving && !isTransformed)
+        {
 
-        
+            RollForward();
+        }
 
-        
+
+
+
+
+
+
+
+
+
 
     }
     
     private void FixedUpdate()
     {
-        if (canMove && !playerCombat.isAttacking)
+        if (canMove && !isDodging && !playerCombat.isAttacking)
         {
             Movement();
 
@@ -132,20 +138,11 @@ public class PlayerController : MonoBehaviour
     
     private void Movement()
     {
+        float x = Input.GetAxisRaw("Horizontal");
+        float y = Input.GetAxisRaw("Vertical");
 
-
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
-
-        Vector3 movement = new Vector3(x, 0, y) * speed * Time.fixedDeltaTime;
-
-        RaycastHit hit;
-        if (!Physics.Raycast(transform.position, movement.normalized, out hit, raycastDistance))
-        {
-            // If no obstacle detected in the movement direction, move the character
-            rb.MovePosition(rb.position + movement);
-        }
-
+        Vector3 moveDir = new Vector3(x, 0, y);
+        rb.velocity = moveDir * speed * Time.deltaTime;
 
 
         // 限制玩家在鏡頭內
@@ -172,17 +169,13 @@ public class PlayerController : MonoBehaviour
 
         transform.localScale = charactorScale;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDodging && isMoving)
-        {
-
-            StartCoroutine(StartDodge());
-        }
+        
 
     }
 
     
 
-    IEnumerator StartDodge()
+    /*IEnumerator StartDodge()
     {
         
         
@@ -192,10 +185,10 @@ public class PlayerController : MonoBehaviour
 
         playerHealth.enabled = false;
 
-        rb.AddForce(rb.velocity * dodgeForce, ForceMode.Impulse);
-
         anim.SetTrigger("isDodging");
-
+        Vector3 rollDirection = transform.forward * rollSpeed;
+        rb.velocity = rollDirection;
+        
         yield return new WaitForSeconds(dodgeDuration);
 
         
@@ -205,10 +198,15 @@ public class PlayerController : MonoBehaviour
         canMove = true;
 
         playerHealth.enabled = true;
+    }*/
+
+
+    void RollForward()
+    {
+        anim.SetTrigger("isDodging");
+        Vector3 rollDirection = transform.forward * rollSpeed;
+        rb.velocity = rollDirection;
     }
-
-
-
 
 
 

@@ -4,123 +4,48 @@ using UnityEngine;
 
 public class PlayerCombat_Joystick : MonoBehaviour
 {
-    public Animator animator;
-
     public GameObject arrowPrefab;
-    public Transform attackPoint;
-    public Vector3 halfExtents;
+    public Transform firePoint;
 
-    public LayerMask enemyLayer;
-
-    public float shootingDistance = 10f;
     public float maxChargeTime = 2f;
-    //public float attackRate = 2f;
-    //float nextAttackTime = 0f;
+    public float maxSpeed = 10f;
+    private float currentChargeTime = 0f;
 
-    private float currentChargeTime = 0f; // Current charge time
-    private bool isCharging; // Flag to track charging state
-
-    PlayerController_Joystick movement;
-    DetectRightLeftSide detect;
-
-    void Start()
-    {
-        movement = GetComponent<PlayerController_Joystick>();
-        detect = GetComponent<DetectRightLeftSide>();
-
-        isCharging = false; 
-    }
+    public bool isAttacking;
 
     void Update()
     {
-        //SpriteFlip();
-        
-        if (Input.GetKey(KeyCode.Joystick1Button5) && movement.isTransformed==false)
+        if (Input.GetKey(KeyCode.Joystick1Button5)) // Assuming left mouse button for charging
         {
-            if(detect.isOnRight==true||detect.isOnLeft==true)
-            {
-                isCharging=true;
-                currentChargeTime += Time.deltaTime;
-                currentChargeTime = Mathf.Clamp(currentChargeTime, 0f, maxChargeTime);
-                
-                
-
-            }
-            
-
+            currentChargeTime += Time.deltaTime;
+            // Add visual feedback for charging (e.g., UI bar or particle effect)
         }
 
-        if(Input.GetKeyUp(KeyCode.Joystick1Button5) && movement.isTransformed==false && currentChargeTime==maxChargeTime)
+        if (Input.GetKeyUp(KeyCode.Joystick1Button5) && currentChargeTime >= 1f) // Release to fire
         {
-            Attack();
-            isCharging = false;
-            currentChargeTime = 0f;
-            //nextAttackTime = Time.time + 1f / attackRate;
-
+            StartCoroutine(Attack());
         }
-        
-
-        
     }
 
-    void Attack()
+
+    IEnumerator Attack()
     {
 
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, shootingDistance, enemyLayer);
+        isAttacking = true;
 
-        float nearestDistance = Mathf.Infinity;
-        GameObject nearestEnemy = null;
 
-        foreach (Collider collider in hitColliders)
-        {
-            float distance = Vector3.Distance(transform.position, collider.transform.position);
 
-            if (distance < nearestDistance)
-            {
-                nearestDistance = distance;
-                nearestEnemy = collider.gameObject;
-            }
-        }
+        GameObject newArrow = Instantiate(arrowPrefab, firePoint.position, firePoint.rotation);
+        Rigidbody rb = newArrow.GetComponent<Rigidbody>();
 
-        if (nearestEnemy != null)
-        {
-            // Calculate direction towards the nearest enemy
-            Vector3 direction = nearestEnemy.transform.position - transform.position;
+        // Adjust arrow's initial speed along the global X-axis based on charge level
+        rb.velocity = Vector3.right * maxSpeed;
 
-            // Instantiate arrowPrefab and set its initial position and rotation
-            GameObject arrow = Instantiate(arrowPrefab, transform.position, Quaternion.LookRotation(direction));
-            Projectile arrowScript = arrow.GetComponent<Projectile>();
+        currentChargeTime = 0;
 
-            if (arrowScript != null)
-            {
-                arrowScript.ShootTowards(nearestEnemy.transform.position);
-            }
-            // You'll need to have a script (e.g., ArrowScript) on your arrow prefab to handle its behavior.
-        }
-        
-        
-        
+        yield return new WaitForSeconds(0.5f);
 
-        
-        
+        isAttacking = false;
 
-        
     }
-
-    /*void SpriteFlip()
-    {
-
-        if(isCharging)
-        {
-            if(detect.isOnRight==true&&!movement.facingRight)
-            {
-                movement.charactorScale.x = 1;
-            }
-            if(detect.isOnLeft==true&&movement.facingRight)
-            {
-                movement.charactorScale.x = -1;
-            }
-
-        }
-    }*/
 }

@@ -1195,13 +1195,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 479235434}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6887283207588837999}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &533970567
 GameObject:
   m_ObjectHideFlags: 0
@@ -5104,6 +5104,7 @@ GameObject:
   - component: {fileID: 543450653696540831}
   - component: {fileID: 3469287837479096122}
   - component: {fileID: 1711813855632866288}
+  - component: {fileID: 3469287837479096123}
   m_Layer: 0
   m_Name: House
   m_TagString: Untagged
@@ -5233,9 +5234,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6857207287a78ad4fa069b5bcaf0c264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 1.5
   dodgeForce: 60
   dodgeDuration: 1
+  rollSpeed: 10
   groundDist: 0.5
   terrainLayer:
     serializedVersion: 2
@@ -5293,11 +5295,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5765312cac9f324e95faabdb6a8d845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 1.5
   dodgeForce: 60
   dodgeDuration: 1
+  rollSpeed: 10
   jumpForce: 0
   groundDist: 0.5
+  raycastDistance: 0.5
   terrainLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -5333,6 +5337,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132149158320677}
   m_Mesh: {fileID: 8583505799121521108, guid: 3e4fa79a10901b94ab19755355964937, type: 3}
+--- !u!65 &3469287837479096123
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149158320677}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.0918827, y: 3.5281594, z: 0.7606012}
+  m_Center: {x: -0.21116889, y: 0.5699481, z: 0.17719045}
 --- !u!1 &3742094156761603410
 GameObject:
   m_ObjectHideFlags: 0
@@ -5346,7 +5371,6 @@ GameObject:
   - component: {fileID: 2114284013273956704}
   - component: {fileID: 6887283207588838000}
   - component: {fileID: 1133366864761644698}
-  - component: {fileID: 6887283207588838003}
   - component: {fileID: 6887283207588838002}
   - component: {fileID: 6887283207588838004}
   m_Layer: 7
@@ -5640,15 +5664,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488e2e8da86706c4e9f4df0716e8c9fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 7751463215352447062}
   arrowPrefab: {fileID: 4805661519754056234, guid: 80dcccf2b08340b43aad48a9e5dbbcde, type: 3}
-  attackPoint: {fileID: 479235435}
-  halfExtents: {x: 0.5, y: 1, z: 0.1}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  shootingDistance: 5
-  maxChargeTime: 1
+  firePoint: {fileID: 479235435}
+  maxChargeTime: 2
+  maxSpeed: 15
+  isAttacking: 0
 --- !u!114 &6887283207588838002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5673,27 +5693,6 @@ MonoBehaviour:
   Health4: 0
   Health5: 0
   flashEffect: {fileID: 7751463215352447063}
---- !u!114 &6887283207588838003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3742094156761603410}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbadc139f8e3b4f45a5dceb76b111e4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isOnRight: 0
-  isOnLeft: 0
-  player: {fileID: 6887283207588837999}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  rightAngleThreshold: 45
-  leftAngleThreshold: 45
-  detectionRange: 3
 --- !u!136 &6887283207588838004
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5809,12 +5808,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7409686278505551261}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee6024913df17ca44b97e282e0163202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityScale: 1
+  gravityScale: 5
 --- !u!136 &7409686278505551265
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5900,7 +5899,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &8035195979958101045
 MonoBehaviour:
   m_ObjectHideFlags: 0
