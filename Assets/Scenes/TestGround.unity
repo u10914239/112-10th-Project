@@ -5136,7 +5136,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -42.7, y: 1.7999997, z: 87.346}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8947623753132304163}
   - {fileID: 2369268560465479517}
@@ -5299,7 +5299,7 @@ MonoBehaviour:
   dodgeForce: 60
   dodgeDuration: 1
   rollSpeed: 10
-  jumpForce: 0
+  jumpForce: 50
   groundDist: 0.5
   raycastDistance: 0.5
   terrainLayer:
@@ -5373,6 +5373,7 @@ GameObject:
   - component: {fileID: 1133366864761644698}
   - component: {fileID: 6887283207588838002}
   - component: {fileID: 6887283207588838004}
+  - component: {fileID: 6887283207588838005}
   m_Layer: 7
   m_Name: Player 2
   m_TagString: Player
@@ -5541,7 +5542,7 @@ Rigidbody:
   m_GameObject: {fileID: 7409686278505551261}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -5716,6 +5717,19 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6887283207588838005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3742094156761603410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee6024913df17ca44b97e282e0163202, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravityScale: 10
 --- !u!1 &7084175182875026889
 GameObject:
   m_ObjectHideFlags: 0
@@ -5813,7 +5827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee6024913df17ca44b97e282e0163202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityScale: 5
+  gravityScale: 10
 --- !u!136 &7409686278505551265
 CapsuleCollider:
   m_ObjectHideFlags: 0

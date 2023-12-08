@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
     {
         
         TurnIntoWeapon();
-
+        Jump();
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDodging && isMoving && !isTransformed)
         {
@@ -114,6 +114,7 @@ public class PlayerController : MonoBehaviour
             isMoving = false;
         }
 
+        
     }
 
     private void UpdateBoundaries()
@@ -281,7 +282,7 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            rb.AddForce(0,jumpForce,0,ForceMode.Impulse);
+            rb.AddForce(Vector3.up*jumpForce, ForceMode.Impulse);
             
         }
     }
