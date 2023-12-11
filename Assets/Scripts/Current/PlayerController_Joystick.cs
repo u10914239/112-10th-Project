@@ -152,6 +152,7 @@ public class PlayerController_Joystick : MonoBehaviour
 
         transform.localScale = charactorScale;
 
+        
       
     }
 
