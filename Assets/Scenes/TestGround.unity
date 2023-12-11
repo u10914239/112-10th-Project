@@ -1563,9 +1563,11 @@ GameObject:
   - component: {fileID: 572521654}
   - component: {fileID: 572521653}
   - component: {fileID: 572521652}
+  - component: {fileID: 572521657}
+  - component: {fileID: 572521656}
   m_Layer: 9
   m_Name: enemy1
-  m_TagString: Untagged
+  m_TagString: EnemyType1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1681,12 +1683,42 @@ Transform:
   m_GameObject: {fileID: 572521651}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -39.947, y: 1.780401, z: 86.17856}
+  m_LocalPosition: {x: -40.01, y: 1.780401, z: 86.17856}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &572521656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572521651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8820473bb698a314c8c958f28b6de260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: 0605f3a53b6d6bb46ae610e1c7edb338, type: 2}
+  duration: 3
+--- !u!114 &572521657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572521651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6532426c39971848b986e44a533c238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  maxHealth: 100
+  currentHealth: 0
+  flashEffect: {fileID: 572521656}
 --- !u!1 &647408490
 GameObject:
   m_ObjectHideFlags: 0
@@ -3388,9 +3420,11 @@ GameObject:
   - component: {fileID: 1213095091}
   - component: {fileID: 1213095090}
   - component: {fileID: 1213095089}
+  - component: {fileID: 1213095094}
+  - component: {fileID: 1213095093}
   m_Layer: 9
   m_Name: enemy2
-  m_TagString: Untagged
+  m_TagString: EnemyType2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3512,6 +3546,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1213095093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213095088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8820473bb698a314c8c958f28b6de260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: 0605f3a53b6d6bb46ae610e1c7edb338, type: 2}
+  duration: 0.5
+--- !u!114 &1213095094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213095088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6532426c39971848b986e44a533c238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  maxHealth: 100
+  currentHealth: 0
+  flashEffect: {fileID: 1213095093}
 --- !u!1 &1291699276
 GameObject:
   m_ObjectHideFlags: 0
@@ -6086,8 +6150,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 5271316052988360463}
   attackPoint: {fileID: 680141706}
-  baseDamage: 10
-  attackDamage: 1
+  damageAmountType1: 1
+  damageAmountType2: 10
   attackRange: 0.5
   isAttacking: 0
   enemyLayer:

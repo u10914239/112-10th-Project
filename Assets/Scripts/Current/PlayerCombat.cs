@@ -9,9 +9,9 @@ public class PlayerCombat : MonoBehaviour
     public Animator anim;
 
     public Transform attackPoint;
-    
-    public int baseDamage = 10;
-    public int attackDamage = 40;
+
+    public int damageAmountType1 = 10;
+    public int damageAmountType2 = 1;
     public float attackRange = 10f;
     public bool isAttacking;
 
@@ -73,7 +73,29 @@ public class PlayerCombat : MonoBehaviour
 
         foreach (Collider enemy in hitEnemies)
         {
-            enemy.GetComponent<EnemyHealth>().TakeDamage(baseDamage);
+          
+
+            if (enemy.CompareTag("EnemyType1"))
+            {
+                EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
+                if (enemyHealth != null)
+                {
+                    // Apply damage to the enemy
+                    enemyHealth.TakeDamage(damageAmountType1);
+                }
+
+            }
+
+            if (enemy.CompareTag("EnemyType2"))
+            {
+                EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
+                if (enemyHealth != null)
+                {
+                    // Apply damage to the enemy
+                    enemyHealth.TakeDamage(damageAmountType2);
+                }
+
+            }
         }
 
         yield return new WaitForSeconds(0.5f);

@@ -4,41 +4,48 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float arrowSpeed = 10f;
-    public int damageAmount = 10; // Set your desired damage amount here
-    public float arrowLifetime = 5f; // Adjust the lifetime of the arrow
+    
+    public int damageAmountType1 = 10; // Set your desired damage amount here
+    public int damageAmountType2 = 1;
 
-    private Vector3 targetPosition;
+
     private Rigidbody rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.velocity = transform.forward * arrowSpeed;
-        Destroy(gameObject, arrowLifetime); // Destroy the arrow after a specified time
+        
     }
 
-    public void ShootTowards(Vector3 target)
-    {
-        targetPosition = target;
-        // Rotate the arrow towards the target
-        transform.LookAt(targetPosition);
-    }
-
+   
     void OnTriggerEnter(Collider other)
     {
         // Check if the arrow collided with an enemy
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("EnemyType1"))
         {
             EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
                 // Apply damage to the enemy
-                enemyHealth.TakeDamage(damageAmount);
+                enemyHealth.TakeDamage(damageAmountType1);
             }
 
             // Destroy the arrow upon hitting the enemy
             Destroy(gameObject);
+        }
+        if (other.CompareTag("EnemyType2"))
+        {
+            EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                // Apply damage to the enemy
+                enemyHealth.TakeDamage(damageAmountType2);
+            }
+
+            // Destroy the arrow upon hitting the enemy
+            Destroy(gameObject);
+
+
         }
     }
 }

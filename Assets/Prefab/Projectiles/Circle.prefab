@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1678456219894169287}
   - component: {fileID: 6741940252152157463}
   - component: {fileID: 3311070499574344300}
-  - component: {fileID: -5719990679879443249}
+  - component: {fileID: 3118416287101023604}
   - component: {fileID: 6776609636436410164}
   - component: {fileID: 5838249669817808004}
   m_Layer: 0
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freezeXZAxis: 1
---- !u!114 &-5719990679879443249
+--- !u!114 &3118416287101023604
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,11 +123,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 315981810436374660}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b901c4c93ab4a542b01a99897aec165, type: 3}
+  m_Script: {fileID: 11500000, guid: 1617e62b09289fd45a67c0c03dad2040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 1
-  ballLifetime: 2
+  damageAmount: 10
 --- !u!54 &6776609636436410164
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -170,9 +169,9 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.49999997
+  m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}

@@ -25,7 +25,7 @@ public class EnemyHealth : MonoBehaviour
     {
         flashEffect.Flash();
         currentHealth -= damage;
-        animator.SetTrigger("Hit");
+        //animator.SetTrigger("Hit");
         if (currentHealth <= 0)
         {
 
