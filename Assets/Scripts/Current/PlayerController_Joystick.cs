@@ -29,7 +29,7 @@ public class PlayerController_Joystick : MonoBehaviour
     
     PickUp pickUp;
     PlayerHealth playerHealth;
-    PlayerCombat_Joystick playerCombat;
+    PlayerCombat_Joystick_Wizard playerCombat;
     Collider col;
 
     public GameObject Sync;
@@ -46,7 +46,7 @@ public class PlayerController_Joystick : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         pickUp = GameObject.Find("Player 1").GetComponent<PickUp>();
         playerHealth = GetComponent<PlayerHealth>();
-        playerCombat = GetComponent<PlayerCombat_Joystick>();
+        playerCombat = GetComponent<PlayerCombat_Joystick_Wizard>();
         col = GetComponent<Collider>();
 
     }
@@ -152,33 +152,12 @@ public class PlayerController_Joystick : MonoBehaviour
 
         transform.localScale = charactorScale;
 
-        
-
-
+      
     }
 
    
 
-    /*IEnumerator StartDodge()
-    {
-        playerHealth.enabled = false;
-
-        isDodging = true;
-
-        canMove = false;
-
-        rb.AddForce(rb.velocity * dodgeForce, ForceMode.Impulse);
-
-        anim.SetTrigger("isDodging");
-
-        yield return new WaitForSeconds(dodgeDuration);
-
-        playerHealth.enabled = true;
-
-        canMove = true;
-
-        isDodging = false;
-    }*/
+    
 
     void RollForward()
     {
@@ -219,17 +198,7 @@ public class PlayerController_Joystick : MonoBehaviour
 
 
         }
-        /*if (pickUp.isHeld == true)
-        {
-            col.enabled = false;
-
-        }
-        else
-        {
-            col.enabled = true;
-
-        }*/
-
+       
         if (isTransformed)
         {
             Sync.SetActive(true);
