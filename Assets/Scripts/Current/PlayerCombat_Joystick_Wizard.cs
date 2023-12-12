@@ -11,32 +11,33 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
     public Transform firePoint;
     public float fireballSpeed = 10f;
     public float fireRate = 1f;
-    public float detectionRadius = 5f;
+    public float detectionRange = 5f;
     public LayerMask enemyLayerMask;
     
 
     private float nextFireTime = 0f;
-   
+    private SpriteRenderer playerSpriteRenderer;
     private Transform nearestEnemy;
 
     void Start()
     {
-        
+        playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     void Update()
     {
         
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius, enemyLayerMask);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRange, enemyLayerMask);
 
         if (colliders.Length > 0)
         {
             nearestEnemy = FindNearestEnemy(colliders);
-            FlipSpriteTowardsEnemy();
+            FlipWhenFindEnemy();
 
             if (Input.GetKeyDown(KeyCode.Joystick1Button5) && Time.time >= nextFireTime)
             {
+                
                 ShootFireball((nearestEnemy.position - firePoint.position).normalized);
                 nextFireTime = Time.time + 1f / fireRate;
             }
@@ -54,6 +55,33 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
                 Debug.Log("No enemy");
             }
         }
+
+
+        
+    }
+
+    private void FlipWhenFindEnemy()
+    {
+        float distanceToEnemy = Vector3.Distance(this.transform.position, nearestEnemy.position);
+
+        // Check if the enemy is within the detection range
+        if (distanceToEnemy <= detectionRange)
+        {
+            // Determine the direction from player to enemy
+            Vector3 direction = nearestEnemy.position - this.transform.position;
+
+            // Flip the player's sprite based on the direction
+            if (direction.x > 0) // Enemy is to the right of the player
+            {
+                this.transform.localScale = new Vector3(1f, 1f, 1f); // No flip
+            }
+            else if (direction.x < 0) // Enemy is to the left of the player
+            {
+                this.transform.localScale = new Vector3(-1f, 1f, 1f); // Flip the sprite horizontally
+            }
+        }
+
+
     }
 
     Transform FindNearestEnemy(Collider[] enemies)
@@ -74,23 +102,7 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
 
         return closestEnemy;
     }
-    void FlipSpriteTowardsEnemy()
-    {
-        if (nearestEnemy != null)
-        {
-            Vector3 charactorScale = transform.localScale;
-
-            if (nearestEnemy.position.x > transform.position.x)
-            {
-                transform.localScale = new Vector3(1f, 1f, 1f);
-            }
-            else
-            {
-                transform.localScale = new Vector3(-1f, 1f, 1f);
-            }
-        }
-    }
-
+    
     void ShootFireball(Vector3 direction)
     {
         GameObject fireball = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
@@ -103,6 +115,6 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
     }
 }
