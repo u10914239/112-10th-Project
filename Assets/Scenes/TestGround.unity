@@ -6343,12 +6343,12 @@ GameObject:
   - component: {fileID: 1220899736986441484}
   - component: {fileID: 5408512190100774022}
   - component: {fileID: 3172363161514562490}
+  - component: {fileID: 7409686278505551267}
   - component: {fileID: 2037844743781738031}
   - component: {fileID: 7409686278505551263}
   - component: {fileID: 7409686278505551264}
   - component: {fileID: 7409686278505551265}
   - component: {fileID: 7409686278505551266}
-  - component: {fileID: 7409686278505551267}
   m_Layer: 7
   m_Name: Player 1
   m_TagString: Player

@@ -31,30 +31,45 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
         {
             currentTarget = GetNearestEnemy();
         }
+        else
+        {
+
+            float distanceToTarget = Vector3.Distance(playerTransform.position, currentTarget.position);
+            if (distanceToTarget < detectionRange)
+            {
+                // Determine the direction from player to current target enemy
+                Vector3 direction = currentTarget.position - playerTransform.position;
+
+                // Flip the player's sprite based on the direction
+                if (direction.x > 0) // Enemy is to the right of the player
+                {
+                    playerTransform.localScale = new Vector3(1f, 1f, 1f); // No flip (original scale)
+                }
+                else if (direction.x < 0) // Enemy is to the left of the player
+                {
+                    playerTransform.localScale = new Vector3(-1f, 1f, 1f); // Flip the sprite horizontally
+                }
+
+
+            }
+                
+
+            // Check if the current target is beyond detection range
+            
+            if (distanceToTarget > detectionRange)
+            {
+                currentTarget = null; // Set the target to null if it's out of range
+            }
+        }
 
         if (currentTarget != null)
         {
-            // Determine the direction from player to current target enemy
-            Vector3 direction = currentTarget.position - playerTransform.position;
-
-            // Flip the player's sprite based on the direction
-            if (direction.x > 0) // Enemy is to the right of the player
-            {
-                playerTransform.localScale = new Vector3(1f, 1f, 1f); // No flip (original scale)
-            }
-            else if (direction.x < 0) // Enemy is to the left of the player
-            {
-                playerTransform.localScale = new Vector3(-1f, 1f, 1f); // Flip the sprite horizontally
-            }
-
             // Attack - Shoot projectile
             if (Input.GetKeyDown(KeyCode.Joystick1Button5) && Time.time >= nextFireTime)
             {
-
                 ShootFireball((currentTarget.position - firePoint.position).normalized);
                 nextFireTime = Time.time + 1f / fireRate;
             }
-            
         }
     }
 
@@ -101,34 +116,5 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, detectionRange);
     }
 
-    /*private void FlipWhenFindEnemy()
-    {
-        float distanceToEnemy = Vector3.Distance(this.transform.position, nearestEnemy.position);
-
-        // Check if the enemy is within the detection range
-        if (distanceToEnemy <= detectionRange)
-        {
-            // Determine the direction from player to enemy
-            Vector3 direction = nearestEnemy.position - this.transform.position;
-
-            // Flip the player's sprite based on the direction
-            if (direction.x > 0) // Enemy is to the right of the player
-            {
-                this.transform.localScale = new Vector3(1f, 1f, 1f); // No flip
-            }
-            else if (direction.x < 0) // Enemy is to the left of the player
-            {
-                this.transform.localScale = new Vector3(-1f, 1f, 1f); // Flip the sprite horizontally
-            }
-        }
-
-
-    }*/
-
-    /*if (Input.GetKeyDown(KeyCode.Joystick1Button5) && Time.time >= nextFireTime)
-            {
-                
-                ShootFireball((nearestEnemy.position - firePoint.position).normalized);
-                nextFireTime = Time.time + 1f / fireRate;
-            }*/
+    
 }
