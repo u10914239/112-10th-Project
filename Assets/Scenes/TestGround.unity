@@ -1567,6 +1567,8 @@ GameObject:
   - component: {fileID: 572521659}
   - component: {fileID: 572521657}
   - component: {fileID: 572521656}
+  - component: {fileID: 572521661}
+  - component: {fileID: 572521660}
   m_Layer: 9
   m_Name: enemy1
   m_TagString: EnemyType1
@@ -1761,6 +1763,31 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &572521660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572521651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f89b239aa88f194fb738bc24121d508, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &572521661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572521651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcbb671e54c70fb428d6af40b1397fd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  freezeXZAxis: 1
 --- !u!1 &647408490
 GameObject:
   m_ObjectHideFlags: 0
@@ -3466,6 +3493,8 @@ GameObject:
   - component: {fileID: 1213095096}
   - component: {fileID: 1213095094}
   - component: {fileID: 1213095093}
+  - component: {fileID: 1213095098}
+  - component: {fileID: 1213095097}
   m_Layer: 9
   m_Name: enemy2
   m_TagString: EnemyType2
@@ -3660,6 +3689,31 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &1213095097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213095088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f89b239aa88f194fb738bc24121d508, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1213095098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213095088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcbb671e54c70fb428d6af40b1397fd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  freezeXZAxis: 1
 --- !u!1 &1291699276
 GameObject:
   m_ObjectHideFlags: 0
@@ -6174,14 +6228,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75e42ee4276e61040b07418fd0abfb0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireballPrefab: {fileID: 315981810436374660, guid: 1a21749a0e1575148b6fb51f943e76ed, type: 3}
-  firePoint: {fileID: 479235435}
-  fireballSpeed: 8
-  fireRate: 1
-  detectionRange: 5
   enemyLayerMask:
     serializedVersion: 2
     m_Bits: 512
+  detectionRange: 2
+  firePoint: {fileID: 479235435}
+  fireballPrefab: {fileID: 315981810436374660, guid: 1a21749a0e1575148b6fb51f943e76ed, type: 3}
+  fireballSpeed: 10
+  fireRate: 1
 --- !u!208 &6887283207588838007
 NavMeshObstacle:
   m_ObjectHideFlags: 0

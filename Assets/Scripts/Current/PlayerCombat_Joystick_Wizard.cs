@@ -4,63 +4,104 @@ using UnityEngine;
 
 public class PlayerCombat_Joystick_Wizard : MonoBehaviour
 {
+
+    public LayerMask enemyLayerMask;
+    public float detectionRange = 10f; // Range within which the player should face the enemy
     
 
-
-    public GameObject fireballPrefab;
     public Transform firePoint;
+    public GameObject fireballPrefab;
     public float fireballSpeed = 10f;
     public float fireRate = 1f;
-    public float detectionRange = 5f;
-    public LayerMask enemyLayerMask;
-    
 
     private float nextFireTime = 0f;
+    private Transform playerTransform;
     private SpriteRenderer playerSpriteRenderer;
-    private Transform nearestEnemy;
+    private Transform currentTarget;
 
     void Start()
     {
+        playerTransform = transform;
         playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
-    void Update()
+    private void Update()
     {
-        
-
-        Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRange, enemyLayerMask);
-
-        if (colliders.Length > 0)
+        if (currentTarget == null || !currentTarget.gameObject.activeSelf)
         {
-            nearestEnemy = FindNearestEnemy(colliders);
-            FlipWhenFindEnemy();
+            currentTarget = GetNearestEnemy();
+        }
 
+        if (currentTarget != null)
+        {
+            // Determine the direction from player to current target enemy
+            Vector3 direction = currentTarget.position - playerTransform.position;
+
+            // Flip the player's sprite based on the direction
+            if (direction.x > 0) // Enemy is to the right of the player
+            {
+                playerTransform.localScale = new Vector3(1f, 1f, 1f); // No flip (original scale)
+            }
+            else if (direction.x < 0) // Enemy is to the left of the player
+            {
+                playerTransform.localScale = new Vector3(-1f, 1f, 1f); // Flip the sprite horizontally
+            }
+
+            // Attack - Shoot projectile
             if (Input.GetKeyDown(KeyCode.Joystick1Button5) && Time.time >= nextFireTime)
             {
-                
-                ShootFireball((nearestEnemy.position - firePoint.position).normalized);
+
+                ShootFireball((currentTarget.position - firePoint.position).normalized);
                 nextFireTime = Time.time + 1f / fireRate;
             }
+            
         }
-        else
+    }
+
+    // Function to find the nearest active enemy
+    private Transform GetNearestEnemy()
+    {
+        Transform nearestEnemy = null;
+        float minDistance = Mathf.Infinity;
+
+        Collider[] hitEnemies = Physics.OverlapSphere(playerTransform.position, detectionRange, enemyLayerMask);
+
+        foreach (Collider enemyCollider in hitEnemies)
         {
-            nearestEnemy = null;
+            Transform enemy = enemyCollider.transform;
 
-            if (Input.GetKeyDown(KeyCode.Joystick1Button5) && Time.time >= nextFireTime)
+            float distanceToEnemy = Vector3.Distance(playerTransform.position, enemy.position);
+
+            // Check if the enemy is closer than the current nearest enemy
+            if (distanceToEnemy < minDistance)
             {
-                /*ShootFireball(transform.right);
-                ShootFireball(-transform.right);
-                nextFireTime = Time.time + 1f / fireRate;*/
-
-                Debug.Log("No enemy");
+                minDistance = distanceToEnemy;
+                nearestEnemy = enemy;
             }
         }
 
-
-        
+        return nearestEnemy;
     }
 
-    private void FlipWhenFindEnemy()
+
+
+
+    void ShootFireball(Vector3 direction)
+    {
+        GameObject fireball = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
+        Rigidbody rb = fireball.GetComponent<Rigidbody>();
+        rb.velocity = direction * fireballSpeed;
+
+        Destroy(fireball, 2f);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+    }
+
+    /*private void FlipWhenFindEnemy()
     {
         float distanceToEnemy = Vector3.Distance(this.transform.position, nearestEnemy.position);
 
@@ -82,39 +123,12 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
         }
 
 
-    }
+    }*/
 
-    Transform FindNearestEnemy(Collider[] enemies)
-    {
-        float minDistance = Mathf.Infinity;
-        Transform closestEnemy = null;
-        Vector3 currentPosition = transform.position;
-
-        foreach (Collider enemyCollider in enemies)
-        {
-            float distance = Vector3.Distance(currentPosition, enemyCollider.transform.position);
-            if (distance < minDistance)
+    /*if (Input.GetKeyDown(KeyCode.Joystick1Button5) && Time.time >= nextFireTime)
             {
-                minDistance = distance;
-                closestEnemy = enemyCollider.transform;
-            }
-        }
-
-        return closestEnemy;
-    }
-    
-    void ShootFireball(Vector3 direction)
-    {
-        GameObject fireball = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
-        Rigidbody rb = fireball.GetComponent<Rigidbody>();
-        rb.velocity = direction * fireballSpeed;
-
-        Destroy(fireball, 2f);
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, detectionRange);
-    }
+                
+                ShootFireball((nearestEnemy.position - firePoint.position).normalized);
+                nextFireTime = Time.time + 1f / fireRate;
+            }*/
 }
