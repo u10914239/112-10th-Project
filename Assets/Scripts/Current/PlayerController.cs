@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
     {
         pickUp = GameObject.Find("Player 2").GetComponent<PickUp_Joystick>();
         playerHealth = GetComponent<PlayerHealth>();
-        playerCombat = GetComponent<PlayerCombat>();
+        playerCombat = GetComponentInChildren<PlayerCombat>();
         col = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
 

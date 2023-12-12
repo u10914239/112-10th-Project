@@ -5,17 +5,14 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
 
-
     public Animator anim;
-
     public Transform attackPoint;
-
     public int damageAmountType1 = 10;
     public int damageAmountType2 = 1;
     public float attackRange = 10f;
     public bool isAttacking;
-
     public LayerMask enemyLayer;
+
 
 
     public float attackRate = 2f;
@@ -27,7 +24,7 @@ public class PlayerCombat : MonoBehaviour
 
     void Start()
     {
-        movement = GetComponent<PlayerController>();
+        movement = GetComponentInParent<PlayerController>();
 
     }
 
@@ -38,9 +35,9 @@ public class PlayerCombat : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Mouse0) && movement.isTransformed == false)
             {
 
-                StartCoroutine(Attack());
+                StartCoroutine("Attack");
                 nextAttackTime = Time.time + 1f / attackRate;
-               
+
 
             }
         }
@@ -73,7 +70,7 @@ public class PlayerCombat : MonoBehaviour
 
         foreach (Collider enemy in hitEnemies)
         {
-          
+
 
             if (enemy.CompareTag("EnemyType1"))
             {
