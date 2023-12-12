@@ -17,7 +17,7 @@ public class PlayerCombat : MonoBehaviour
 
     public float attackRate = 2f;
     float nextAttackTime = 0f;
-
+    
     
     PlayerController movement;
 
@@ -36,10 +36,12 @@ public class PlayerCombat : MonoBehaviour
             {
 
                 Attack();
+                isAttacking = true;
                 nextAttackTime = Time.time + 1f / attackRate;
-
+                Invoke(nameof(ResetAttack), attackRate);
 
             }
+           
         }
 
         
@@ -48,30 +50,38 @@ public class PlayerCombat : MonoBehaviour
     void Attack()
     {
         anim.SetTrigger("Attack");
-
+        isAttacking = true;
 
     }
+    void ResetAttack()
+    {
+        isAttacking = false;
+
+    }
+   
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "EnemyType1")
+        if(other.tag == "EnemyType1" && isAttacking)
         {
             EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
                 // Apply damage to the enemy
                 enemyHealth.TakeDamage(damageAmountType1);
+                isAttacking = false;
             }
 
         }
 
-        if (other.tag == "EnemyType2")
+        if (other.tag == "EnemyType2" && isAttacking)
         {
             EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
                 // Apply damage to the enemy
                 enemyHealth.TakeDamage(damageAmountType2);
+                isAttacking = false;
             }
 
         }

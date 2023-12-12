@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if (canMove && !isDodging && !playerCombat.isAttacking)
+        if (canMove && !isDodging)
         {
             Movement();
 
