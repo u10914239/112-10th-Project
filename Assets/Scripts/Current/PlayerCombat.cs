@@ -35,7 +35,7 @@ public class PlayerCombat : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Mouse0) && movement.isTransformed == false)
             {
 
-                StartCoroutine("Attack");
+                Attack();
                 nextAttackTime = Time.time + 1f / attackRate;
 
 
@@ -45,7 +45,37 @@ public class PlayerCombat : MonoBehaviour
         
     }
 
-    
+    void Attack()
+    {
+        anim.SetTrigger("Attack");
+
+
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "EnemyType1")
+        {
+            EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                // Apply damage to the enemy
+                enemyHealth.TakeDamage(damageAmountType1);
+            }
+
+        }
+
+        if (other.tag == "EnemyType2")
+        {
+            EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                // Apply damage to the enemy
+                enemyHealth.TakeDamage(damageAmountType2);
+            }
+
+        }
+    }
    
    
 
@@ -59,7 +89,7 @@ public class PlayerCombat : MonoBehaviour
 
     }
 
-    IEnumerator Attack()
+    /*IEnumerator Attack()
     {
 
         isAttacking = true;
@@ -99,5 +129,5 @@ public class PlayerCombat : MonoBehaviour
 
         isAttacking = false;
 
-    }
+    }*/
 }
