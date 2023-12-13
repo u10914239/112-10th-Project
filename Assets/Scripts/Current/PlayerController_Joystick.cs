@@ -6,27 +6,20 @@ public class PlayerController_Joystick : MonoBehaviour
 {
     public float speed;
     float stopSpeed = 0f;
-
     public float dodgeForce = 10f;
     public float dodgeDuration = 0.5f;
-
     public float rollSpeed = 10f;
-
+    public float jumpForce;
     public float groundDist;
-
     public LayerMask terrainLayer;
     public Rigidbody rb;
     public Animator anim;
-
-    
-
     public static float powerTime;
     public bool isTransformed;
-    
-
-
     public SpriteRenderer Knight;
-    
+
+
+    private Vector2 moveInput;
     PickUp pickUp;
     PlayerHealth playerHealth;
     PlayerCombat_Joystick_Wizard playerCombat;
@@ -36,9 +29,7 @@ public class PlayerController_Joystick : MonoBehaviour
 
 
     bool canMove, isMoving, isDodging;
-    private Camera mainCamera;
-    private float minWorldX, maxWorldX, minWorldY, maxWorldY;
-    private float boundaryPadding = 1.0f;
+   
     
 
     void Awake()
@@ -58,8 +49,7 @@ public class PlayerController_Joystick : MonoBehaviour
         isTransformed = false;
         
         canMove = true;
-        mainCamera = Camera.main;
-        UpdateBoundaries();
+        
 
     }
 
@@ -74,20 +64,49 @@ public class PlayerController_Joystick : MonoBehaviour
             RollForward();
         }
 
-        
-       
+        if (canMove)
+        {
+            moveInput.x = Input.GetAxisRaw("Horizontal2");
+            moveInput.y = Input.GetAxisRaw("Vertical2");
+            moveInput.Normalize();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Joystick1Button2))
+        {
+
+            rb.velocity += new Vector3(0, jumpForce, 0);
+        }
+
+        Vector3 charactorScale = transform.localScale;
+
+        if (moveInput.x > 0)
+        {
+            charactorScale.x = 1;
+
+
+        }
+        if (moveInput.x < 0)
+        {
+            charactorScale.x = -1;
+        }
+
+        transform.localScale = charactorScale;
+
+
+
+        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal2") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical2") * speed);
+        anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
+
 
     }
     void FixedUpdate()
     {
         if (canMove)
         {
-            Movement();
-
+            rb.velocity = new Vector3(moveInput.x * speed, rb.velocity.y, moveInput.y * speed);
         }
 
-        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal2") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical2") * speed);
-        anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
+
 
         if (stopSpeed > 0.1f)
         {
@@ -100,62 +119,20 @@ public class PlayerController_Joystick : MonoBehaviour
             isMoving = false;
         }
 
+
+       
     }
 
-    private void UpdateBoundaries()
-    {
-        float distance = Mathf.Abs(mainCamera.transform.position.z - transform.position.z);
-
-        Vector3 lowerLeft = mainCamera.ScreenToWorldPoint(new Vector3(0 + boundaryPadding, 0 + boundaryPadding, distance));
-        Vector3 upperRight = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width - boundaryPadding, Screen.height - boundaryPadding, distance));
-
-        minWorldX = lowerLeft.x;
-        maxWorldX = upperRight.x;
-        minWorldY = lowerLeft.y;
-        maxWorldY = upperRight.y;
-    }
+   
 
     private void LateUpdate()
     {
         // Call UpdateBoundaries in LateUpdate to ensure it runs after the camera has moved
-        UpdateBoundaries();
+        
     }
 
-    private void Movement()
-    {
-        
-        float x = Input.GetAxisRaw("Horizontal2");
-        float y = Input.GetAxisRaw("Vertical2");
-
-        Vector3 moveDir = new Vector3(x, 0, y);
-        rb.velocity = moveDir * speed * Time.deltaTime;
-
-        Vector3 newPosition = transform.position + rb.velocity;
-
-        newPosition.x = Mathf.Clamp(newPosition.x, minWorldX, maxWorldX);
-        newPosition.y = Mathf.Clamp(newPosition.y, minWorldY, maxWorldY);
-
-        transform.position = newPosition;
-
-        Vector3 charactorScale = transform.localScale;
-
-        if (x > 0)
-        {
-            charactorScale.x = 1;
-
-
-        }
-        if (x < 0)
-        {
-            charactorScale.x = -1;
-        }
-
-        transform.localScale = charactorScale;
-
-        
-      
-    }
-
+    
+    
    
 
     

@@ -18,7 +18,8 @@ public class EnemyType : MonoBehaviour
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false;
+        //agent.updateRotation = false;
+        //agent.updateRotation = false;
 
     }
 
