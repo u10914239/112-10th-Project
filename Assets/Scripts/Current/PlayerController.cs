@@ -7,37 +7,25 @@ public class PlayerController : MonoBehaviour
 {
     public float speed;
     float stopSpeed = 0f;
-
     public float dodgeForce = 10f;
     public float dodgeDuration = 0.5f;
-   
     public float rollSpeed = 10f;
-
     public float jumpForce;
-
     public float groundDist;
-
     public float raycastDistance = 0.5f;
-    
-
     public LayerMask terrainLayer;
-    
     public Animator anim;
-
     public static float powerTime;
-    
     public bool isTransformed;
-    
-
     public GameObject Sync;
-    
-    
-
 
     bool canMove , isMoving, isDodging;
     private Camera mainCamera;
+    
     private float minWorldX, maxWorldX, minWorldY, maxWorldY;
-    private float boundaryPadding = 1.0f;
+    public float boundaryPadding = 0.1f;
+    private Vector2 moveInput;
+    private CapsuleCollider playerCollider;
 
     PickUp_Joystick pickUp;
     PlayerHealth playerHealth;
@@ -46,8 +34,8 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
 
     [SerializeField] private SimpleFlash flashEffect;
-   
 
+   
     private void Awake()
     {
         pickUp = GameObject.Find("Player 2").GetComponent<PickUp_Joystick>();
@@ -55,16 +43,17 @@ public class PlayerController : MonoBehaviour
         playerCombat = GetComponentInChildren<PlayerCombat>();
         col = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
-
+        playerCollider = GetComponent<CapsuleCollider>();
     }
     void Start()
     {
         
         isTransformed = false;
-        
         canMove = true;
         
+        
         mainCamera = Camera.main;
+        
         UpdateBoundaries();
     }
 
@@ -72,20 +61,43 @@ public class PlayerController : MonoBehaviour
     {
         
         TurnIntoWeapon();
-        Jump();
+       
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDodging && isMoving && !isTransformed)
         {
 
             RollForward();
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            /*rb.AddForce(Vector3.up*jumpForce, ForceMode.Impulse);*/
+            rb.velocity += new Vector3(0, jumpForce, 0);
+        }
+
+        moveInput.x= Input.GetAxisRaw("Horizontal");
+        moveInput.y = Input.GetAxisRaw("Vertical");
+        moveInput.Normalize();
+
+        
+        Vector3 charactorScale = transform.localScale;
+
+        if (moveInput.x > 0)
+        {
+            charactorScale.x = 1;
+
+
+        }
+        if (moveInput.x < 0)
+        {
+            charactorScale.x = -1;
+        }
+
+        transform.localScale = charactorScale;
 
 
 
-
-
-
-
+        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * speed);
+        anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
 
 
 
@@ -94,14 +106,9 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if (canMove && !isDodging)
-        {
-            Movement();
-
-        }
-
-        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * speed);
-        anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
+        rb.velocity = new Vector3(moveInput.x * speed, rb.velocity.y, moveInput.y * speed);
+        PlayerBoundCamera();
+        
 
         if (stopSpeed > 0.1f)
         {
@@ -114,7 +121,13 @@ public class PlayerController : MonoBehaviour
             isMoving = false;
         }
 
-        
+                
+    }
+
+
+    private void LateUpdate()
+    {
+         UpdateBoundaries();
     }
 
     private void UpdateBoundaries()
@@ -130,14 +143,29 @@ public class PlayerController : MonoBehaviour
         maxWorldY = upperRight.y;
     }
 
-    private void LateUpdate()
+    private void PlayerBoundCamera()
     {
-        // Call UpdateBoundaries in LateUpdate to ensure it runs after the camera has moved
-        UpdateBoundaries();
+        Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        moveInput.Normalize();
+
+        Vector3 newPosition = transform.position + moveInput * speed * Time.deltaTime;
+
+        newPosition.x = Mathf.Clamp(newPosition.x, minWorldX, maxWorldX);
+        newPosition.y = Mathf.Clamp(newPosition.y, minWorldY, maxWorldY);
+
+        // Check if the new position is within boundaries before updating the player's position
+        if (IsWithinBoundaries(newPosition))
+        {
+            rb.MovePosition(newPosition);
+        }
     }
 
-    
-    private void Movement()
+    private bool IsWithinBoundaries(Vector3 position)
+    {
+        return position.x >= minWorldX && position.x <= maxWorldX
+            && position.y >= minWorldY && position.y <= maxWorldY;
+    }
+    /*private void Movement()
     {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
@@ -145,8 +173,32 @@ public class PlayerController : MonoBehaviour
         Vector3 moveDir = new Vector3(x, 0, y);
         rb.velocity = moveDir * speed * Time.deltaTime;
 
+        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * speed);
+        anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
 
-        // 限制玩家在鏡頭內
+
+        
+
+       
+
+
+    }*/
+
+    /*private void UpdateBoundaries()
+    {
+        float distance = Mathf.Abs(mainCamera.transform.position.z - transform.position.z);
+
+        Vector3 lowerLeft = mainCamera.ScreenToWorldPoint(new Vector3(0 + boundaryPadding, 0 + boundaryPadding, distance));
+        Vector3 upperRight = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width - boundaryPadding, Screen.height - boundaryPadding, distance));
+
+        minWorldX = lowerLeft.x;
+        maxWorldX = upperRight.x;
+        minWorldY = lowerLeft.y;
+        maxWorldY = upperRight.y;
+    }
+
+    private void PlayerBoundCamera()
+    {
         Vector3 newPosition = transform.position + rb.velocity;
 
         newPosition.x = Mathf.Clamp(newPosition.x, minWorldX, maxWorldX);
@@ -155,50 +207,6 @@ public class PlayerController : MonoBehaviour
         transform.position = newPosition;
 
 
-        Vector3 charactorScale = transform.localScale;
-
-        if (x > 0)
-        {
-            charactorScale.x = 1;
-
-
-        }
-        if (x < 0)
-        {
-            charactorScale.x = -1;
-        }
-
-        transform.localScale = charactorScale;
-
-        
-
-    }
-
-    
-
-    /*IEnumerator StartDodge()
-    {
-        
-        
-        isDodging = true;
-
-        canMove = false;
-
-        playerHealth.enabled = false;
-
-        anim.SetTrigger("isDodging");
-        Vector3 rollDirection = transform.forward * rollSpeed;
-        rb.velocity = rollDirection;
-        
-        yield return new WaitForSeconds(dodgeDuration);
-
-        
-
-        isDodging = false;
-
-        canMove = true;
-
-        playerHealth.enabled = true;
     }*/
 
 
@@ -242,17 +250,7 @@ public class PlayerController : MonoBehaviour
 
 
         }
-        /*if (pickUp.isHeld == true)
-        {
-            col.enabled = false;
-
-        }
-        else
-        {
-            col.enabled = true;
-
-        }*/
-
+        
         if (isTransformed)
         {
             Sync.SetActive(true);
@@ -278,14 +276,10 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    void Jump()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            rb.AddForce(Vector3.up*jumpForce, ForceMode.Impulse);
-            
-        }
-    }
+
+
+
+    
 
     
 }

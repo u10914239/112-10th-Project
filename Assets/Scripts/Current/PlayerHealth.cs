@@ -89,7 +89,7 @@ public class PlayerHealth : MonoBehaviour
             HealthBar5.SetActive(false);
         }
     }
-    private void Die()
+    public void Die()
     {
         Debug.Log("I Died");
         gameObject.SetActive(false);
