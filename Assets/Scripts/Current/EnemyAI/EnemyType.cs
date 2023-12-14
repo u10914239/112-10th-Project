@@ -5,22 +5,31 @@ using UnityEngine.AI;
 
 public class EnemyType : MonoBehaviour
 {
-    public float chasingRange = 5f;
-    public float chaseCooldown = 1.0f;
-    public float detectionRange = 10f;
-    public LayerMask playerLayer;
 
+   
+    
+    public float detectionRange, attackRange;
+    public bool playerInSightRange, playerInAttackRange;
+    public LayerMask playerLayer;
+    
+    public float chaseCooldown = 1.0f;
+    public float timeBetweenAttacks;
+    bool alreadyAttacked;
+    
+
+
+    private Animator anim;
     private Transform target;
     private NavMeshAgent agent;
     private float lastPlayerMovementTime = Mathf.NegativeInfinity;
     private bool isFacingRight = false;
+    private EnemyHealth enemyHealth;
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        //agent.updateRotation = false;
-        //agent.updateRotation = false;
-
+        enemyHealth = GetComponent<EnemyHealth>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -28,8 +37,20 @@ public class EnemyType : MonoBehaviour
         if (Time.time - lastPlayerMovementTime > chaseCooldown)
         {
             FindNearestPlayer();
-            ChasePlayer();
+            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         }
+        
+
+        playerInSightRange = Physics.CheckSphere(transform.position, detectionRange, playerLayer);
+        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
+
+        //if (!playerInSightRange && !playerInAttackRange) Patroling();
+        
+        if (playerInAttackRange && playerInSightRange) AttackPlayer();
+
+        float velocity = agent.velocity.magnitude / agent.speed;
+        anim.SetFloat("Speed", Mathf.Abs(velocity));
+        StopMoving();
 
     }
 
@@ -68,12 +89,10 @@ public class EnemyType : MonoBehaviour
         {
             
             agent.SetDestination(target.position);
+            
+
 
             Vector3 direction = target.position - transform.position;
-            direction.y = 0; 
-            Quaternion rotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
-
             if (direction.x > 0 && !isFacingRight)
             {
                 
@@ -85,6 +104,48 @@ public class EnemyType : MonoBehaviour
                 Flip();
             }
         }
+    }
+
+    void AttackPlayer()
+    {
+        if(target != null)
+        {
+
+            anim.SetBool("isAttacking", true);
+            agent.SetDestination(transform.position);
+            
+
+            if (!alreadyAttacked)
+            {
+                alreadyAttacked = true;
+
+                Invoke(nameof(ResetAttack), timeBetweenAttacks);
+
+            }
+
+
+        }
+       
+        
+    }
+
+    void ResetAttack()
+    {
+        alreadyAttacked = false;
+        anim.SetBool("isAttacking", false);
+    }
+
+
+    void StopMoving()
+    {
+        if(enemyHealth.currentHealth <= 0)
+        {
+
+            agent.speed = 0;
+
+        }
+
+
     }
 
     void Flip()
@@ -99,5 +160,8 @@ public class EnemyType : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }

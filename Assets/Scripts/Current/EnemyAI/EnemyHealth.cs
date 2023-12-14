@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public Animator animator;
+    public Animator anim;
     public int maxHealth;
     public int currentHealth;
 
+    
     [SerializeField] private SimpleFlash flashEffect;
     
     void Start()
@@ -28,14 +29,17 @@ public class EnemyHealth : MonoBehaviour
         //animator.SetTrigger("Hit");
         if (currentHealth <= 0)
         {
-
+            anim.SetTrigger("isDead");
             Die();
         }
     }
 
     private void Die()
     {
+        
+        
         Debug.Log("Enemy Died");
-        Destroy(this.gameObject);
+        
+        Destroy(this.gameObject,2f);
     }
 }
