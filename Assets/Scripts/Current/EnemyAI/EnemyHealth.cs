@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EnemyHealth : MonoBehaviour
 {
     public Animator anim;
     public int maxHealth;
     public int currentHealth;
+    public static event Action OnDestroyed;
 
-    
     [SerializeField] private SimpleFlash flashEffect;
     
     void Start()
@@ -42,4 +43,10 @@ public class EnemyHealth : MonoBehaviour
         
         Destroy(this.gameObject,2f);
     }
+
+    void OnDestroy()
+    {
+        OnDestroyed?.Invoke(); // Invoke the event when the enemy is destroyed
+    }
+
 }
