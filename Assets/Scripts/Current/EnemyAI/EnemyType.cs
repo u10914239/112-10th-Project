@@ -21,6 +21,7 @@ public class EnemyType : MonoBehaviour
     private Animator anim;
     private Transform target;
     private NavMeshAgent agent;
+    
     private float lastPlayerMovementTime = Mathf.NegativeInfinity;
     private bool isFacingRight = false;
     private EnemyHealth enemyHealth;
@@ -30,6 +31,7 @@ public class EnemyType : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponentInChildren<Animator>();
+       
     }
 
     void Update()
@@ -115,18 +117,38 @@ public class EnemyType : MonoBehaviour
             agent.SetDestination(transform.position);
             
 
-            if (!alreadyAttacked)
-            {
-                alreadyAttacked = true;
-
-                Invoke(nameof(ResetAttack), timeBetweenAttacks);
-
-            }
+            
 
 
         }
        
         
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        
+        if (!alreadyAttacked)
+        {
+
+            if (other.tag == "Player")
+            {
+                PlayerHealth playerHealth = other.gameObject.GetComponent<PlayerHealth>();
+                if (playerHealth != null)
+                {
+                    // Apply damage to the enemy
+                    playerHealth.TakeDamage(1);
+                    
+                }
+
+            }
+
+            alreadyAttacked = true;
+
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+
+        }
+
     }
 
     void ResetAttack()

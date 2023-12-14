@@ -6,15 +6,27 @@ using System;
 public class EnemyHealth : MonoBehaviour
 {
     public Animator anim;
+    public float knockbackForce;
     public int maxHealth;
     public int currentHealth;
     public static event Action OnDestroyed;
 
+    
+    
     [SerializeField] private SimpleFlash flashEffect;
     
+
+    void Awake()
+    {
+        
+
+
+    }
+
     void Start()
     {
         currentHealth = maxHealth;
+        
     }
 
    
@@ -27,6 +39,7 @@ public class EnemyHealth : MonoBehaviour
     {
         flashEffect.Flash();
         currentHealth -= damage;
+        
         //animator.SetTrigger("Hit");
         if (currentHealth <= 0)
         {
@@ -40,8 +53,26 @@ public class EnemyHealth : MonoBehaviour
         
         
         Debug.Log("Enemy Died");
-        
+        DisableAllColliders(transform);
+        StartCoroutine(Disable());
         Destroy(this.gameObject,2f);
+    }
+
+    void DisableAllColliders(Transform parent)
+    {
+        Collider[] colliders = parent.GetComponentsInChildren<Collider>();
+
+        foreach (Collider col in colliders)
+        {
+            col.enabled = false;
+        }
+    }
+
+    IEnumerator Disable()
+    {
+
+        yield return new WaitForSeconds(2f);
+        this.gameObject.SetActive(false);
     }
 
     void OnDestroy()
