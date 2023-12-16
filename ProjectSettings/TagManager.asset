@@ -30,7 +30,7 @@ TagManager:
   - Ground
   - Enemies
   - CamBounds
-  - Obstacle
+  - EnemyDetection
   - 
   - 
   - 

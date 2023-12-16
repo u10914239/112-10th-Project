@@ -89,7 +89,7 @@ public class PlayerCombat : MonoBehaviour
    
    
 
-    void OnDrawGizmosSelected()
+    /*void OnDrawGizmosSelected()
     {
         if (attackPoint == null)
             return;
@@ -97,7 +97,7 @@ public class PlayerCombat : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
 
 
-    }
+    }*/
 
     /*IEnumerator Attack()
     {
