@@ -6,7 +6,7 @@ using System;
 public class EnemyHealth : MonoBehaviour
 {
     public Animator anim;
-    public float knockbackForce;
+    /*public float knockbackForce;*/
     public int maxHealth;
     public int currentHealth;
     public static event Action OnDestroyed;

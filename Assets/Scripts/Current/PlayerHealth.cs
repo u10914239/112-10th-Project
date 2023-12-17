@@ -35,7 +35,7 @@ public class PlayerHealth : MonoBehaviour
     {
         flashEffect.Flash();
         currentHealth -= damage;
-        Debug.Log("Player Health: " + currentHealth);
+        //Debug.Log("Player Health: " + currentHealth);
         if (currentHealth <= 0)
         {
 

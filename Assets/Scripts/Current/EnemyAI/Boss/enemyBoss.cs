@@ -6,64 +6,54 @@ using UnityEngine.AI;
 public class enemyBoss : MonoBehaviour
 {
 
-    public enemyBossAttack enemyShooting;
+    public float detectionRange, attackRange;
+    public bool playerInSightRange, playerInAttackRange;
     public LayerMask playerLayer;
-    
-    public float chaseCooldown = 1.0f;
-    public float detectionRange = 10f;
-    
-    
 
-    
-    private NavMeshAgent agent;
+    public float chaseCooldown = 1.0f;
+    public float timeBetweenAttacks;
+    public bool alreadyAttacked;
+
+
+
+    private Animator anim;
     private Transform target;
+    private NavMeshAgent agent;
+
     private float lastPlayerMovementTime = Mathf.NegativeInfinity;
     private bool isFacingRight = false;
+    
+    private EnemyHealth enemyHealth;
+    private SphereCollider sphereCollider;
 
-    void Start()
+    void Awake()
     {
-        
         agent = GetComponent<NavMeshAgent>();
-
-        if (target == null)
-        {
-            // If the target is not set, try to find the player object
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
-            {
-                target = player.transform;
-            }
-        }
-
-
-        // Get the EnemyShooting component
-        enemyShooting = GetComponent<enemyBossAttack>();
-
-        // Example: Start shooting projectiles after a delay
-        InvokeRepeating("StartShooting", 2f, 3f); // Calls StartShooting() every 3 seconds after an initial delay of 2 seconds
+        enemyHealth = GetComponent<EnemyHealth>();
+        anim = GetComponentInChildren<Animator>();
+        sphereCollider = GetComponentInChildren<SphereCollider>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //SpriteFlipCheck();
-
-        ChasePlayer();
-
         if (Time.time - lastPlayerMovementTime > chaseCooldown)
         {
             FindNearestPlayer();
-            ChasePlayer();
+            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         }
 
-    }
 
-    void StartShooting()
-    {
-        if (enemyShooting != null)
-        {
-            enemyShooting.ShootAtPlayer();
-        }
+        playerInSightRange = Physics.CheckSphere(transform.position, detectionRange, playerLayer);
+        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
+
+        //if (!playerInSightRange && !playerInAttackRange) Patroling();
+
+        if (playerInAttackRange && playerInSightRange) AttackPlayer();
+
+        float velocity = agent.velocity.magnitude / agent.speed;
+        anim.SetFloat("Speed", Mathf.Abs(velocity));
+        StopMoving();
+
     }
 
     void FindNearestPlayer()
@@ -99,40 +89,67 @@ public class enemyBoss : MonoBehaviour
     {
         if (target != null)
         {
-            //agent.stoppingDistance = 0.5f; // Set a stopping distance for chasing
+
             agent.SetDestination(target.position);
+            anim.SetBool("isAttacking", false);
+            
 
             Vector3 direction = target.position - transform.position;
-            direction.y = 0; // Ensure direction is on the XZ plane
-            Quaternion rotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
-
             if (direction.x > 0 && !isFacingRight)
             {
-                // If player is on the right side of the enemy
-                // Flip the sprite to face right
-                // Replace 'YourSpriteRenderer' with your actual SpriteRenderer component
+
                 Flip();
             }
             else if (direction.x < 0 && isFacingRight)
             {
-                // If player is on the left side of the enemy
-                // Flip the sprite to face left
-                // Replace 'YourSpriteRenderer' with your actual SpriteRenderer component
+
                 Flip();
             }
         }
     }
 
-    void SpriteFlipCheck()
+    void AttackPlayer()
     {
-        if (agent.velocity.x < 0 && isFacingRight)
+
+        agent.SetDestination(transform.position);
+
+        if (target != null && !alreadyAttacked)
         {
-            Flip();
+
+            
+            
+
+            alreadyAttacked = true;
+            anim.SetBool("isAttacking", true);
+
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
-        else if (agent.velocity.x > 0 && !isFacingRight)
+        
+
+
+    }
+
+    void ResetAttack()
+    {
+
+        alreadyAttacked = false;
+        anim.SetBool("isAttacking", false);
+    }
+
+
+
+    
+
+
+
+
+    void StopMoving()
+    {
+        if (enemyHealth.currentHealth <= 0)
         {
-            Flip();
+
+            agent.speed = 0;
+
         }
 
 
@@ -146,5 +163,14 @@ public class enemyBoss : MonoBehaviour
         transform.localScale = newScale;
     }
 
-   
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
+
 }

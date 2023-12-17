@@ -42,7 +42,7 @@ public class spawnMinions : MonoBehaviour
             // newMinion.transform.parent = transform;
 
             // Attach EnemyAI script to the spawned minion
-            Minion minionAI = newMinion.GetComponent<Minion>();
+           /* Minion minionAI = newMinion.GetComponent<Minion>();
             if (minionAI != null)
             {
                 minionAI.enabled = true; // Enable the EnemyAI script for navigation
@@ -50,7 +50,7 @@ public class spawnMinions : MonoBehaviour
             else
             {
                 Debug.LogError("Minion prefab is missing EnemyAI component.");
-            }
+            }*/
         }
     }
 
