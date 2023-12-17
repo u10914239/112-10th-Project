@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 872879938432178746}
   - component: {fileID: 5172079039666265540}
   - component: {fileID: 3551607996421867006}
+  - component: {fileID: 4586439265752470887}
   - component: {fileID: 2327297447242654274}
   - component: {fileID: 7125008761562554976}
   - component: {fileID: 4590114380653115763}
@@ -110,6 +111,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4586439265752470887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2896167105872150257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: addcd3057de306042ad388a55f71528b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2327297447242654274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,7 +177,7 @@ GameObject:
   - component: {fileID: 5027652487313581931}
   - component: {fileID: 6383563644967671852}
   m_Layer: 9
-  m_Name: enemy2
+  m_Name: Slime
   m_TagString: EnemyType2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -271,7 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRange: 3
-  attackRange: 0.3
+  attackRange: 0.1
   playerInSightRange: 0
   playerInAttackRange: 0
   playerLayer:
@@ -293,7 +306,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 5172079039666265540}
-  knockbackForce: 0
   maxHealth: 1
   currentHealth: 0
   flashEffect: {fileID: 2327297447242654274}
@@ -307,6 +319,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8366030521262865303}
   - component: {fileID: 2863759697694615317}
+  - component: {fileID: 7379207866635778028}
+  - component: {fileID: 6806499237673736857}
   m_Layer: 9
   m_Name: attackCollision
   m_TagString: Untagged
@@ -348,5 +362,44 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.15
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7379207866635778028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8725270406059922614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9873b53312fc45142ad58e7ecabf80db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &6806499237673736857
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8725270406059922614}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

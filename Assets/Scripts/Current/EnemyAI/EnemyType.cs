@@ -24,7 +24,7 @@ public class EnemyType : MonoBehaviour
     
     private float lastPlayerMovementTime = Mathf.NegativeInfinity;
     private bool isFacingRight = false;
-    private bool isAttacking = false;
+    
     private EnemyHealth enemyHealth;
     private SphereCollider sphereCollider;
 
@@ -112,17 +112,20 @@ public class EnemyType : MonoBehaviour
 
     void AttackPlayer()
     {
-        if(target != null && !alreadyAttacked)
+        agent.SetDestination(transform.position);
+
+        if (target != null && !alreadyAttacked)
         {
 
+
+
+
+            alreadyAttacked = true;
             anim.SetBool("isAttacking", true);
-            agent.SetDestination(transform.position);
-            isAttacking = true;
+
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
-        else
-        {
-            isAttacking = false;
-        }
+
 
 
     }
@@ -136,34 +139,7 @@ public class EnemyType : MonoBehaviour
 
     
 
-    void OnTriggerEnter(Collider other)
-    {
-        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-
-        
-        
-        if (other.tag == "Player" && isAttacking)
-        {
-               
-            if (playerHealth != null)
-            {
-                // Apply damage to the enemy
-                playerHealth.TakeDamage(1);
-                alreadyAttacked = true;
-
-                Invoke(nameof(ResetAttack), timeBetweenAttacks);
-
-            }
-
-        }
-
-
-        
-
-
-
-
-    }
+    
 
 
 

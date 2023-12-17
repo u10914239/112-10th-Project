@@ -29,7 +29,7 @@ public class enemyBossAttackMelee : MonoBehaviour
             {
                 // Apply damage to the enemy
                 playerHealth.TakeDamage(1);
-                Debug.Log("Hit");
+                
 
             }
 

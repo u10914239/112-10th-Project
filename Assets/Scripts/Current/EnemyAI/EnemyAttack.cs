@@ -21,7 +21,7 @@ public class EnemyAttack : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
                 
-        if (other.tag == "Player" && enemyType.alreadyAttacked==false)
+        if (other.tag == "Player")
         {
             PlayerHealth playerHealth = other.gameObject.GetComponent<PlayerHealth>();
             if (playerHealth != null)
