@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     public static float powerTime;
     public bool isTransformed;
     public GameObject Sync;
+    public bool facingRight;
+    public Quaternion initialGlobalRotation;
 
     bool canMove , isMoving, isDodging;
     
@@ -78,22 +80,7 @@ public class PlayerController : MonoBehaviour
        
 
         
-        Vector3 charactorScale = transform.localScale;
-
-        if (moveInput.x > 0)
-        {
-            charactorScale.x = 1;
-
-
-        }
-        if (moveInput.x < 0)
-        {
-            charactorScale.x = -1;
-        }
-
-        transform.localScale = charactorScale;
-
-
+        
 
         stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * speed);
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
@@ -109,8 +96,8 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector3(moveInput.x * speed, rb.velocity.y, moveInput.y * speed);
         }
-        
-                
+        properFlip();
+
 
         if (stopSpeed > 0.1f)
         {
@@ -126,13 +113,17 @@ public class PlayerController : MonoBehaviour
                 
     }
 
-
-    private void LateUpdate()
+    void properFlip()
     {
-         
+        if ((moveInput.x < 0 && facingRight) || (moveInput.x > 0 && !facingRight))
+        {
+            facingRight = !facingRight;
+            transform.Rotate(new Vector3(0, 180, 0));
+            initialGlobalRotation = transform.rotation;
+        }
     }
 
-    
+
 
     void RollForward()
     {

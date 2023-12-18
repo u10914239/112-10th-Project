@@ -11,31 +11,35 @@ public class PlayerController_Joystick : MonoBehaviour
     public float rollSpeed = 10f;
     public float jumpForce;
     public float groundDist;
+    public GameObject Sync;
     public LayerMask terrainLayer;
     public Rigidbody rb;
     public Animator anim;
     public static float powerTime;
     public bool isTransformed;
     public SpriteRenderer Knight;
-
+    public bool facingRight;
 
     private Vector2 moveInput;
-    PickUp pickUp;
+    public Quaternion initialGlobalRotation;
+    PickUp pickUp1;
+
     PlayerHealth playerHealth;
     PlayerCombat_Joystick_Wizard playerCombat;
     Collider col;
 
-    public GameObject Sync;
 
 
     bool canMove, isMoving, isDodging;
-   
+    bool currentFacing;
     
 
     void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-        pickUp = GameObject.Find("Player 1").GetComponent<PickUp>();
+        pickUp1 = GameObject.Find("Player 1").GetComponent<PickUp>();
+        
+        
         playerHealth = GetComponent<PlayerHealth>();
         playerCombat = GetComponent<PlayerCombat_Joystick_Wizard>();
         col = GetComponent<Collider>();
@@ -76,23 +80,8 @@ public class PlayerController_Joystick : MonoBehaviour
 
             rb.velocity += new Vector3(0, jumpForce, 0);
         }
-
-        Vector3 charactorScale = transform.localScale;
-
-        if (moveInput.x > 0)
-        {
-            charactorScale.x = 1;
-
-
-        }
-        if (moveInput.x < 0)
-        {
-            charactorScale.x = -1;
-        }
-
-        transform.localScale = charactorScale;
-
-
+        
+        
 
         stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal2") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical2") * speed);
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
@@ -103,9 +92,9 @@ public class PlayerController_Joystick : MonoBehaviour
     {
         if (canMove)
         {
-            rb.velocity = new Vector3(moveInput.x * speed, rb.velocity.y, moveInput.y * speed);
+            rb.velocity = new Vector3(moveInput.x * speed , rb.velocity.y, moveInput.y * speed);
         }
-
+        properFlip();
 
 
         if (stopSpeed > 0.1f)
@@ -123,19 +112,21 @@ public class PlayerController_Joystick : MonoBehaviour
        
     }
 
-   
 
-    private void LateUpdate()
+
+    void properFlip()
     {
-        // Call UpdateBoundaries in LateUpdate to ensure it runs after the camera has moved
-        
+        if ((moveInput.x < 0 && facingRight) || (moveInput.x > 0 && !facingRight))
+        {
+            facingRight = !facingRight;
+            transform.Rotate(new Vector3(0, 180, 0));
+            initialGlobalRotation = transform.rotation;
+        }
     }
 
-    
-    
-   
 
-    
+
+
 
     void RollForward()
     {
@@ -147,7 +138,7 @@ public class PlayerController_Joystick : MonoBehaviour
 
     void TurnIntoWeapon()
     {
-        if (pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1))
+        if (pickUp1.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             rb.isKinematic = true;
             rb.interpolation = RigidbodyInterpolation.None;
@@ -156,6 +147,7 @@ public class PlayerController_Joystick : MonoBehaviour
             
             canMove = false;
             col.isTrigger = true;
+           
 
 
             RaycastHit hit;
@@ -184,14 +176,14 @@ public class PlayerController_Joystick : MonoBehaviour
 
             if (powerTime >= 10)
             {
+                anim.SetBool("Transform", false);
                 rb.isKinematic = false;
                 rb.interpolation = RigidbodyInterpolation.Interpolate;
+                
 
-                anim.SetBool("Transform", false);
+
 
                 powerTime = 0;
-
-
                 col.isTrigger = false;
                 isTransformed = false;
                 canMove = true;

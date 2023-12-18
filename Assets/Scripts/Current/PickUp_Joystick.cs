@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PickUp_Joystick : MonoBehaviour
 {
-    private Transform weaponHolder;
+    public Transform weaponHolder;
     
     public bool isHeld;
 
@@ -26,6 +26,11 @@ public class PickUp_Joystick : MonoBehaviour
 
     }
 
+    void Update()
+    {
+
+        
+    }
 
     void FixedUpdate()
     {
@@ -35,8 +40,8 @@ public class PickUp_Joystick : MonoBehaviour
             
             this.transform.SetParent(null);
             isHeld = false;
-            
-            
+            player2.transform.rotation = player2.initialGlobalRotation;
+
 
         }
         
@@ -55,6 +60,8 @@ public class PickUp_Joystick : MonoBehaviour
             this.transform.SetParent(weaponHolder);
             transform.localPosition = Vector3.zero;
             isHeld = true;
+
+           
 
         }
        

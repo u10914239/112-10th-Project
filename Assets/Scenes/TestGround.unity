@@ -156,7 +156,7 @@ MonoBehaviour:
   spawnInterval: 1
   spawnPoint: {fileID: 834404390}
   spawnRadius: 1.34
-  maxEnemies: 1
+  maxEnemies: 10
 --- !u!4 &25139381
 Transform:
   m_ObjectHideFlags: 0
@@ -1990,7 +1990,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
-  attackRate: 2
+  attackRate: 0.5
 --- !u!136 &680141709
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5810,7 +5810,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1945647168
 Transform:
   m_ObjectHideFlags: 0
@@ -6625,6 +6625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4fcc50ca0431d84a842e6c15db8a039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponHolder: {fileID: 0}
   isHeld: 0
 --- !u!4 &1220899736986441484
 Transform:
@@ -6718,6 +6719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a08f6fbcff1ff84789e42853cf96dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponHolder: {fileID: 0}
   isHeld: 0
 --- !u!114 &2114284013273956704
 MonoBehaviour:
@@ -6737,6 +6739,7 @@ MonoBehaviour:
   rollSpeed: 10
   jumpForce: 15
   groundDist: 0.5
+  Sync: {fileID: 554261020}
   terrainLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -6744,7 +6747,8 @@ MonoBehaviour:
   anim: {fileID: 7751463215352447062}
   isTransformed: 0
   Knight: {fileID: 323646677360642144}
-  Sync: {fileID: 554261020}
+  facingRight: 1
+  initialGlobalRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!4 &2194223809336743651 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6172907540867845137, guid: 3ebef266c3302cb41bf646d5dff6a9a8, type: 3}
@@ -6795,6 +6799,8 @@ MonoBehaviour:
   anim: {fileID: 5271316052988360463}
   isTransformed: 0
   Sync: {fileID: 2124249797}
+  facingRight: 1
+  initialGlobalRotation: {x: 0, y: 0, z: 0, w: 0}
   flashEffect: {fileID: 8947623753132304164}
 --- !u!1 &3432753578552270478
 GameObject:
@@ -7271,10 +7277,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75e42ee4276e61040b07418fd0abfb0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyLayerMask:
-    serializedVersion: 2
-    m_Bits: 512
-  detectionRange: 2
   firePoint: {fileID: 479235435}
   fireballPrefab: {fileID: 315981810436374660, guid: 1a21749a0e1575148b6fb51f943e76ed, type: 3}
   fireballSpeed: 10

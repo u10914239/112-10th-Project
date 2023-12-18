@@ -7,17 +7,23 @@ public class Projectile : MonoBehaviour
     
     public int damageAmountType1 = 10; // Set your desired damage amount here
     public int damageAmountType2 = 1;
-
+    public float fireballSpeed;
 
     private Rigidbody rb;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        
+        /*rb = GetComponent<Rigidbody>();*/
+
+       /* rb.velocity = transform.right * fireballSpeed;*/
     }
 
-   
+    void Update()
+    {
+
+    }
+
+
     void OnTriggerEnter(Collider other)
     {
         // Check if the arrow collided with an enemy

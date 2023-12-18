@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PickUp : MonoBehaviour
 {
-    private Transform weaponHolder;
+    public Transform weaponHolder;
     
     public bool isHeld;
     
@@ -34,7 +34,7 @@ public class PickUp : MonoBehaviour
             
             this.transform.SetParent(null);
             isHeld = false;
-
+            player1.transform.rotation = player1.initialGlobalRotation;
 
 
         }

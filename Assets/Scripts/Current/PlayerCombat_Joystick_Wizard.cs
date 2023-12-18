@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerCombat_Joystick_Wizard : MonoBehaviour
 {
 
-    public LayerMask enemyLayerMask;
-    public float detectionRange = 10f; // Range within which the player should face the enemy
+    //public LayerMask enemyLayerMask;
+    //public float detectionRange = 10f; // Range within which the player should face the enemy
     
 
     public Transform firePoint;
@@ -15,19 +15,34 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
     public float fireRate = 1f;
 
     private float nextFireTime = 0f;
-    private Transform playerTransform;
+    /*private Transform playerTransform;
     private SpriteRenderer playerSpriteRenderer;
-    private Transform currentTarget;
+    private Transform currentTarget;*/
+    
 
     void Start()
     {
-        playerTransform = transform;
-        playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        //playerTransform = transform;
+        //playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        
     }
 
     private void Update()
     {
-        if (currentTarget == null || !currentTarget.gameObject.activeSelf)
+
+
+        if (Input.GetKeyDown(KeyCode.Joystick1Button5) && Time.time >= nextFireTime)
+        {
+            ShootFireball();
+
+
+
+            nextFireTime = Time.time + 1f / fireRate;
+
+        }
+
+
+       /* if (currentTarget == null || !currentTarget.gameObject.activeSelf)
         {
             currentTarget = GetNearestEnemy();
         }
@@ -52,29 +67,20 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
 
 
             }
-                
+
 
             // Check if the current target is beyond detection range
-            
+
             if (distanceToTarget > detectionRange)
             {
                 currentTarget = null; // Set the target to null if it's out of range
             }
-        }
+        }*/
 
-        if (currentTarget != null)
-        {
-            // Attack - Shoot projectile
-            if (Input.GetKeyDown(KeyCode.Joystick1Button5) && Time.time >= nextFireTime)
-            {
-                ShootFireball((currentTarget.position - firePoint.position).normalized);
-                nextFireTime = Time.time + 1f / fireRate;
-            }
-        }
     }
 
     // Function to find the nearest active enemy
-    private Transform GetNearestEnemy()
+    /*private Transform GetNearestEnemy()
     {
         Transform nearestEnemy = null;
         float minDistance = Mathf.Infinity;
@@ -96,25 +102,27 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
         }
 
         return nearestEnemy;
-    }
+    }*/
 
 
 
 
-    void ShootFireball(Vector3 direction)
+    void ShootFireball()
     {
+        // Create a fireball at the fire point position and rotation
         GameObject fireball = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
-        Rigidbody rb = fireball.GetComponent<Rigidbody>();
-        rb.velocity = direction * fireballSpeed;
 
-        Destroy(fireball, 2f);
+        // Set fireball's initial velocity along the X-axis
+        Rigidbody rb = fireball.GetComponent<Rigidbody>();
+        rb.velocity = transform.right * fireballSpeed; // fireballSpeed is a variable determining fireball speed
+        
     }
 
-    private void OnDrawGizmosSelected()
+    /*private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
-    }
+    }*/
 
-    
+
 }
