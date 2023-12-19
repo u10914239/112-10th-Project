@@ -10,22 +10,25 @@ public class PlayerCombat : MonoBehaviour
     public int damageAmountType1 = 10;
     public int damageAmountType2 = 1;
     public float attackRange = 10f;
+    public int multiplier = 2;
     public bool isAttacking;
     public LayerMask enemyLayer;
 
 
 
     public float attackRate = 2f;
-    
-    
-    
+    private float attackSpeed = 1f;
+    private float currentSpeed;
+
+    PickUp_Joystick pickUpJoy;
     PlayerController movement;
 
 
     void Start()
     {
         movement = GetComponentInParent<PlayerController>();
-
+        pickUpJoy = GameObject.Find("Player 2").GetComponent<PickUp_Joystick>();
+        currentSpeed = movement.speed;
     }
 
     void Update()
@@ -43,17 +46,30 @@ public class PlayerCombat : MonoBehaviour
         }
           
     }
+    void FixedUpdate()
+    {
+        
+        if(isAttacking)
+        {
+            movement.speed = attackSpeed;
+
+        }
+        else if (!isAttacking)
+        {
+            movement.speed = currentSpeed;
+        }
+    }
 
     void Attack()
     {
         anim.SetTrigger("Attack");
-        movement.enabled = false;
+        
         isAttacking = true;
         
     }
     void ResetAttack()
     {
-        movement.enabled = true;
+        
         isAttacking = false;
        
     }
@@ -78,10 +94,21 @@ public class PlayerCombat : MonoBehaviour
             EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
-                // Apply damage to the enemy
+                
+
                 enemyHealth.TakeDamage(damageAmountType2);
                 isAttacking = false;
+
+               
             }
+            if(enemyHealth != null && pickUpJoy.isHeld && pickUpJoy!= null)
+            {
+                Debug.Log("is multiply ");
+                enemyHealth.TakeDamage(damageAmountType2 * multiplier);
+                isAttacking = false;
+
+            }
+
 
         }
     }

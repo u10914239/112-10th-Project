@@ -74,9 +74,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1617e62b09289fd45a67c0c03dad2040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmountType1: 10
-  damageAmountType2: 1
+  damageAmountType1: 1
+  damageAmountType2: 10
   fireballSpeed: 10
+  multiplier: 2
 --- !u!54 &6776609636436410164
 Rigidbody:
   m_ObjectHideFlags: 0

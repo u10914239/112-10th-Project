@@ -2,74 +2,63 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUp_Joystick : MonoBehaviour
+public class PickUp : MonoBehaviour
 {
     public Transform weaponHolder;
     
     public bool isHeld;
-
+    
     PlayerController player1;
     PlayerController_Joystick player2;
 
-
     void Awake()
     {
-        player1 = GameObject.Find("Player 1").GetComponent<PlayerController>();
-        player2 = gameObject.GetComponent<PlayerController_Joystick>();
-        weaponHolder = GameObject.Find("Weapon Holder 1").GetComponent<Transform>();
+        player1 = gameObject.GetComponent<PlayerController>();
+        player2 = GameObject.Find("Player 2").GetComponent<PlayerController_Joystick>();
+        weaponHolder = GameObject.Find("Weapon Holder 2").GetComponent<Transform>();
         
 
     }
     void Start()
     {
         isHeld = false;
-
-    }
-
-    void Update()
-    {
-
         
     }
 
+   
     void FixedUpdate()
     {
 
-        if (player2.isTransformed == false)
+        if (player1.isTransformed == false)
         {
             
             this.transform.SetParent(null);
             isHeld = false;
-            player2.transform.rotation = player2.initialGlobalRotation;
+            player1.transform.rotation = player1.initialGlobalRotation;
 
 
         }
         
 
-    }
 
-    
+
+    }
 
     private void OnTriggerEnter(Collider collision)
     {
 
 
-        if (collision.gameObject.tag == "Player" && player2.isTransformed == true)
+        if (collision.gameObject.tag == "Player 2" && player1.isTransformed == true)
         {
             
             this.transform.SetParent(weaponHolder);
             transform.localPosition = Vector3.zero;
             isHeld = true;
 
-           
-
         }
-       
-
+        
 
     }
 
     
-
-
 }

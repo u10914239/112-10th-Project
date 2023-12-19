@@ -1,98 +1,101 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
-public class PlayerController_Joystick : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public float speed;
     float stopSpeed = 0f;
+
     public float dodgeForce = 10f;
     public float dodgeDuration = 0.5f;
     public float rollSpeed = 10f;
     public float jumpForce;
     public float groundDist;
-    public GameObject Sync;
-    public LayerMask terrainLayer;
-    public Rigidbody rb;
-    public Animator anim;
+    public float raycastDistance = 0.5f;
     public static float powerTime;
-    public bool isTransformed;
-    public SpriteRenderer Knight;
     public bool facingRight;
-
-    private Vector2 moveInput;
-    public Quaternion initialGlobalRotation;
-    PickUp pickUp1;
-
-    PlayerHealth playerHealth;
-    PlayerCombat_Joystick_Wizard playerCombat;
-    Collider col;
-
-
-
-    bool canMove, isMoving, isDodging;
-    bool currentFacing;
+    public bool isTransformed;
     
+    public LayerMask terrainLayer;
+    public Animator anim;
+    public GameObject Sync;
+    public Quaternion initialGlobalRotation;
 
-    void Awake()
+
+
+   
+    bool canMove , isMoving , isDodging;
+    private Vector2 moveInput;
+
+    PickUp_Joystick pickUp;
+   
+    PlayerCombat playerCombat;
+    Collider col;
+    Rigidbody rb;
+
+    [SerializeField] private SimpleFlash flashEffect;
+
+   
+    private void Awake()
     {
-        rb = gameObject.GetComponent<Rigidbody>();
-        pickUp1 = GameObject.Find("Player 1").GetComponent<PickUp>();
+        pickUp = GameObject.Find("Player 2").GetComponent<PickUp_Joystick>();
         
-        
-        playerHealth = GetComponent<PlayerHealth>();
-        playerCombat = GetComponent<PlayerCombat_Joystick_Wizard>();
+        playerCombat = GetComponentInChildren<PlayerCombat>();
         col = GetComponent<Collider>();
-
+        rb = GetComponent<Rigidbody>();
+        
     }
-
     void Start()
     {
         
-
         isTransformed = false;
-        
         canMove = true;
         
-
     }
 
     void Update()
     {
         
         TurnIntoWeapon();
+       
 
-        if (Input.GetKeyDown(KeyCode.Joystick1Button0) && !isDodging && isMoving)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDodging && isMoving && !isTransformed)
         {
 
             RollForward();
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            
+            rb.velocity += new Vector3(0, jumpForce, 0);
+        }
 
         if (canMove)
         {
-            moveInput.x = Input.GetAxisRaw("Horizontal2");
-            moveInput.y = Input.GetAxisRaw("Vertical2");
+            moveInput.x = Input.GetAxisRaw("Horizontal");
+            moveInput.y = Input.GetAxisRaw("Vertical");
             moveInput.Normalize();
         }
+       
 
-        if (Input.GetKeyDown(KeyCode.Joystick1Button2))
-        {
-
-            rb.velocity += new Vector3(0, jumpForce, 0);
-        }
         
         
 
-        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal2") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical2") * speed);
+        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * speed);
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
 
 
+
+
     }
-    void FixedUpdate()
+    
+    private void FixedUpdate()
     {
-        if (canMove)
+        if(canMove)
         {
-            rb.velocity = new Vector3(moveInput.x * speed , rb.velocity.y, moveInput.y * speed);
+            rb.velocity = new Vector3(moveInput.x * speed, rb.velocity.y, moveInput.y * speed);
         }
         properFlip();
 
@@ -108,11 +111,8 @@ public class PlayerController_Joystick : MonoBehaviour
             isMoving = false;
         }
 
-
-       
+                
     }
-
-
 
     void properFlip()
     {
@@ -126,8 +126,6 @@ public class PlayerController_Joystick : MonoBehaviour
 
 
 
-
-
     void RollForward()
     {
         anim.SetTrigger("isDodging");
@@ -136,9 +134,10 @@ public class PlayerController_Joystick : MonoBehaviour
     }
 
 
+
     void TurnIntoWeapon()
     {
-        if (pickUp1.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1))
+        if (pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.E))
         {
             rb.isKinematic = true;
             rb.interpolation = RigidbodyInterpolation.None;
@@ -147,7 +146,6 @@ public class PlayerController_Joystick : MonoBehaviour
             
             canMove = false;
             col.isTrigger = true;
-           
 
 
             RaycastHit hit;
@@ -168,31 +166,38 @@ public class PlayerController_Joystick : MonoBehaviour
 
 
         }
-       
+        
         if (isTransformed)
         {
             Sync.SetActive(true);
             powerTime += Time.deltaTime;
-
+            
             if (powerTime >= 10)
             {
-                anim.SetBool("Transform", false);
                 rb.isKinematic = false;
                 rb.interpolation = RigidbodyInterpolation.Interpolate;
-                
 
-
+                anim.SetBool("Transform", false);
 
                 powerTime = 0;
+
+
                 col.isTrigger = false;
                 isTransformed = false;
                 canMove = true;
                 Sync.SetActive(false);
-
+               
             }
 
         }
 
     }
 
+
+
+    
+
+    
 }
+
+   

@@ -18,11 +18,11 @@ public class enemyBossAttackMelee : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+        PlayerHealthBar playerHealth = other.GetComponent<PlayerHealthBar>();
 
 
 
-        if (other.tag == "Player")
+        if (other.tag == "Player 1")
         {
 
             if (playerHealth != null)
@@ -30,6 +30,19 @@ public class enemyBossAttackMelee : MonoBehaviour
                 // Apply damage to the enemy
                 playerHealth.TakeDamage(1);
                 
+
+            }
+
+        }
+
+        if (other.tag == "Player 2")
+        {
+
+            if (playerHealth != null)
+            {
+                // Apply damage to the enemy
+                playerHealth.TakeDamage(1);
+
 
             }
 

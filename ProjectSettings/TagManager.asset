@@ -11,13 +11,12 @@ TagManager:
   - Main
   - Second
   - Enemy
-  - smallWave
   - End
-  - PlayerHitBox
-  - Player2
   - Target
   - EnemyType1
   - EnemyType2
+  - Player 1
+  - Player 2
   layers:
   - Default
   - TransparentFX

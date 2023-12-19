@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController_Joystick : MonoBehaviour
 {
     public float speed;
     float stopSpeed = 0f;
@@ -12,89 +11,88 @@ public class PlayerController : MonoBehaviour
     public float rollSpeed = 10f;
     public float jumpForce;
     public float groundDist;
-    public float raycastDistance = 0.5f;
+    public GameObject Sync;
     public LayerMask terrainLayer;
+    public Rigidbody rb;
     public Animator anim;
     public static float powerTime;
     public bool isTransformed;
-    public GameObject Sync;
     public bool facingRight;
     public Quaternion initialGlobalRotation;
+    public SpriteRenderer magicStaff;
 
-    bool canMove , isMoving, isDodging;
-    
-    
-   
+
+
     private Vector2 moveInput;
-   
-
-    PickUp_Joystick pickUp;
-    PlayerHealth playerHealth;
-    PlayerCombat playerCombat;
+    PickUp pickUp1;
+    PlayerCombat_Joystick_Wizard playerCombat;
     Collider col;
-    Rigidbody rb;
 
-    [SerializeField] private SimpleFlash flashEffect;
 
-   
-    private void Awake()
+
+    bool canMove, isMoving;
+    bool currentFacing;
+    
+
+    void Awake()
     {
-        pickUp = GameObject.Find("Player 2").GetComponent<PickUp_Joystick>();
-        playerHealth = GetComponent<PlayerHealth>();
-        playerCombat = GetComponentInChildren<PlayerCombat>();
+        rb = gameObject.GetComponent<Rigidbody>();
+        pickUp1 = GameObject.Find("Player 1").GetComponent<PickUp>();
+       
+
+
+        playerCombat = GetComponent<PlayerCombat_Joystick_Wizard>();
         col = GetComponent<Collider>();
-        rb = GetComponent<Rigidbody>();
-        
+
     }
+
     void Start()
     {
         
+
         isTransformed = false;
+        
         canMove = true;
         
+
     }
 
     void Update()
     {
         
         TurnIntoWeapon();
-       
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDodging && isMoving && !isTransformed)
+        if (Input.GetKeyDown(KeyCode.Joystick1Button0) && isMoving)
         {
 
             RollForward();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            
-            rb.velocity += new Vector3(0, jumpForce, 0);
-        }
 
         if (canMove)
         {
-            moveInput.x = Input.GetAxisRaw("Horizontal");
-            moveInput.y = Input.GetAxisRaw("Vertical");
+            moveInput.x = Input.GetAxisRaw("Horizontal2");
+            moveInput.y = Input.GetAxisRaw("Vertical2");
             moveInput.Normalize();
         }
-       
 
+        if (Input.GetKeyDown(KeyCode.Joystick1Button2))
+        {
+
+            rb.velocity += new Vector3(0, jumpForce, 0);
+        }
         
         
 
-        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * speed);
+        stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal2") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical2") * speed);
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
 
 
-
-
     }
-    
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-        if(canMove)
+        if (canMove)
         {
-            rb.velocity = new Vector3(moveInput.x * speed, rb.velocity.y, moveInput.y * speed);
+            rb.velocity = new Vector3(moveInput.x * speed , rb.velocity.y, moveInput.y * speed);
         }
         properFlip();
 
@@ -110,8 +108,11 @@ public class PlayerController : MonoBehaviour
             isMoving = false;
         }
 
-                
+
+       
     }
+
+
 
     void properFlip()
     {
@@ -125,18 +126,20 @@ public class PlayerController : MonoBehaviour
 
 
 
+
+
     void RollForward()
     {
         anim.SetTrigger("isDodging");
         Vector3 rollDirection = transform.forward * rollSpeed;
         rb.velocity = rollDirection;
-    }
 
+    }
 
 
     void TurnIntoWeapon()
     {
-        if (pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.E))
+        if (pickUp1.isHeld == false  && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             rb.isKinematic = true;
             rb.interpolation = RigidbodyInterpolation.None;
@@ -145,6 +148,7 @@ public class PlayerController : MonoBehaviour
             
             canMove = false;
             col.isTrigger = true;
+           
 
 
             RaycastHit hit;
@@ -165,38 +169,31 @@ public class PlayerController : MonoBehaviour
 
 
         }
-        
+       
         if (isTransformed)
         {
             Sync.SetActive(true);
             powerTime += Time.deltaTime;
-            
+
             if (powerTime >= 10)
             {
+                anim.SetBool("Transform", false);
                 rb.isKinematic = false;
                 rb.interpolation = RigidbodyInterpolation.Interpolate;
+                
 
-                anim.SetBool("Transform", false);
+
 
                 powerTime = 0;
-
-
                 col.isTrigger = false;
                 isTransformed = false;
                 canMove = true;
                 Sync.SetActive(false);
-               
+
             }
 
         }
 
     }
 
-
-
-    
-
-    
 }
-
-   

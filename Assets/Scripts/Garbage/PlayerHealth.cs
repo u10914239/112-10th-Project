@@ -11,9 +11,19 @@ public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth;
     int currentHealth;
+
+    public bool isInvulernable = false;
     public GameObject HealthBar1,HealthBar2,HealthBar3,HealthBar4,HealthBar5;
     public float Health1,Health2,Health3,Health4,Health5;
     [SerializeField] private SimpleFlash flashEffect;
+
+    
+
+    void Awake()
+    {
+        
+    }
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -33,9 +43,13 @@ public class PlayerHealth : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
+
+        if (isInvulernable)
+            return;
+
         flashEffect.Flash();
         currentHealth -= damage;
-        Debug.Log("Player Health: " + currentHealth);
+        //Debug.Log("Player Health: " + currentHealth);
         if (currentHealth <= 0)
         {
 

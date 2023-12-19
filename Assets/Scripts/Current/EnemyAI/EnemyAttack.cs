@@ -20,10 +20,10 @@ public class EnemyAttack : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-                
-        if (other.tag == "Player")
+        PlayerHealthBar playerHealth = other.gameObject.GetComponent<PlayerHealthBar>();
+        if (other.tag == "Player 1")
         {
-            PlayerHealth playerHealth = other.gameObject.GetComponent<PlayerHealth>();
+            
             if (playerHealth != null)
             {
                 // Apply damage to the enemy
@@ -32,6 +32,18 @@ public class EnemyAttack : MonoBehaviour
             }
 
         }
-                
+
+
+        if (other.tag == "Player 2")
+        {
+            
+            if (playerHealth != null)
+            {
+                // Apply damage to the enemy
+                playerHealth.TakeDamage(1);
+
+            }
+
+        }
     }
 }
