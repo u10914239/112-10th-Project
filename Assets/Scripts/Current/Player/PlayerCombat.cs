@@ -10,6 +10,7 @@ public class PlayerCombat : MonoBehaviour
     public int damageAmountType1 = 10;
     public int damageAmountType2 = 1;
     public float attackRange = 10f;
+    public float knockbackForce = 10f;
     public int multiplier = 2;
     public bool isAttacking;
     public LayerMask enemyLayer;
@@ -77,9 +78,20 @@ public class PlayerCombat : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "EnemyType1" && isAttacking)
+       
+        EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
+        EnemyType enemyAI = other.gameObject.GetComponent<EnemyType>();
+
+        if(other.tag == "EnemyType1"|| other.tag == "EnemyType2")
         {
-            EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
+            
+            
+           StartCoroutine(enemyAI.KnockBack());
+        }
+
+
+        if (other.tag == "EnemyType1" && isAttacking)
+        {
             if (enemyHealth != null)
             {
                 // Apply damage to the enemy
@@ -91,15 +103,16 @@ public class PlayerCombat : MonoBehaviour
 
         if (other.tag == "EnemyType2" && isAttacking)
         {
-            EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
+            
+
             if (enemyHealth != null)
             {
                 
-
                 enemyHealth.TakeDamage(damageAmountType2);
                 isAttacking = false;
 
-               
+                
+
             }
             if(enemyHealth != null && pickUpJoy.isHeld && pickUpJoy!= null)
             {
@@ -109,8 +122,21 @@ public class PlayerCombat : MonoBehaviour
 
             }
 
+            Rigidbody rb = other.GetComponent<Rigidbody>();
+
+            if (rb != null)
+            {
+                Vector3 knockBack = (other.transform.position - transform.position).normalized;
+                
+                rb.AddForce(knockBack * knockbackForce, ForceMode.Impulse);
+                StartCoroutine(enemyAI.KnockBack());
+            }
+            
 
         }
+
+
+
     }
    
    

@@ -15,25 +15,26 @@ public class EnemyType : MonoBehaviour
     public float chaseCooldown = 1.0f;
     public float timeBetweenAttacks;
     public bool alreadyAttacked;
-    
+    public bool isFacingRight = false;
 
 
+    private Rigidbody rb;
     private Animator anim;
     private Transform target;
     private NavMeshAgent agent;
+    private EnemyHealth enemyHealth;
     
     private float lastPlayerMovementTime = Mathf.NegativeInfinity;
-    private bool isFacingRight = false;
     
-    private EnemyHealth enemyHealth;
-    private SphereCollider sphereCollider;
+    
+
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponentInChildren<Animator>();
-        sphereCollider = GetComponentInChildren<SphereCollider>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -58,6 +59,25 @@ public class EnemyType : MonoBehaviour
 
     }
 
+    void FixedUpdate()
+    {
+        
+
+
+    }
+
+    public IEnumerator KnockBack()
+    {
+        agent.isStopped = true;
+
+        yield return new WaitForSeconds(0.2f); //Only knock the enemy back for a short time     
+
+        rb.velocity = Vector3.zero;
+        agent.isStopped = false;
+
+    }
+
+    
     void FindNearestPlayer()
     {
         Collider[] players = Physics.OverlapSphere(transform.position, detectionRange, playerLayer);

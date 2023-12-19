@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class PlayerHealthBar : MonoBehaviour
 {
-    [SerializeField] private Slider SliderValue;
 
     public int maxHealth = 500;
+    public bool isInvulernable = false;
+
+    [SerializeField] private Slider SliderValue;
     [SerializeField] int currentHealth;
     [SerializeField] private SimpleFlash flashEffect;
     void Start()
@@ -23,9 +25,11 @@ public class PlayerHealthBar : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (isInvulernable)
+            return;
         flashEffect.Flash();
         currentHealth -= damage;
-        Debug.Log("Player Health: " + currentHealth);
+        //Debug.Log("Player Health: " + currentHealth);
         if (currentHealth <= 0)
         {
 

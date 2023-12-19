@@ -11,14 +11,14 @@ public class EnemyHealth : MonoBehaviour
     public int currentHealth;
     public static event Action OnDestroyed;
 
-    
+
     
     [SerializeField] private SimpleFlash flashEffect;
     
 
     void Awake()
     {
-        
+       
 
 
     }
@@ -39,8 +39,14 @@ public class EnemyHealth : MonoBehaviour
     {
         flashEffect.Flash();
         currentHealth -= damage;
+
         Debug.Log("Enemy Health: " + currentHealth);
-        //animator.SetTrigger("Hit");
+        anim.SetTrigger("Hit");
+
+        
+
+
+
         if (currentHealth <= 0)
         {
             anim.SetTrigger("isDead");

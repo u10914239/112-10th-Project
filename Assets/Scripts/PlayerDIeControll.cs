@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerDIeControll : MonoBehaviour
 {
     public GameObject player1, player2;
-    PlayerHealth playerHealth;
+    PlayerHealthBar playerHealth;
 
     void Start()
     {
@@ -18,7 +18,7 @@ public class PlayerDIeControll : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.M))
         {
-            playerHealth = player2.GetComponent<PlayerHealth>();
+            playerHealth = player2.GetComponent<PlayerHealthBar>();
             playerHealth.Die();
 
         }

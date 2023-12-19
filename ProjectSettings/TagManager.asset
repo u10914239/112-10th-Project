@@ -17,6 +17,7 @@ TagManager:
   - EnemyType2
   - Player 1
   - Player 2
+  - WeaponCollider
   layers:
   - Default
   - TransparentFX

@@ -7,7 +7,7 @@ AnimationClip:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Skeleton_Walk
-  serializedVersion: 6
+  serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
   m_UseHighQualityCurve: 1
@@ -17,48 +17,15 @@ AnimationClip:
   m_PositionCurves: []
   m_ScaleCurves: []
   m_FloatCurves: []
-  m_PPtrCurves:
-  - curve:
-    - time: 0
-      value: {fileID: 21300000, guid: 7511bcee84fdd744da9c93f1301d4004, type: 3}
-    - time: 0.14285715
-      value: {fileID: 21300000, guid: 6883266f30228d24eb6484aa40166075, type: 3}
-    - time: 0.2857143
-      value: {fileID: 21300000, guid: 25e5394b9c6297d4887ad8e89ecd6c4f, type: 3}
-    - time: 0.42857143
-      value: {fileID: 21300000, guid: e3361123748e1604b96e7ee4f188a7ab, type: 3}
-    - time: 0.5714286
-      value: {fileID: 21300000, guid: 418e6d781a01bd548851fe0ac424188c, type: 3}
-    - time: 0.71428573
-      value: {fileID: 21300000, guid: 949b617aa72b01943859f51bc3e65e47, type: 3}
-    - time: 0.85714287
-      value: {fileID: 21300000, guid: f74b63e6f6f2b0549a2ddf20576e5bf3, type: 3}
-    attribute: m_Sprite
-    path: 
-    classID: 212
-    script: {fileID: 0}
-  m_SampleRate: 7
+  m_PPtrCurves: []
+  m_SampleRate: 60
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
-    genericBindings:
-    - serializedVersion: 2
-      path: 0
-      attribute: 0
-      script: {fileID: 0}
-      typeID: 212
-      customType: 23
-      isPPtrCurve: 1
-    pptrCurveMapping:
-    - {fileID: 21300000, guid: 7511bcee84fdd744da9c93f1301d4004, type: 3}
-    - {fileID: 21300000, guid: 6883266f30228d24eb6484aa40166075, type: 3}
-    - {fileID: 21300000, guid: 25e5394b9c6297d4887ad8e89ecd6c4f, type: 3}
-    - {fileID: 21300000, guid: e3361123748e1604b96e7ee4f188a7ab, type: 3}
-    - {fileID: 21300000, guid: 418e6d781a01bd548851fe0ac424188c, type: 3}
-    - {fileID: 21300000, guid: 949b617aa72b01943859f51bc3e65e47, type: 3}
-    - {fileID: 21300000, guid: f74b63e6f6f2b0549a2ddf20576e5bf3, type: 3}
+    genericBindings: []
+    pptrCurveMapping: []
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
