@@ -109,6 +109,9 @@ public class EnemyType : MonoBehaviour
 
     void ChasePlayer()
     {
+        if (enemyHealth.currentHealth <= 0)
+            return;
+
         if (target != null)
         {
             

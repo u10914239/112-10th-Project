@@ -82,12 +82,7 @@ public class PlayerCombat : MonoBehaviour
         EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
         EnemyType enemyAI = other.gameObject.GetComponent<EnemyType>();
 
-        if(other.tag == "EnemyType1"|| other.tag == "EnemyType2")
-        {
-            
-            
-           StartCoroutine(enemyAI.KnockBack());
-        }
+       
 
 
         if (other.tag == "EnemyType1" && isAttacking)
@@ -99,6 +94,15 @@ public class PlayerCombat : MonoBehaviour
                 isAttacking = false;
             }
 
+            Rigidbody rb = other.GetComponent<Rigidbody>();
+
+            if (rb != null)
+            {
+                Vector3 knockBack = (other.transform.position - transform.position).normalized;
+
+                rb.AddForce(knockBack * knockbackForce, ForceMode.Impulse);
+                StartCoroutine(enemyAI.KnockBack());
+            }
         }
 
         if (other.tag == "EnemyType2" && isAttacking)
