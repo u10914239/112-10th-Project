@@ -293,6 +293,7 @@ MonoBehaviour:
   chaseCooldown: 1
   timeBetweenAttacks: 0.5
   alreadyAttacked: 0
+  isFacingRight: 0
 --- !u!114 &6383563644967671852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,6 +309,7 @@ MonoBehaviour:
   anim: {fileID: 5172079039666265540}
   maxHealth: 1
   currentHealth: 0
+  PlayerKillCount: {fileID: 0}
   flashEffect: {fileID: 2327297447242654274}
 --- !u!1 &8725270406059922614
 GameObject:

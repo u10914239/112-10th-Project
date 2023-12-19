@@ -101,7 +101,7 @@ public class PlayerCombat : MonoBehaviour
                 Vector3 knockBack = (other.transform.position - transform.position).normalized;
 
                 rb.AddForce(knockBack * knockbackForce, ForceMode.Impulse);
-                StartCoroutine(enemyAI.KnockBack());
+                //StartCoroutine(enemyAI.KnockBack());
             }
         }
 

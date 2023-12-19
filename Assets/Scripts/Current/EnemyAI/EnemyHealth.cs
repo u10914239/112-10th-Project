@@ -10,12 +10,9 @@ public class EnemyHealth : MonoBehaviour
     public int maxHealth;
     public int currentHealth;
     public static event Action OnDestroyed;
-
-
     
     [SerializeField] private SimpleFlash flashEffect;
-    
-
+    [SerializeField] bool AmIBoss;
     void Awake()
     {
        
@@ -51,6 +48,12 @@ public class EnemyHealth : MonoBehaviour
         {
             anim.SetTrigger("isDead");
             Die();
+            GameManager.PlayerKillCount +=1;
+            if(AmIBoss)
+            {
+                Story.ResetStory = true;
+                Story.ScriptsVersion = 2;
+            }
         }
     }
 

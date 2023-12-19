@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject GameOverScreen;
     public GameObject DemoEnd;
+    public static int PlayerKillCount;
     void Start()
     {
         
@@ -14,7 +15,16 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Mission();
+    }
+
+    void Mission()
+    {
+        if(PlayerKillCount >= 5)
+        {
+            print("Boss Spawn");
+            BossSpawn.BossTrigger = true;
+        }
     }
 
     void Trash()
