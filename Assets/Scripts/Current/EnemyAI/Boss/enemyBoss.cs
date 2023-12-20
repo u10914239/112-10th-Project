@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class enemyBoss : MonoBehaviour
+public class EnemyBoss : MonoBehaviour
 {
 
     public float detectionRange, attackRange;
@@ -15,7 +15,7 @@ public class enemyBoss : MonoBehaviour
     public bool alreadyAttacked;
 
 
-
+    private Rigidbody rb;
     private Animator anim;
     private Transform target;
     private NavMeshAgent agent;
@@ -24,14 +24,14 @@ public class enemyBoss : MonoBehaviour
     private bool isFacingRight = false;
     
     private EnemyHealth enemyHealth;
-    private SphereCollider sphereCollider;
-
+   
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponentInChildren<Animator>();
-        sphereCollider = GetComponentInChildren<SphereCollider>();
+        rb = GetComponent<Rigidbody>();
+        
     }
 
     void Update()
@@ -136,9 +136,18 @@ public class enemyBoss : MonoBehaviour
         anim.SetBool("isAttacking", false);
     }
 
+    public IEnumerator KnockBack()
+    {
+        agent.isStopped = true;
+
+        yield return new WaitForSeconds(0.2f); //Only knock the enemy back for a short time     
+
+        rb.velocity = Vector3.zero;
+        agent.isStopped = false;
+
+    }
 
 
-    
 
 
 

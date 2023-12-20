@@ -3594,7 +3594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c179865972cc4204a8c9094e8e934d4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Boss: {fileID: 8112095457764918568, guid: 52f548b29e0aa724bbc0a17280dd2cab, type: 3}
+  Boss: {fileID: 4353486828779231470, guid: 52f548b29e0aa724bbc0a17280dd2cab, type: 3}
   SpawnPoint: {fileID: 1315675791}
   SpawnPos: {x: 0, y: 0, z: 0}
   TriggerYet: 0
@@ -3607,7 +3607,7 @@ Transform:
   m_GameObject: {fileID: 1315675789}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -41.363, y: 1.889, z: 84.11}
+  m_LocalPosition: {x: -32.17, y: 1.889, z: 83.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5492,67 +5492,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!1001 &324566218233610876
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6635063884402162030, guid: 52f548b29e0aa724bbc0a17280dd2cab, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -41.363
-      objectReference: {fileID: 0}
-    - target: {fileID: 6635063884402162030, guid: 52f548b29e0aa724bbc0a17280dd2cab, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.889
-      objectReference: {fileID: 0}
-    - target: {fileID: 6635063884402162030, guid: 52f548b29e0aa724bbc0a17280dd2cab, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 84.11
-      objectReference: {fileID: 0}
-    - target: {fileID: 6635063884402162030, guid: 52f548b29e0aa724bbc0a17280dd2cab, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6635063884402162030, guid: 52f548b29e0aa724bbc0a17280dd2cab, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6635063884402162030, guid: 52f548b29e0aa724bbc0a17280dd2cab, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6635063884402162030, guid: 52f548b29e0aa724bbc0a17280dd2cab, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6635063884402162030, guid: 52f548b29e0aa724bbc0a17280dd2cab, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6635063884402162030, guid: 52f548b29e0aa724bbc0a17280dd2cab, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6635063884402162030, guid: 52f548b29e0aa724bbc0a17280dd2cab, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8112095457764918568, guid: 52f548b29e0aa724bbc0a17280dd2cab, type: 3}
-      propertyPath: m_Name
-      value: Slime King
-      objectReference: {fileID: 0}
-    - target: {fileID: 8112095457764918568, guid: 52f548b29e0aa724bbc0a17280dd2cab, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 52f548b29e0aa724bbc0a17280dd2cab, type: 3}
 --- !u!4 &444679201911558266 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7123126017878616364, guid: 92310638a7cc0b848b1b05e0efa1b25b, type: 3}
@@ -7483,8 +7422,10 @@ MonoBehaviour:
   attackPoint: {fileID: 2994318823962406620}
   damageAmountType1: 1
   damageAmountType2: 1
+  damageAmountType3: 1
   attackRange: 0.1
-  knockbackForce: 10
+  knockbackForce: 5
+  bossknockbackForce: 1
   multiplier: 2
   isAttacking: 0
   enemyLayer:
@@ -8639,5 +8580,4 @@ SceneRoots:
   - {fileID: 8412996010569558202}
   - {fileID: 2679624802144386606}
   - {fileID: 25139381}
-  - {fileID: 324566218233610876}
   - {fileID: 1315675791}

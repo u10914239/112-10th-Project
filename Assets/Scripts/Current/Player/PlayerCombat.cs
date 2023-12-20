@@ -9,8 +9,10 @@ public class PlayerCombat : MonoBehaviour
     public Transform attackPoint;
     public int damageAmountType1 = 10;
     public int damageAmountType2 = 1;
+    public int damageAmountType3 = 1;
     public float attackRange = 10f;
     public float knockbackForce = 10f;
+    public float bossknockbackForce = 1f;
     public int multiplier = 2;
     public bool isAttacking;
     public LayerMask enemyLayer;
@@ -81,8 +83,8 @@ public class PlayerCombat : MonoBehaviour
        
         EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
         EnemyType enemyAI = other.gameObject.GetComponent<EnemyType>();
+        EnemyBoss enemyBoss = other.gameObject.GetComponent<EnemyBoss>();
 
-       
 
 
         if (other.tag == "EnemyType1" && isAttacking)
@@ -101,7 +103,7 @@ public class PlayerCombat : MonoBehaviour
                 Vector3 knockBack = (other.transform.position - transform.position).normalized;
 
                 rb.AddForce(knockBack * knockbackForce, ForceMode.Impulse);
-                //StartCoroutine(enemyAI.KnockBack());
+                StartCoroutine(enemyAI.KnockBack());
             }
         }
 
@@ -139,7 +141,39 @@ public class PlayerCombat : MonoBehaviour
 
         }
 
+        if (other.tag == "EnemyTypeBoss" && isAttacking)
+        {
 
+
+            if (enemyHealth != null)
+            {
+
+                enemyHealth.TakeDamage(damageAmountType2);
+                isAttacking = false;
+
+
+
+            }
+            if (enemyHealth != null && pickUpJoy.isHeld && pickUpJoy != null)
+            {
+                Debug.Log("is multiply ");
+                enemyHealth.TakeDamage(damageAmountType2 * multiplier);
+                isAttacking = false;
+
+            }
+
+            Rigidbody rb = other.GetComponent<Rigidbody>();
+
+            if (rb != null)
+            {
+                Vector3 knockBack = (other.transform.position - transform.position).normalized;
+
+                rb.AddForce(knockBack * bossknockbackForce, ForceMode.Impulse);
+                StartCoroutine(enemyBoss.KnockBack());
+            }
+
+
+        }
 
     }
    

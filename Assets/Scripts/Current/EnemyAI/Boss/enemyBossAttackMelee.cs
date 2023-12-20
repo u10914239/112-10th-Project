@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class enemyBossAttackMelee : MonoBehaviour
 {
-    enemyBoss enemyBoss;
+    EnemyBoss enemyBoss;
     void Start()
     {
         
@@ -13,7 +13,7 @@ public class enemyBossAttackMelee : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        enemyBoss = GetComponentInParent<enemyBoss>();
+        enemyBoss = GetComponentInParent<EnemyBoss>();
     }
 
     void OnTriggerEnter(Collider other)
