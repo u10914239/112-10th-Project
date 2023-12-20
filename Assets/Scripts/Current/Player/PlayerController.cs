@@ -18,9 +18,15 @@ public class PlayerController : MonoBehaviour
     public bool facingRight;
     public bool isTransformed;
     
-    public LayerMask terrainLayer;
     public Animator anim;
     public GameObject Sync;
+    public GameObject WeaponHolder;
+
+    public Sprite GodWeaponSprite;
+    public SpriteRenderer NormalWeaponSprite;
+    private Sprite originalSprite;
+
+    public LayerMask terrainLayer;
     public Quaternion initialGlobalRotation;
 
 
@@ -52,7 +58,7 @@ public class PlayerController : MonoBehaviour
         
         isTransformed = false;
         canMove = true;
-        
+        originalSprite = NormalWeaponSprite.sprite;
     }
 
     void Update()
@@ -78,10 +84,23 @@ public class PlayerController : MonoBehaviour
             moveInput.y = Input.GetAxisRaw("Vertical");
             moveInput.Normalize();
         }
-       
+        //檢查手上有沒有神器
+        if (WeaponHolder != null)
+        {
+            bool hasChildren = WeaponHolder.transform.childCount > 0;
 
-        
-        
+            if (hasChildren && NormalWeaponSprite != null && GodWeaponSprite != null)
+            {
+                NormalWeaponSprite.sprite = GodWeaponSprite;
+
+            }
+            else
+            {
+                NormalWeaponSprite.sprite = originalSprite; ;
+            }
+        }
+
+
 
         stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical") * speed);
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));

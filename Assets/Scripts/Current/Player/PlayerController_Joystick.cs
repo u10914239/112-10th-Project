@@ -13,20 +13,25 @@ public class PlayerController_Joystick : MonoBehaviour
     public float groundDist;
     public GameObject Sync;
     public LayerMask terrainLayer;
-    public Rigidbody rb;
     public Animator anim;
     public static float powerTime;
     public bool isTransformed;
     public bool facingRight;
+
+
+    
+    public GameObject WeaponHolder;
+    public Sprite GodWeaponSprite;
+    public SpriteRenderer NormalWeaponSprite;
+    private Sprite originalSprite;
+
     public Quaternion initialGlobalRotation;
-    public SpriteRenderer magicStaff;
-
-
 
     private Vector2 moveInput;
     PickUp pickUp1;
     PlayerCombat_Joystick_Wizard playerCombat;
     Collider col;
+    Rigidbody rb;
 
 
 
@@ -53,7 +58,7 @@ public class PlayerController_Joystick : MonoBehaviour
         isTransformed = false;
         
         canMove = true;
-        
+        originalSprite = NormalWeaponSprite.sprite;
 
     }
 
@@ -80,8 +85,22 @@ public class PlayerController_Joystick : MonoBehaviour
 
             rb.velocity += new Vector3(0, jumpForce, 0);
         }
-        
-        
+
+        //檢查手上有沒有神器
+        if (WeaponHolder != null)
+        {
+            bool hasChildren = WeaponHolder.transform.childCount > 0;
+
+            if (hasChildren && NormalWeaponSprite != null && GodWeaponSprite != null)
+            {
+                NormalWeaponSprite.sprite = GodWeaponSprite;
+
+            }
+            else
+            {
+                NormalWeaponSprite.sprite = originalSprite; ;
+            }
+        }
 
         stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal2") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical2") * speed);
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));

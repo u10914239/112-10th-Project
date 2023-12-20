@@ -13,12 +13,10 @@ TagManager:
   - Enemy
   - End
   - Target
-  - EnemyType1
-  - EnemyType2
   - Player 1
   - Player 2
   - WeaponCollider
-  - EnemyTypeBoss
+  - Boss
   layers:
   - Default
   - TransparentFX
