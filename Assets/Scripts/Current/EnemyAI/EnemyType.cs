@@ -5,9 +5,9 @@ using UnityEngine.AI;
 
 public class EnemyType : MonoBehaviour
 {
+    public Transform centrePoint;
+    public float patrolRange;
 
-   
-    
     public float detectionRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
     public LayerMask playerLayer;
@@ -25,8 +25,8 @@ public class EnemyType : MonoBehaviour
     private EnemyHealth enemyHealth;
     
     private float lastPlayerMovementTime = Mathf.NegativeInfinity;
-    
-    
+
+    private float lastPatrollTIme= Mathf.NegativeInfinity;
 
 
     void Awake()
@@ -35,26 +35,31 @@ public class EnemyType : MonoBehaviour
         enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
+        centrePoint = GameObject.Find("Enemy Generator").GetComponent<Transform>();
     }
 
     void Update()
     {
-        if (Time.time - lastPlayerMovementTime > chaseCooldown)
-        {
-            FindNearestPlayer();
-            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        }
         
 
         playerInSightRange = Physics.CheckSphere(transform.position, detectionRange, playerLayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
 
-        //if (!playerInSightRange && !playerInAttackRange) Patroling();
+        if (Time.time - lastPlayerMovementTime > chaseCooldown)
+        {
+            FindNearestPlayer();
+            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+        }
+        if (!playerInSightRange && !playerInAttackRange) Patroling();
         
         if (playerInAttackRange && playerInSightRange) AttackPlayer();
 
         float velocity = agent.velocity.magnitude / agent.speed;
         anim.SetFloat("Speed", Mathf.Abs(velocity));
+
+        
+
+
         StopMoving();
 
     }
@@ -107,6 +112,61 @@ public class EnemyType : MonoBehaviour
         lastPlayerMovementTime = Time.time;
     }
 
+
+    private void Patroling()
+    {
+        anim.SetBool("isAttacking", false);
+
+        if (agent.remainingDistance <= agent.stoppingDistance) //done with path
+        {
+            Vector3 point;
+            if (RandomPoint(centrePoint.position, patrolRange, out point)) //pass in our centre point and radius of area
+            {
+                if (Time.time - lastPatrollTIme > chaseCooldown)
+                {
+                   
+                    Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f); //so you can see with gizmos
+                    agent.SetDestination(point);
+
+                }
+                    
+
+            }
+        }
+       
+        
+        if (agent.velocity.x > 0 && !isFacingRight)
+        {
+
+            Flip();
+        }
+        else if (agent.velocity.x < 0 && isFacingRight)
+        {
+
+            Flip();
+        }
+        
+        
+    }
+
+   
+
+    bool RandomPoint(Vector3 center, float range, out Vector3 result)
+    {
+
+        Vector3 randomPoint = center + Random.insideUnitSphere * range; //random point in a sphere 
+        UnityEngine.AI.NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas)) //documentation: https://docs.unity3d.com/ScriptReference/AI.NavMesh.SamplePosition.html
+        {
+            //the 1.0f is the max distance from the random point to a point on the navmesh, might want to increase if range is big
+            //or add a for loop like in the documentation
+            result = hit.position;
+            return true;
+        }
+
+        result = Vector3.zero;
+        return false;
+    }
     void ChasePlayer()
     {
         if (enemyHealth.currentHealth <= 0)

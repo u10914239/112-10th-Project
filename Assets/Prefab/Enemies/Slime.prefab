@@ -283,6 +283,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b70d713320d014fb30812c79dca7ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  centrePoint: {fileID: 872879938432178746}
+  patrolRange: 10
   detectionRange: 3
   attackRange: 0.1
   playerInSightRange: 0
@@ -309,8 +311,8 @@ MonoBehaviour:
   anim: {fileID: 5172079039666265540}
   maxHealth: 1
   currentHealth: 0
-  PlayerKillCount: {fileID: 0}
   flashEffect: {fileID: 2327297447242654274}
+  AmIBoss: 0
 --- !u!1 &8725270406059922614
 GameObject:
   m_ObjectHideFlags: 0
