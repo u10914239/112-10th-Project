@@ -11,6 +11,7 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
     public Animator anim;
     public Transform firePoint;
     public GameObject fireballPrefab;
+    public GameObject laserPrefab;
     public float fireballSpeed = 10f;
     public float fireRate = 1f;
 
@@ -51,6 +52,12 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
         
 
 
+    }
+
+    void ShootLaser()
+    {
+        GameObject laser = Instantiate(laserPrefab, firePoint.position, transform.rotation);
+       
     }
 
 }

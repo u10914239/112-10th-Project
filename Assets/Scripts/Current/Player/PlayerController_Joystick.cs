@@ -6,6 +6,7 @@ public class PlayerController_Joystick : MonoBehaviour
 {
     public float speed;
     float stopSpeed = 0f;
+
     public float dodgeForce = 10f;
     public float dodgeDuration = 0.5f;
     public float rollSpeed = 10f;
@@ -66,7 +67,7 @@ public class PlayerController_Joystick : MonoBehaviour
     {
         
         TurnIntoWeapon();
-
+        
         if (Input.GetKeyDown(KeyCode.Joystick1Button0) && isMoving)
         {
 
@@ -77,6 +78,7 @@ public class PlayerController_Joystick : MonoBehaviour
         {
             moveInput.x = Input.GetAxisRaw("Horizontal2");
             moveInput.y = Input.GetAxisRaw("Vertical2");
+
             moveInput.Normalize();
         }
 
@@ -112,6 +114,7 @@ public class PlayerController_Joystick : MonoBehaviour
         if (canMove)
         {
             rb.velocity = new Vector3(moveInput.x * speed , rb.velocity.y, moveInput.y * speed);
+
         }
         properFlip();
 

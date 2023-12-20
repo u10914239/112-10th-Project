@@ -2,24 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class StaffUltimate : MonoBehaviour
 {
-    
-    public int damageAmount = 1; // Set your desired damage amount here
-   
-    
+
+    public int damageAmount = 1;
 
     SpriteRenderer spriteRenderer;
     Rigidbody rb;
-    
 
     void Start()
     {
-
-        rb = GetComponent<Rigidbody>();
-        
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        rb = GetComponentInParent<Rigidbody>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
+
+   
+   
 
     void Update()
     {
@@ -41,13 +39,13 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         // Check if the arrow collided with an enemy
         if (other.CompareTag("Enemy"))
         {
             EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
-            
+
             if (enemyHealth != null)
             {
                 // Apply damage to the enemy
@@ -55,8 +53,8 @@ public class Projectile : MonoBehaviour
             }
 
 
-            
-            Destroy(gameObject);
+
+            //Destroy(gameObject);
         }
         if (other.CompareTag("Boss"))
         {
@@ -68,9 +66,15 @@ public class Projectile : MonoBehaviour
             }
 
             // Destroy the arrow upon hitting the enemy
-            Destroy(gameObject);
+           //Destroy(gameObject);
 
 
         }
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
+
     }
 }
