@@ -7,8 +7,8 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
 
     //public LayerMask enemyLayerMask;
     //public float detectionRange = 10f; // Range within which the player should face the enemy
-    
 
+    public Animator anim;
     public Transform firePoint;
     public GameObject fireballPrefab;
     public float fireballSpeed = 10f;
@@ -30,32 +30,27 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Joystick1Button5) && Time.time >= nextFireTime)
         {
-            ShootFireball();
-
-
-
+            
+            anim.SetTrigger("Attack");
             nextFireTime = Time.time + 1f / fireRate;
 
         }
 
 
+    }
 
+    void ShootFireball()
+    {
+        // Create a fireball at the fire point position and rotation
+        GameObject fireball = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
 
+        // Set fireball's initial velocity along the X-axis
+        Rigidbody rb = fireball.GetComponent<Rigidbody>();
+        rb.velocity = transform.right * fireballSpeed; // fireballSpeed is a variable determining fireball speed
 
-
-
-        void ShootFireball()
-        {
-            // Create a fireball at the fire point position and rotation
-            GameObject fireball = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
-
-            // Set fireball's initial velocity along the X-axis
-            Rigidbody rb = fireball.GetComponent<Rigidbody>();
-            rb.velocity = transform.right * fireballSpeed; // fireballSpeed is a variable determining fireball speed
-
-        }
-
+        
 
 
     }
+
 }

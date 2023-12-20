@@ -8,24 +8,38 @@ public class Projectile : MonoBehaviour
     public int damageAmount = 1; // Set your desired damage amount here
    
     public float fireballSpeed;
-    
-    
 
+    SpriteRenderer spriteRenderer;
+    Rigidbody rb;
     PickUp pickUp;
 
     void Start()
     {
 
-        
+        rb = GetComponent<Rigidbody>();
         pickUp = GameObject.Find("Player 1").GetComponent<PickUp>();
-        
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     void Update()
     {
-        
+        FlipSprite();
     }
 
+    private void FlipSprite()
+    {
+        if (rb != null && spriteRenderer != null)
+        {
+            if (rb.velocity.x < 0)
+            {
+                spriteRenderer.flipX = true;
+            }
+            else
+            {
+                spriteRenderer.flipX = false;
+            }
+        }
+    }
 
     void OnTriggerEnter(Collider other)
     {
