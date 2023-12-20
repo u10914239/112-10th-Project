@@ -64,7 +64,13 @@ public class Projectile : MonoBehaviour
             if (enemyHealth != null)
             {
                 // Apply damage to the enemy
-                enemyHealth.TakeDamage(damageAmount);
+
+                if(EnemyHealth.shieldKind ==0 || EnemyHealth.shieldKind ==2)
+                {
+                    enemyHealth.TakeDamage(damageAmount);
+                }
+
+                
             }
 
             // Destroy the arrow upon hitting the enemy

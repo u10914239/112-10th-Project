@@ -245,6 +245,7 @@ public class EnemyType : MonoBehaviour
         Vector3 newScale = transform.localScale;
         newScale.x *= -1;
         transform.localScale = newScale;
+        EnemyHealthBar.FlipR = true;
     }
 
     private void OnDrawGizmosSelected()

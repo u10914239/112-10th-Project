@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 public class EnemyHealth : MonoBehaviour
@@ -8,11 +9,18 @@ public class EnemyHealth : MonoBehaviour
     public Animator anim;
     /*public float knockbackForce;*/
     public int maxHealth;
-    public int currentHealth;
+    public float currentHealth;
     public static event Action OnDestroyed;
+    [SerializeField] private Slider SliderValue;
+    [SerializeField] private Slider SliderValueShield;
     
     [SerializeField] private SimpleFlash flashEffect;
     [SerializeField] bool AmIBoss;
+
+    [SerializeField] float shieldHealth;
+    [SerializeField] bool Round2;
+    [SerializeField] public static int shieldKind;
+    [SerializeField] GameObject NoSword,NoMagic;
     void Awake()
     {
        
@@ -23,19 +31,52 @@ public class EnemyHealth : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        
+        shieldHealth = 0f;
+        Round2 = false;
     }
 
    
     void Update()
     {
+        SliderValue.value = currentHealth;
+        if(AmIBoss)
+        {
+            SliderValueShield.value = shieldHealth;
+        }
+        
+        if(AmIBoss)
+        {
+            SecondRound();
+        }
+        
         
     }
 
     public void TakeDamage(int damage)
     {
         flashEffect.Flash();
-        currentHealth -= damage;
+
+        if (shieldHealth > 0)
+        {
+            if (damage <= shieldHealth)
+            {
+                shieldHealth -= damage;
+            }
+            else
+            {
+                float remainingDamage = damage - shieldHealth;
+                shieldHealth = 0f;
+                shieldKind = 0;
+                currentHealth -= remainingDamage;
+            }
+        }
+        else
+        {
+            currentHealth -= damage;
+        }
+
+
+        //currentHealth -= damage;
 
         Debug.Log("Enemy Health: " + currentHealth);
         anim.SetTrigger("Hit");
@@ -54,6 +95,28 @@ public class EnemyHealth : MonoBehaviour
                 Story.ResetStory = true;
                 Story.ScriptsVersion = 2;
             }
+        }
+    }
+    void SecondRound()
+    {
+        if(currentHealth <= maxHealth/2 && !Round2)
+        {
+            shieldKind = UnityEngine.Random.Range(1,3);
+            Round2 = true;
+            shieldHealth = 30;
+            print("ShieldKind is" + shieldKind);
+            if(shieldKind == 1)
+            {
+                NoMagic.SetActive(true);
+            }else if(shieldKind ==2)
+            {
+                NoSword.SetActive(true);
+            }
+        }
+        if(AmIBoss && shieldKind == 0)
+        {
+            NoSword.SetActive(false);
+            NoMagic.SetActive(false);
         }
     }
 

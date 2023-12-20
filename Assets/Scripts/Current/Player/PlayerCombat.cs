@@ -114,7 +114,12 @@ public class PlayerCombat : MonoBehaviour
 
                 if (enemyHealth != null)
                 {
-                    enemyHealth.TakeDamage(damageAmount);
+                    if(EnemyHealth.shieldKind ==0 || EnemyHealth.shieldKind ==1)
+                    {
+                        enemyHealth.TakeDamage(damageAmount);
+                    }
+
+                    
 
                     if (rb != null)
                     {
