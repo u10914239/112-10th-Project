@@ -7,25 +7,25 @@ public class PlayerCombat : MonoBehaviour
 
     public Animator anim;
     public Transform attackPoint;
-    public int damageAmountType1 = 10;
-    public int damageAmountType2 = 1;
-    public int damageAmountType3 = 1;
+    public int damageAmount;
+    
     public float attackRange = 10f;
     public float knockbackForce = 10f;
-    public float bossknockbackForce = 1f;
-    public int multiplier = 2;
+   
     public bool isAttacking;
     public LayerMask enemyLayer;
-
-
-
+    public float radius;
     public float attackRate = 2f;
-    private float attackSpeed = 1f;
+    
+
+
     private float currentSpeed;
+   
 
     PickUp_Joystick pickUpJoy;
     PlayerController movement;
 
+    //public int multiplier = 2;
 
     void Start()
     {
@@ -38,146 +38,107 @@ public class PlayerCombat : MonoBehaviour
     {
       
         
-        if (Input.GetKeyDown(KeyCode.Mouse0) && movement.isTransformed == false)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && movement.isTransformed == false && !isAttacking)
         {
 
             Attack();
-            isAttacking = true;
+            
                 
             Invoke(nameof(ResetAttack), attackRate);
 
         }
-          
+        
     }
     void FixedUpdate()
     {
         
-        if(isAttacking)
-        {
-            movement.speed = attackSpeed;
-
-        }
-        else if (!isAttacking)
-        {
-            movement.speed = currentSpeed;
-        }
+        
     }
 
     void Attack()
     {
-        anim.SetTrigger("Attack");
         
+        
+        anim.SetTrigger("Attack");
+        movement.speed = movement.speed * 0.5f;
         isAttacking = true;
+        
+        
+        
+        
         
     }
     void ResetAttack()
     {
-        
+        movement.speed = currentSpeed;
         isAttacking = false;
        
     }
    
 
-    void OnTriggerEnter(Collider other)
-    {
-       
-        EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
-        EnemyType enemyAI = other.gameObject.GetComponent<EnemyType>();
-        EnemyBoss enemyBoss = other.gameObject.GetComponent<EnemyBoss>();
-
-
-
-        if (other.tag == "EnemyType1" && isAttacking)
-        {
-            if (enemyHealth != null)
-            {
-                // Apply damage to the enemy
-                enemyHealth.TakeDamage(damageAmountType1);
-                isAttacking = false;
-            }
-
-            Rigidbody rb = other.GetComponent<Rigidbody>();
-
-            if (rb != null)
-            {
-                Vector3 knockBack = (other.transform.position - transform.position).normalized;
-
-                rb.AddForce(knockBack * knockbackForce, ForceMode.Impulse);
-                StartCoroutine(enemyAI.KnockBack());
-            }
-        }
-
-        if (other.tag == "EnemyType2" && isAttacking)
-        {
-            
-
-            if (enemyHealth != null)
-            {
-                
-                enemyHealth.TakeDamage(damageAmountType2);
-                isAttacking = false;
-
-                
-
-            }
-            if(enemyHealth != null && pickUpJoy.isHeld && pickUpJoy!= null)
-            {
-                Debug.Log("is multiply ");
-                enemyHealth.TakeDamage(damageAmountType2 * multiplier);
-                isAttacking = false;
-
-            }
-
-            Rigidbody rb = other.GetComponent<Rigidbody>();
-
-            if (rb != null)
-            {
-                Vector3 knockBack = (other.transform.position - transform.position).normalized;
-                
-                rb.AddForce(knockBack * knockbackForce, ForceMode.Impulse);
-                StartCoroutine(enemyAI.KnockBack());
-            }
-            
-
-        }
-
-        if (other.tag == "EnemyTypeBoss" && isAttacking)
-        {
-
-
-            if (enemyHealth != null)
-            {
-
-                enemyHealth.TakeDamage(damageAmountType2);
-                isAttacking = false;
-
-
-
-            }
-            if (enemyHealth != null && pickUpJoy.isHeld && pickUpJoy != null)
-            {
-                Debug.Log("is multiply ");
-                enemyHealth.TakeDamage(damageAmountType2 * multiplier);
-                isAttacking = false;
-
-            }
-
-            Rigidbody rb = other.GetComponent<Rigidbody>();
-
-            if (rb != null)
-            {
-                Vector3 knockBack = (other.transform.position - transform.position).normalized;
-
-                rb.AddForce(knockBack * bossknockbackForce, ForceMode.Impulse);
-                StartCoroutine(enemyBoss.KnockBack());
-            }
-
-
-        }
-
-    }
-   
-   
-
     
+
+    public void DealDamage()
+    {
+
+        Collider[] enemy = Physics.OverlapSphere(attackPoint.transform.position, radius, enemyLayer);
+
+        foreach (Collider enemyGameObject in enemy)
+        {
+
+            Rigidbody rb = enemyGameObject.GetComponent<Rigidbody>();
+            EnemyHealth enemyHealth = enemyGameObject.GetComponent<EnemyHealth>();
+
+            if (enemyGameObject.CompareTag("Enemy"))
+            {
+                
+
+                if (enemyHealth != null)
+                {
+                    enemyHealth.TakeDamage(damageAmount);
+
+                    if (rb != null)
+                    {
+                        EnemyType enemyAI = enemyGameObject.GetComponent<EnemyType>();
+                        Vector3 knockBack = (enemyGameObject.transform.position - transform.position).normalized;
+                        rb.AddForce(knockBack * knockbackForce, ForceMode.Impulse);
+                        StartCoroutine(enemyAI.KnockBack());
+                    }
+                }
+
+            }
+
+            if (enemyGameObject.CompareTag("Boss"))
+            {
+
+
+                if (enemyHealth != null)
+                {
+                    enemyHealth.TakeDamage(damageAmount);
+
+                    if (rb != null)
+                    {
+                        EnemyBoss bossAI = enemyGameObject.GetComponent<EnemyBoss>();
+                        Vector3 knockBack = (enemyGameObject.transform.position - transform.position).normalized;
+                        rb.AddForce(knockBack * knockbackForce, ForceMode.Impulse);
+                        StartCoroutine(bossAI.KnockBack());
+                    }
+                }
+
+            }
+
+
+
+
+
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.transform.position, radius);
+    }
 }

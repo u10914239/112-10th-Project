@@ -5,10 +5,10 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     
-    public int damageAmountType1 = 1; // Set your desired damage amount here
-    public int damageAmountType2 = 10;
+    public int damageAmount = 1; // Set your desired damage amount here
+   
     public float fireballSpeed;
-    public int multiplier = 2;
+    
     
 
     PickUp pickUp;
@@ -30,36 +30,27 @@ public class Projectile : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // Check if the arrow collided with an enemy
-        if (other.CompareTag("EnemyType1"))
+        if (other.CompareTag("Enemy"))
         {
             EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
             
             if (enemyHealth != null)
             {
                 // Apply damage to the enemy
-                enemyHealth.TakeDamage(damageAmountType1);
+                enemyHealth.TakeDamage(damageAmount);
             }
+
 
             
-            if (enemyHealth != null && pickUp.isHeld && pickUp != null)
-            {
-                
-                Debug.Log("is multiply ");
-                enemyHealth.TakeDamage(damageAmountType1 * multiplier);
-                
-
-            }
-
-            // Destroy the arrow upon hitting the enemy
             Destroy(gameObject);
         }
-        if (other.CompareTag("EnemyType2"))
+        if (other.CompareTag("Boss"))
         {
             EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
                 // Apply damage to the enemy
-                enemyHealth.TakeDamage(damageAmountType2);
+                enemyHealth.TakeDamage(damageAmount);
             }
 
             // Destroy the arrow upon hitting the enemy
