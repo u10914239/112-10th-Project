@@ -12,32 +12,54 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
     public Transform firePoint;
     public GameObject fireballPrefab;
     public GameObject laserPrefab;
+    public GameObject swordgasPrefab;
     public float fireballSpeed = 10f;
     public float fireRate = 1f;
 
     private float nextFireTime = 0f;
-   
-    
+
+    PlayerController_Joystick movement;
 
     void Start()
     {
-       
-        
+        movement = GetComponentInParent<PlayerController_Joystick>();
+
     }
 
     private void Update()
     {
 
 
-        if (Input.GetKeyDown(KeyCode.Joystick1Button5) && Time.time >= nextFireTime)
+        if (Input.GetKeyDown(KeyCode.Joystick1Button5) && Time.time >= nextFireTime && !movement.isHoldingGod)
         {
             
             anim.SetTrigger("Attack");
             nextFireTime = Time.time + 1f / fireRate;
 
         }
+        if (Input.GetKeyDown(KeyCode.Joystick1Button5) && Time.time >= nextFireTime && movement.isHoldingGod)
+        {
+            GodAttack();
+            
+
+        }
 
 
+    }
+
+    void GodAttack()
+    {
+
+        anim.SetTrigger("GodAttack");
+        //movement.speed = movement.speed * 0.5f;
+        //isAttacking = true;
+    }
+
+    void ShootSwordGas()
+    {
+        GameObject swordGas = Instantiate(swordgasPrefab, firePoint.position, transform.rotation);
+        Rigidbody rb = swordGas.GetComponent<Rigidbody>();
+        rb.velocity = transform.right * fireballSpeed;
     }
 
     void ShootFireball()

@@ -19,9 +19,9 @@ public class PlayerController_Joystick : MonoBehaviour
     public static float powerTime;
     public bool isTransformed;
     public bool facingRight;
+    public bool isHoldingGod;
 
 
-    
     public GameObject WeaponHolder;
     public Sprite GodWeaponSprite;
     public SpriteRenderer NormalWeaponSprite;
@@ -97,11 +97,12 @@ public class PlayerController_Joystick : MonoBehaviour
             if (hasChildren && NormalWeaponSprite != null && GodWeaponSprite != null)
             {
                 NormalWeaponSprite.sprite = GodWeaponSprite;
-
+                isHoldingGod = true;
             }
             else
             {
-                NormalWeaponSprite.sprite = originalSprite; ;
+                NormalWeaponSprite.sprite = originalSprite;
+                isHoldingGod = false;
             }
         }
 

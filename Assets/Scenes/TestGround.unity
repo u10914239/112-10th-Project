@@ -8594,6 +8594,7 @@ MonoBehaviour:
   anim: {fileID: 8052538198098417080}
   isTransformed: 0
   facingRight: 1
+  isHoldingGod: 0
   WeaponHolder: {fileID: 3982522789944984179}
   GodWeaponSprite: {fileID: 21300000, guid: 203a2607c6ee8ff49b70953c59db445d, type: 3}
   NormalWeaponSprite: {fileID: 3982522789944984180}
@@ -9268,6 +9269,7 @@ MonoBehaviour:
   firePoint: {fileID: 7358550794264144102}
   fireballPrefab: {fileID: 315981810436374660, guid: 1a21749a0e1575148b6fb51f943e76ed, type: 3}
   laserPrefab: {fileID: 649012837428607243, guid: 91db00e6aacfc704390be9c0f819cb96, type: 3}
+  swordgasPrefab: {fileID: 3554950584081364408, guid: 5b6d009b8e1470e4ba9d610976b9f68a, type: 3}
   fireballSpeed: 10
   fireRate: 1
 --- !u!222 &8131801958533001845
