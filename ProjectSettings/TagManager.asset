@@ -17,6 +17,7 @@ TagManager:
   - Player 2
   - WeaponCollider
   - Boss
+  - EnemyType2
   layers:
   - Default
   - TransparentFX
@@ -30,7 +31,7 @@ TagManager:
   - Enemies
   - CamBounds
   - EnemyDetection
-  - 
+  - SceneCollider
   - 
   - 
   - 
