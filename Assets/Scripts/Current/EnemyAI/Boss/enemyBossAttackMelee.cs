@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class enemyBossAttackMelee : MonoBehaviour
 {
+    public int damageAmount;
     EnemyBoss enemyBoss;
     void Start()
     {
@@ -28,7 +29,7 @@ public class enemyBossAttackMelee : MonoBehaviour
             if (playerHealth != null)
             {
                 // Apply damage to the enemy
-                playerHealth.TakeDamage(1);
+                playerHealth.TakeDamage(damageAmount);
                 
 
             }
@@ -41,7 +42,7 @@ public class enemyBossAttackMelee : MonoBehaviour
             if (playerHealth != null)
             {
                 // Apply damage to the enemy
-                playerHealth.TakeDamage(1);
+                playerHealth.TakeDamage(damageAmount);
 
 
             }

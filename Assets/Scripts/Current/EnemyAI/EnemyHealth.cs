@@ -87,7 +87,7 @@ public class EnemyHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            anim.SetTrigger("isDead");
+            
             Die();
             GameManager.PlayerKillCount +=1;
             if(AmIBoss)
@@ -122,11 +122,11 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die()
     {
-        
-        
+
+        anim.SetTrigger("isDead");
         Debug.Log("Enemy Died");
         DisableAllColliders(transform);
-        StartCoroutine(Disable());
+        //StartCoroutine(Disable());
         Destroy(this.gameObject,2f);
     }
 
@@ -140,12 +140,12 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    IEnumerator Disable()
+    /*IEnumerator Disable()
     {
 
         yield return new WaitForSeconds(2f);
         this.gameObject.SetActive(false);
-    }
+    }*/
 
     void OnDestroy()
     {

@@ -39,9 +39,9 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Joystick1Button5) && Time.time >= nextFireTime && movement.isHoldingGod)
         {
-            GodAttack();
-            
+            //GodAttack();
 
+            anim.SetTrigger("GodAttack");
         }
 
 
@@ -50,7 +50,7 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
     void GodAttack()
     {
 
-        anim.SetTrigger("GodAttack");
+        
         //movement.speed = movement.speed * 0.5f;
         //isAttacking = true;
     }

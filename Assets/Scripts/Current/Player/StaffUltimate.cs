@@ -21,10 +21,10 @@ public class StaffUltimate : MonoBehaviour
 
     void Update()
     {
-        FlipSprite();
+        //FlipSprite();
     }
 
-    private void FlipSprite()
+   /* private void FlipSprite()
     {
         if (rb != null && spriteRenderer != null)
         {
@@ -37,7 +37,7 @@ public class StaffUltimate : MonoBehaviour
                 spriteRenderer.flipX = false;
             }
         }
-    }
+    }*/
 
     void OnTriggerStay(Collider other)
     {

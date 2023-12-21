@@ -115,7 +115,7 @@ public class PlayerController_Joystick : MonoBehaviour
     {
         if (canMove)
         {
-            rb.velocity = new Vector3(moveInput.x * speed , rb.velocity.y, moveInput.y * speed);
+            rb.velocity = new Vector3(moveInput.x * speed  , rb.velocity.y, moveInput.y * speed );
 
         }
         properFlip();

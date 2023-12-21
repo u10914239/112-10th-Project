@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    
+    public int damageAmount;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +27,7 @@ public class EnemyAttack : MonoBehaviour
             if (playerHealth != null)
             {
                 // Apply damage to the enemy
-                playerHealth.TakeDamage(1);
+                playerHealth.TakeDamage(damageAmount);
 
             }
 
@@ -40,7 +40,7 @@ public class EnemyAttack : MonoBehaviour
             if (playerHealth != null)
             {
                 // Apply damage to the enemy
-                playerHealth.TakeDamage(1);
+                playerHealth.TakeDamage(damageAmount);
 
             }
 

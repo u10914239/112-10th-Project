@@ -22,13 +22,13 @@ public class SwordUltimate : MonoBehaviour
 
     void Update()
     {
-        FlipSprite();
+        //FlipSprite();
 
         GameObject parentObject = transform.parent.gameObject;
         Destroy(parentObject, destroyDelay);
     }
 
-    private void FlipSprite()
+    /*private void FlipSprite()
     {
         if (rb != null && spriteRenderer != null)
         {
@@ -41,7 +41,7 @@ public class SwordUltimate : MonoBehaviour
                 spriteRenderer.flipX = false;
             }
         }
-    }
+    }*/
 
     void OnTriggerStay(Collider other)
     {

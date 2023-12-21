@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6776609636436410164}
   - component: {fileID: 5838249669817808004}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: MagicBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

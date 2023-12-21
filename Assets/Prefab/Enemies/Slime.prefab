@@ -554,7 +554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 5172079039666265540}
-  maxHealth: 1
+  maxHealth: 30
   currentHealth: 0
   SliderValue: {fileID: 8054189397325268023}
   SliderValueShield: {fileID: 0}
@@ -923,6 +923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9873b53312fc45142ad58e7ecabf80db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageAmount: 5
 --- !u!54 &6806499237673736857
 Rigidbody:
   m_ObjectHideFlags: 0
