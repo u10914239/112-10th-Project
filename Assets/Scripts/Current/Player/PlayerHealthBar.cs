@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealthBar : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class PlayerHealthBar : MonoBehaviour
     [SerializeField] private Slider SliderValue;
     [SerializeField] int currentHealth;
     [SerializeField] private SimpleFlash flashEffect;
+    public GameObject EndCover,Slider1,Slider2;
+    public AudioSource Punch;
     void Start()
     {
         currentHealth = maxHealth;
@@ -25,6 +28,7 @@ public class PlayerHealthBar : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        Punch.Play();
         if (isInvulernable)
             return;
         flashEffect.Flash();
@@ -34,11 +38,20 @@ public class PlayerHealthBar : MonoBehaviour
         {
 
             Die();
+            Invoke("GameOver",2f );
         }
     }
     public void Die()
     {
         Debug.Log("I Died");
         gameObject.SetActive(false);
+    }
+    public void GameOver()
+    {
+        EndCover.SetActive(true);
+        Slider1.SetActive(false);
+        Slider2.SetActive(false);
+
+        //SceneManager.LoadScene("EndCover");
     }
 }

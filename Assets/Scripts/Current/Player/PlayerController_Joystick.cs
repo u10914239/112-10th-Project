@@ -39,6 +39,7 @@ public class PlayerController_Joystick : MonoBehaviour
     private bool isGrounded;
     bool canMove, isMoving;
     bool currentFacing;
+    public AudioSource Swoosh3;
     
 
     void Awake()
@@ -73,6 +74,7 @@ public class PlayerController_Joystick : MonoBehaviour
         {
 
             RollForward();
+            Swoosh3.Play();
         }
 
         if (canMove)
@@ -89,7 +91,7 @@ public class PlayerController_Joystick : MonoBehaviour
             rb.velocity += new Vector3(0, jumpForce, 0);
         }
 
-        //ÀË¬d¤â¤W¦³¨S¦³¯«¾¹
+        //ï¿½Ë¬dï¿½ï¿½Wï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (WeaponHolder != null)
         {
             bool hasChildren = WeaponHolder.transform.childCount > 0;
@@ -163,7 +165,7 @@ public class PlayerController_Joystick : MonoBehaviour
 
     void TurnIntoWeapon()
     {
-        if (pickUp1.isHeld == false  && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1))
+        if (PlayerCombat_Joystick_Wizard.MagicAmount == 100 && pickUp1.isHeld == false  && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             rb.isKinematic = true;
             rb.interpolation = RigidbodyInterpolation.None;
@@ -199,7 +201,7 @@ public class PlayerController_Joystick : MonoBehaviour
             Sync.SetActive(true);
             powerTime += Time.deltaTime;
 
-            if (powerTime >= 10)
+            if (powerTime >= 2)
             {
                 anim.SetBool("Transform", false);
                 rb.isKinematic = false;

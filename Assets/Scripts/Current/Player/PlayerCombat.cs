@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -25,6 +26,13 @@ public class PlayerCombat : MonoBehaviour
     PickUp_Joystick pickUpJoy;
     PlayerController movement;
 
+    public Text MagicShow;
+    public static float MagicAmount;
+
+    public AudioSource Swoosh;
+    public AudioSource Boom;
+    public AudioSource Punch;
+
     //public int multiplier = 2;
 
     void Start()
@@ -43,6 +51,7 @@ public class PlayerCombat : MonoBehaviour
             
             Attack();
             Invoke(nameof(ResetAttack), attackRate);
+            Swoosh.Play();
 
            
         }
@@ -52,7 +61,7 @@ public class PlayerCombat : MonoBehaviour
             Invoke(nameof(ResetAttack), attackRate);
 
         }
-        
+        Magic();
     }
     void FixedUpdate()
     {
@@ -91,7 +100,7 @@ public class PlayerCombat : MonoBehaviour
     void ShootLaser()
     {
         GameObject laser = Instantiate(laserPrefab, attackPoint.position, transform.rotation);
-
+        Boom.Play();
     }
 
 
@@ -114,6 +123,8 @@ public class PlayerCombat : MonoBehaviour
                 if (enemyHealth != null)
                 {
                     enemyHealth.TakeDamage(damageAmount);
+                    Punch.Play();
+                    MagicAmount += 5;
 
                     if (rb != null)
                     {
@@ -163,5 +174,13 @@ public class PlayerCombat : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.transform.position, radius);
+    }
+    void Magic()
+    {
+        MagicShow.text = MagicAmount.ToString();
+        if(MagicAmount >= 100)
+        {
+            MagicAmount = 100;
+        }
     }
 }

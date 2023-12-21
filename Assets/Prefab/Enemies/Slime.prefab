@@ -121,7 +121,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 6665087831016710144}
   m_Direction: 1
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 30
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -564,6 +564,7 @@ MonoBehaviour:
   Round2: 0
   NoSword: {fileID: 6838735415256468656}
   NoMagic: {fileID: 6838735415256468656}
+  Punch: {fileID: 0}
 --- !u!1 &6485879473336539405
 GameObject:
   m_ObjectHideFlags: 0

@@ -56,6 +56,7 @@ public class EnemyHealth : MonoBehaviour
     {
         flashEffect.Flash();
 
+
         if (shieldHealth > 0)
         {
             if (damage <= shieldHealth)

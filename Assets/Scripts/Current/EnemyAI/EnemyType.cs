@@ -29,6 +29,7 @@ public class EnemyType : MonoBehaviour
     private float lastPatrollTIme= Mathf.NegativeInfinity;
 
 
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -52,7 +53,11 @@ public class EnemyType : MonoBehaviour
         }
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         
-        if (playerInAttackRange && playerInSightRange) AttackPlayer();
+        if (playerInAttackRange && playerInSightRange) 
+        {
+            AttackPlayer();
+
+        }
 
         float velocity = agent.velocity.magnitude / agent.speed;
         anim.SetFloat("Speed", Mathf.Abs(velocity));

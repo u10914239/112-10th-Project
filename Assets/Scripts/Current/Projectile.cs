@@ -52,6 +52,7 @@ public class Projectile : MonoBehaviour
             {
                 // Apply damage to the enemy
                 enemyHealth.TakeDamage(damageAmount);
+                PlayerCombat_Joystick_Wizard.MagicAmount +=5;
             }
 
 

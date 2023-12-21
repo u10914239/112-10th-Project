@@ -18,6 +18,7 @@ TagManager:
   - WeaponCollider
   - Boss
   - EnemyType2
+  - Scene2
   layers:
   - Default
   - TransparentFX

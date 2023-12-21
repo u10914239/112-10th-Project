@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCombat_Joystick_Wizard : MonoBehaviour
 {
@@ -19,7 +20,11 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
     private float nextFireTime = 0f;
 
     PlayerController_Joystick movement;
-
+    public Text MagicShow;
+    public static float MagicAmount;
+    public AudioSource Pop;
+    public AudioSource Swoosh2;
+    public AudioSource Punch;
     void Start()
     {
         movement = GetComponentInParent<PlayerController_Joystick>();
@@ -35,6 +40,7 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
             
             anim.SetTrigger("Attack");
             nextFireTime = Time.time + 1f / fireRate;
+            Pop.Play();
 
         }
         if (Input.GetKeyDown(KeyCode.Joystick1Button5) && Time.time >= nextFireTime && movement.isHoldingGod)
@@ -44,7 +50,7 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
             anim.SetTrigger("GodAttack");
         }
 
-
+        Magic();
     }
 
     void GodAttack()
@@ -60,6 +66,7 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
         GameObject swordGas = Instantiate(swordgasPrefab, firePoint.position, transform.rotation);
         Rigidbody rb = swordGas.GetComponent<Rigidbody>();
         rb.velocity = transform.right * fireballSpeed;
+        Swoosh2.Play();
     }
 
     void ShootFireball()
@@ -80,6 +87,14 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
     {
         GameObject laser = Instantiate(laserPrefab, firePoint.position, transform.rotation);
        
+    }
+    void Magic()
+    {
+        MagicShow.text = MagicAmount.ToString();
+        if(MagicAmount >= 100)
+        {
+            MagicAmount = 100;
+        }
     }
 
 }

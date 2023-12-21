@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
 
     [SerializeField] private SimpleFlash flashEffect;
+    public AudioSource Swoosh3;
 
    
     private void Awake()
@@ -72,6 +73,7 @@ public class PlayerController : MonoBehaviour
         {
 
             RollForward();
+            Swoosh3.Play();
         }
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
@@ -85,7 +87,7 @@ public class PlayerController : MonoBehaviour
             moveInput.y = Input.GetAxisRaw("Vertical");
             moveInput.Normalize();
         }
-        //ÀË¬d¤â¤W¦³¨S¦³¯«¾¹
+        //ï¿½Ë¬dï¿½ï¿½Wï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (WeaponHolder != null)
         {
             bool hasChildren = WeaponHolder.transform.childCount > 0;
@@ -161,7 +163,7 @@ public class PlayerController : MonoBehaviour
 
     void TurnIntoWeapon()
     {
-        if (pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.E))
+        if (PlayerCombat.MagicAmount == 100 &&pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.E))
         {
             rb.isKinematic = true;
             rb.interpolation = RigidbodyInterpolation.None;
@@ -196,7 +198,7 @@ public class PlayerController : MonoBehaviour
             Sync.SetActive(true);
             powerTime += Time.deltaTime;
             
-            if (powerTime >= 10)
+            if (powerTime >= 2)
             {
                 rb.isKinematic = false;
                 rb.interpolation = RigidbodyInterpolation.Interpolate;
@@ -216,11 +218,6 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
-
-
-    
-
     
 }
 
