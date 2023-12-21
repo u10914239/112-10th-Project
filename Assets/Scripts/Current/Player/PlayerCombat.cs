@@ -7,8 +7,8 @@ public class PlayerCombat : MonoBehaviour
 
     public Animator anim;
     public Transform attackPoint;
+    public GameObject laserPrefab;
     public int damageAmount;
-    
     public float attackRange = 10f;
     public float knockbackForce = 10f;
    
@@ -38,12 +38,17 @@ public class PlayerCombat : MonoBehaviour
     {
       
         
-        if (Input.GetKeyDown(KeyCode.Mouse0) && movement.isTransformed == false && !isAttacking)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && movement.isTransformed == false && !isAttacking && !movement.isHoldingGod)
         {
-
-            Attack();
             
-                
+            Attack();
+            Invoke(nameof(ResetAttack), attackRate);
+
+           
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse0) && movement.isTransformed == false && !isAttacking && movement.isHoldingGod)
+        {
+            GodAttack();
             Invoke(nameof(ResetAttack), attackRate);
 
         }
@@ -68,15 +73,28 @@ public class PlayerCombat : MonoBehaviour
         
         
     }
+
+    void GodAttack()
+    {
+
+        anim.SetTrigger("GodAttack");
+        movement.speed = movement.speed * 0.5f;
+        isAttacking = true;
+    }
+
     void ResetAttack()
     {
         movement.speed = currentSpeed;
         isAttacking = false;
        
     }
-   
+    void ShootLaser()
+    {
+        GameObject laser = Instantiate(laserPrefab, attackPoint.position, transform.rotation);
 
-    
+    }
+
+
 
     public void DealDamage()
     {

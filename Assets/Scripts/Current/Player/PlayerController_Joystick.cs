@@ -12,6 +12,7 @@ public class PlayerController_Joystick : MonoBehaviour
     public float rollSpeed = 10f;
     public float jumpForce;
     public float groundDist;
+    public float raycastDistance = 0.5f;
     public GameObject Sync;
     public LayerMask terrainLayer;
     public Animator anim;
@@ -35,7 +36,7 @@ public class PlayerController_Joystick : MonoBehaviour
     Rigidbody rb;
 
 
-
+    private bool isGrounded;
     bool canMove, isMoving;
     bool currentFacing;
     
@@ -67,7 +68,7 @@ public class PlayerController_Joystick : MonoBehaviour
     {
         
         TurnIntoWeapon();
-        
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, raycastDistance, terrainLayer);
         if (Input.GetKeyDown(KeyCode.Joystick1Button0) && isMoving)
         {
 
@@ -82,7 +83,7 @@ public class PlayerController_Joystick : MonoBehaviour
             moveInput.Normalize();
         }
 
-        if (Input.GetKeyDown(KeyCode.Joystick1Button2))
+        if (isGrounded && Input.GetKeyDown(KeyCode.Joystick1Button0))
         {
 
             rb.velocity += new Vector3(0, jumpForce, 0);

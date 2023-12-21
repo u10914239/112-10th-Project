@@ -16,7 +16,7 @@ public class EnemyGenerator : MonoBehaviour
 
     void Start()
     {
-        EnemyHealth.OnDestroyed += HandleEnemyDestroyed;
+        //EnemyHealth.OnDestroyed += HandleEnemyDestroyed;
     }
 
     void Update()

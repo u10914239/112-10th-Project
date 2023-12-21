@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour
     public static float powerTime;
     public bool facingRight;
     public bool isTransformed;
-    
+    public bool isHoldingGod;
+
     public Animator anim;
     public GameObject Sync;
     public GameObject WeaponHolder;
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-   
+    private bool isGrounded;
     bool canMove , isMoving , isDodging;
     private Vector2 moveInput;
 
@@ -65,14 +66,14 @@ public class PlayerController : MonoBehaviour
     {
         
         TurnIntoWeapon();
-       
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, raycastDistance, terrainLayer);
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDodging && isMoving && !isTransformed)
         {
 
             RollForward();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             
             rb.velocity += new Vector3(0, jumpForce, 0);
@@ -92,11 +93,15 @@ public class PlayerController : MonoBehaviour
             if (hasChildren && NormalWeaponSprite != null && GodWeaponSprite != null)
             {
                 NormalWeaponSprite.sprite = GodWeaponSprite;
+                isHoldingGod = true;
+                
 
             }
             else
             {
-                NormalWeaponSprite.sprite = originalSprite; ;
+                NormalWeaponSprite.sprite = originalSprite;
+                isHoldingGod = false;
+                
             }
         }
 
