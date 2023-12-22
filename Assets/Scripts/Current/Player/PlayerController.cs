@@ -163,7 +163,8 @@ public class PlayerController : MonoBehaviour
 
     void TurnIntoWeapon()
     {
-        if (PlayerCombat.MagicAmount == 100 &&pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.E))
+        if (PlayerCombat.MagicAmount >= 50 &&pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.E) ||
+            PlayerCombat.MagicAmount >= 50 && pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.Mouse1))
         {
             rb.isKinematic = true;
             rb.interpolation = RigidbodyInterpolation.None;
@@ -198,7 +199,7 @@ public class PlayerController : MonoBehaviour
             Sync.SetActive(true);
             powerTime += Time.deltaTime;
             
-            if (powerTime >= 2)
+            if (powerTime >= 3)
             {
                 rb.isKinematic = false;
                 rb.interpolation = RigidbodyInterpolation.Interpolate;

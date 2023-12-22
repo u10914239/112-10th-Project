@@ -165,7 +165,7 @@ public class PlayerController_Joystick : MonoBehaviour
 
     void TurnIntoWeapon()
     {
-        if (PlayerCombat_Joystick_Wizard.MagicAmount == 100 && pickUp1.isHeld == false  && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1))
+        if (PlayerCombat_Joystick_Wizard.MagicAmount >= 50 && pickUp1.isHeld == false  && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             rb.isKinematic = true;
             rb.interpolation = RigidbodyInterpolation.None;
@@ -201,7 +201,7 @@ public class PlayerController_Joystick : MonoBehaviour
             Sync.SetActive(true);
             powerTime += Time.deltaTime;
 
-            if (powerTime >= 2)
+            if (powerTime >= 3)
             {
                 anim.SetBool("Transform", false);
                 rb.isKinematic = false;

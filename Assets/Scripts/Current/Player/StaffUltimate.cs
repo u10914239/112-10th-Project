@@ -50,6 +50,7 @@ public class StaffUltimate : MonoBehaviour
             {
                 // Apply damage to the enemy
                 enemyHealth.TakeDamage(damageAmount);
+                PlayerCombat.MagicAmount += 5;
             }
 
 
@@ -63,6 +64,7 @@ public class StaffUltimate : MonoBehaviour
             {
                 // Apply damage to the enemy
                 enemyHealth.TakeDamage(damageAmount);
+                PlayerCombat.MagicAmount += 5;
             }
 
             // Destroy the arrow upon hitting the enemy

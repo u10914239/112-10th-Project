@@ -18,6 +18,8 @@ public class ScenesManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("Level_0");
+        PlayerCombat.MagicAmount = 0;
+        PlayerCombat_Joystick_Wizard.MagicAmount = 0;
     }
     public void Cover()
     {
