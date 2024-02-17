@@ -90,7 +90,7 @@ public class EnemyHealth : MonoBehaviour
         {
             
             Die();
-            GameManager.PlayerKillCount +=1;
+            
             if(AmIBoss)
             {
                 Story.ResetStory = true;
