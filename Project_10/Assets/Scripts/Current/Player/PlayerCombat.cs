@@ -40,6 +40,7 @@ public class PlayerCombat : MonoBehaviour
         movement = GetComponentInParent<PlayerController>();
         pickUpJoy = GameObject.Find("Player 2").GetComponent<PickUp_Joystick>();
         currentSpeed = movement.speed;
+        //´ú¸Õ¥Î MagicAmount = 100;
     }
 
     void Update()
