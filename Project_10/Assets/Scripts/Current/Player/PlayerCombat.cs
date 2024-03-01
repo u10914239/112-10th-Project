@@ -32,6 +32,8 @@ public class PlayerCombat : MonoBehaviour
     public AudioSource Swoosh;
     public AudioSource Boom;
     public AudioSource Punch;
+    public PlayerHealthBar playerHealthBar;
+    public Coroutine recharge;
 
     //public int multiplier = 2;
 
@@ -40,14 +42,14 @@ public class PlayerCombat : MonoBehaviour
         movement = GetComponentInParent<PlayerController>();
         pickUpJoy = GameObject.Find("Player 2").GetComponent<PickUp_Joystick>();
         currentSpeed = movement.speed;
-        //´ú¸Õ¥Î MagicAmount = 100;
+        MagicAmount = 100;
     }
 
     void Update()
     {
       
         
-        if (Input.GetKeyDown(KeyCode.Mouse0) && movement.isTransformed == false && !isAttacking && !movement.isHoldingGod)
+        if (playerHealthBar.currentStamina>=10 && Input.GetKeyDown(KeyCode.Joystick2Button5) && movement.isTransformed == false && !isAttacking && !movement.isHoldingGod)
         {
             
             Attack();
@@ -56,7 +58,7 @@ public class PlayerCombat : MonoBehaviour
 
            
         }
-        if (Input.GetKeyDown(KeyCode.Mouse0) && movement.isTransformed == false && !isAttacking && movement.isHoldingGod)
+        if (Input.GetKeyDown(KeyCode.Joystick2Button5) && movement.isTransformed == false && !isAttacking && movement.isHoldingGod)
         {
             GodAttack();
             Invoke(nameof(ResetAttack), attackRate);
@@ -77,11 +79,20 @@ public class PlayerCombat : MonoBehaviour
         anim.SetTrigger("Attack");
         movement.speed = movement.speed * 0.5f;
         isAttacking = true;
-        
-        
-        
-        
-        
+        playerHealthBar.StartRecover = false;
+        playerHealthBar.currentStamina -=10;
+        if(recharge != null) StopAllCoroutines();
+        recharge = StartCoroutine(Recover());
+        //StopCoroutine(Recover());
+        //StartCoroutine(Recover());
+    }
+
+    IEnumerator Recover()
+    {
+        yield return new WaitForSeconds(1.5f);
+        playerHealthBar.StaminaRecover();
+        //if(playerHealthBar.currentStamina >= playerHealthBar.MaxStamina)
+        //yield return new WaitForSeconds(1);
     }
 
     void GodAttack()

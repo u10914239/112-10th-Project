@@ -20,10 +20,10 @@ public class Sync : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Target.localPosition.x<=-225)
+        if(Target!=null && Target.localPosition.x<=-225)
         {
             Add = true;
-        }else if(Target.localPosition.x>=225)
+        }else if(Target!=null && Target.localPosition.x>=225)
         {
             Add = false;
         }
@@ -44,10 +44,10 @@ public class Sync : MonoBehaviour
     
     void FixedUpdate()
     {
-        if(Add)
+        if(Target!=null && Add)
         {
             Target.position = Target.position + new Vector3(0,10,0);
-        }else if(!Add)
+        }else if(Target!=null && !Add)
         {
             Target.position = Target.position + new Vector3(0,-10,0);
         }

@@ -57,9 +57,9 @@ public class SwordUltimate : MonoBehaviour
                 PlayerCombat.MagicAmount += 5;
             }
 
+            Invoke("Destroy", 2f);
 
-
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
         if (other.CompareTag("Boss"))
         {
@@ -71,8 +71,9 @@ public class SwordUltimate : MonoBehaviour
                 PlayerCombat.MagicAmount += 5;
             }
 
+            Invoke("Destroy", 2f);
             // Destroy the arrow upon hitting the enemy
-            Destroy(gameObject);
+            //Destroy(gameObject);
 
 
         }

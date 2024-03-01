@@ -45,6 +45,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SimpleFlash flashEffect;
     public AudioSource Swoosh3;
 
+    public bool RollCoolDown;
+    public PlayerHealthBar playerHealthBar;
+
+    private Coroutine recharge;
    
     private void Awake()
     {
@@ -69,13 +73,14 @@ public class PlayerController : MonoBehaviour
         TurnIntoWeapon();
         isGrounded = Physics.Raycast(transform.position, Vector3.down, raycastDistance, terrainLayer);
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDodging && isMoving && !isTransformed)
+        if (playerHealthBar.currentStamina>=30 && Input.GetKeyDown(KeyCode.Joystick2Button2) && !isDodging && isMoving && !isTransformed)
         {
 
             RollForward();
             Swoosh3.Play();
+            Invoke("RollCoolDownTimeEnd", 0.5f);
         }
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        if (isGrounded && Input.GetKeyDown(KeyCode.Joystick2Button0))
         {
             
             rb.velocity += new Vector3(0, jumpForce, 0);
@@ -114,14 +119,13 @@ public class PlayerController : MonoBehaviour
 
 
 
-
     }
     
     private void FixedUpdate()
     {
         if(canMove)
         {
-            rb.velocity = new Vector3(moveInput.x * speed, rb.velocity.y, moveInput.y * speed);
+            rb.velocity = new Vector3(moveInput.x * speed, rb.velocity.y, -moveInput.y * speed);
         }
         properFlip();
 
@@ -157,20 +161,44 @@ public class PlayerController : MonoBehaviour
         anim.SetTrigger("isDodging");
         Vector3 rollDirection = transform.forward * rollSpeed;
         rb.velocity = rollDirection;
+        RollCoolDown = true;
+        speed = 8f;
+        playerHealthBar.currentStamina -=30;
+        playerHealthBar.StartRecover = false;
+
+        if(recharge != null) StopAllCoroutines();
+        recharge = StartCoroutine(Recover());
+
+        //StopCoroutine(Recover());
+        //StartCoroutine(Recover());
     }
 
+    IEnumerator Recover()
+    {
+        yield return new WaitForSeconds(1.5f);
+        playerHealthBar.StaminaRecover();
+        //if(playerHealthBar.currentStamina >= playerHealthBar.MaxStamina)
+        //yield return new WaitForSeconds(1);
+    }
+
+    void RollCoolDownTimeEnd()
+    {
+        speed = 2.5f;
+        RollCoolDown = false;
+        
+    }
 
 
     void TurnIntoWeapon()
     {
         if (PlayerCombat.MagicAmount >= 50 &&pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.E) ||
-            PlayerCombat.MagicAmount >= 50 && pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.Mouse1))
+            PlayerCombat.MagicAmount >= 50 && pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick2Button1))
         {
             rb.isKinematic = true;
             rb.interpolation = RigidbodyInterpolation.None;
             anim.SetBool("Transform", true);
             isTransformed = true;
-            
+            Explosion(this.transform.position, 0.5f);
             canMove = false;
             col.isTrigger = true;
 
@@ -188,7 +216,6 @@ public class PlayerController : MonoBehaviour
                     transform.position = movePos;
 
                 }
-
             }
 
 
@@ -218,6 +245,22 @@ public class PlayerController : MonoBehaviour
 
         }
 
+    }
+    void Explosion(Vector3 center, float radius)
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+        foreach (var hitCollider in hitColliders)
+        {
+            if(hitCollider.gameObject.tag == "Enemy")
+            {
+                Rigidbody rb = hitCollider.GetComponent<Rigidbody>();
+                if (rb != null)
+            {
+                rb.AddExplosionForce(1000, center, radius);
+            }
+            }
+            
+        }
     }
     
 }

@@ -40,7 +40,10 @@ public class PlayerController_Joystick : MonoBehaviour
     bool canMove, isMoving;
     bool currentFacing;
     public AudioSource Swoosh3;
-    
+
+    public bool RollCoolDown;
+    public PlayerHealthBar playerHealthBar;
+    public Coroutine recharge;
 
     void Awake()
     {
@@ -70,11 +73,19 @@ public class PlayerController_Joystick : MonoBehaviour
         
         TurnIntoWeapon();
         isGrounded = Physics.Raycast(transform.position, Vector3.down, raycastDistance, terrainLayer);
-        if (Input.GetKeyDown(KeyCode.Joystick1Button0) && isMoving)
+        //if (Input.GetKeyDown(KeyCode.Joystick1Button0) && isMoving)
+        //{
+//
+        //    RollForward();
+        //    Swoosh3.Play();
+        //}
+
+        if (playerHealthBar.currentStamina>=30 && Input.GetKeyDown(KeyCode.Joystick1Button2) && isMoving && !isTransformed)
         {
 
             RollForward();
             Swoosh3.Play();
+            Invoke("RollCoolDownTimeEnd", 1f);
         }
 
         if (canMove)
@@ -159,8 +170,32 @@ public class PlayerController_Joystick : MonoBehaviour
         anim.SetTrigger("isDodging");
         Vector3 rollDirection = transform.forward * rollSpeed;
         rb.velocity = rollDirection;
+        speed = 6f;
+        anim.SetTrigger("Roll");
+        playerHealthBar.currentStamina -=30;
+        playerHealthBar.StartRecover = false;
+        if(recharge != null) StopAllCoroutines();
+        recharge = StartCoroutine(Recover());
 
+        //StopCoroutine(Recover());
+        //StartCoroutine(Recover());
     }
+
+    IEnumerator Recover()
+    {
+        yield return new WaitForSeconds(1.5f);
+        playerHealthBar.StaminaRecover();
+        //if(playerHealthBar.currentStamina >= playerHealthBar.MaxStamina)
+        //yield return new WaitForSeconds(1);
+    }
+
+    void RollCoolDownTimeEnd()
+    {
+        RollCoolDown = false;
+        speed=2.5f;
+    }
+
+
 
 
     void TurnIntoWeapon()
@@ -171,7 +206,7 @@ public class PlayerController_Joystick : MonoBehaviour
             rb.interpolation = RigidbodyInterpolation.None;
             anim.SetBool("Transform", true);
             isTransformed = true;
-            
+            Explosion(this.transform.position, 0.5f);
             canMove = false;
             col.isTrigger = true;
            
@@ -220,6 +255,22 @@ public class PlayerController_Joystick : MonoBehaviour
 
         }
 
+    }
+    void Explosion(Vector3 center, float radius)
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+        foreach (var hitCollider in hitColliders)
+        {
+            if(hitCollider.gameObject.tag == "Enemy")
+            {
+                Rigidbody rb = hitCollider.GetComponent<Rigidbody>();
+                if (rb != null)
+            {
+                rb.AddExplosionForce(1000, center, radius);
+            }
+            }
+            
+        }
     }
 
 }

@@ -25,6 +25,8 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
     public AudioSource Pop;
     public AudioSource Swoosh2;
     public AudioSource Punch;
+    public PlayerHealthBar playerHealthBar;
+    public Coroutine recharge;
     void Start()
     {
         movement = GetComponentInParent<PlayerController_Joystick>();
@@ -35,12 +37,20 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
     {
 
 
-        if (Input.GetKeyDown(KeyCode.Joystick1Button5) && Time.time >= nextFireTime && !movement.isHoldingGod)
+        if (playerHealthBar.currentStamina>=10 && Input.GetKeyDown(KeyCode.Joystick1Button5) && Time.time >= nextFireTime && !movement.isHoldingGod)
         {
             
             anim.SetTrigger("Attack");
             nextFireTime = Time.time + 1f / fireRate;
             Pop.Play();
+            
+            playerHealthBar.StartRecover = false;
+        playerHealthBar.currentStamina -=10;
+        if(recharge != null) StopAllCoroutines();
+        recharge = StartCoroutine(Recover());
+
+        //StopCoroutine(Recover());
+        //StartCoroutine(Recover());
 
         }
         if (Input.GetKeyDown(KeyCode.Joystick1Button5) && Time.time >= nextFireTime && movement.isHoldingGod)
@@ -53,6 +63,13 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
         Magic();
     }
 
+    IEnumerator Recover()
+    {
+        yield return new WaitForSeconds(1.5f);
+        playerHealthBar.StaminaRecover();
+        //if(playerHealthBar.currentStamina >= playerHealthBar.MaxStamina)
+        //yield return new WaitForSeconds(1);
+    }
     void GodAttack()
     {
 

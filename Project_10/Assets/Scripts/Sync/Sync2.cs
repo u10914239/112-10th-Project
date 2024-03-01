@@ -30,7 +30,7 @@ public class Sync2 : MonoBehaviour
         
         if(Touching && !TouchingCoolDown)
         {
-            if(Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Mouse1))
+            if(Input.GetKeyDown(KeyCode.Joystick2Button1) || Input.GetKeyDown(KeyCode.Mouse1))
                 {
                     //print("Fun");
                     TargetArea.localPosition = new Vector3(Random.Range(-220,220),0,0);
