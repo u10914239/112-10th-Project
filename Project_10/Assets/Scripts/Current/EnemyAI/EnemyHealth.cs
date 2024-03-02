@@ -121,7 +121,7 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    private void Die()
+    public void Die()
     {
 
         anim.SetTrigger("isDead");

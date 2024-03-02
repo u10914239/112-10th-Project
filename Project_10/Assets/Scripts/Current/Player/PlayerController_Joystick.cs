@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerController_Joystick : MonoBehaviour
 {
@@ -25,6 +26,13 @@ public class PlayerController_Joystick : MonoBehaviour
     public GameObject WeaponHolder;
     public Sprite GodWeaponSprite;
     public SpriteRenderer NormalWeaponSprite;
+
+    
+    private NavMeshAgent enemyAgent;
+    private float originalSpeed;
+    private Rigidbody enemyRb;
+    
+
     private Sprite originalSprite;
 
     public Quaternion initialGlobalRotation;
@@ -65,6 +73,9 @@ public class PlayerController_Joystick : MonoBehaviour
         
         canMove = true;
         originalSprite = NormalWeaponSprite.sprite;
+
+        
+        
 
     }
 
@@ -206,7 +217,7 @@ public class PlayerController_Joystick : MonoBehaviour
             rb.interpolation = RigidbodyInterpolation.None;
             anim.SetBool("Transform", true);
             isTransformed = true;
-            Explosion(this.transform.position, 0.5f);
+            Explosion(transform.position, 2f);
             canMove = false;
             col.isTrigger = true;
            
@@ -258,19 +269,51 @@ public class PlayerController_Joystick : MonoBehaviour
     }
     void Explosion(Vector3 center, float radius)
     {
-        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
-        foreach (var hitCollider in hitColliders)
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
+        foreach (Collider nearyby in hitColliders )
         {
-            if(hitCollider.gameObject.tag == "Enemy")
+            if(nearyby.gameObject.tag == "Enemy")
             {
-                Rigidbody rb = hitCollider.GetComponent<Rigidbody>();
-                if (rb != null)
-            {
-                rb.AddExplosionForce(1000, center, radius);
-            }
+                enemyRb = nearyby.GetComponent<Rigidbody>();
+                enemyAgent = nearyby.GetComponent<NavMeshAgent>();
+
+                if (enemyRb != null && enemyAgent !=null)
+                {
+                    StartCoroutine(TemporarilyStopAgentAfterExplosion());
+                   
+
+
+
+                }
             }
             
         }
+    }
+
+    IEnumerator TemporarilyStopAgentAfterExplosion()
+    {
+        originalSpeed = enemyAgent.speed;
+
+        enemyAgent.speed = 0f;
+
+        enemyAgent.velocity = Vector3.zero;
+               
+        enemyAgent.isStopped = true;
+
+        Vector3 knockbackDirection = enemyAgent.transform.position -transform.position;
+        knockbackDirection.Normalize();
+        enemyRb.AddForce(knockbackDirection * 10f, ForceMode.Impulse);
+
+        yield return new WaitForSeconds(1f);
+
+        enemyAgent.speed = originalSpeed;
+
+        enemyRb.velocity = Vector3.zero;
+
+        enemyAgent.isStopped= false;
+      
+        
+
     }
 
 }

@@ -18,7 +18,7 @@ public class PlayerDIeControll : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.M))
         {
-            playerHealth = player2.GetComponent<PlayerHealthBar>();
+            playerHealth = player1.GetComponent<PlayerHealthBar>();
             playerHealth.Die();
 
         }
