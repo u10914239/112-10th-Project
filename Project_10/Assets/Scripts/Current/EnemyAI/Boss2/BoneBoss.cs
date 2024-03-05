@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBoss : MonoBehaviour
+public class BoneBoss : MonoBehaviour
 {
 
     public float detectionRange, attackRange;
@@ -24,6 +25,10 @@ public class EnemyBoss : MonoBehaviour
     private bool isFacingRight = false;
     
     private EnemyHealth enemyHealth;
+
+    [SerializeField] int AttackCount;
+    bool AttackFaster = false;
+    public int JumpCountLimit = 4;
    
     void Awake()
     {
@@ -110,14 +115,30 @@ public class EnemyBoss : MonoBehaviour
 
     void AttackPlayer()
     {
+        
         agent.SetDestination(transform.position);
-
-        if (target != null && !alreadyAttacked)
+        if(enemyHealth.Round2 && !AttackFaster)
         {
+            timeBetweenAttacks = timeBetweenAttacks / 2;
+            JumpCountLimit = 2;
+            AttackFaster = true;
+        }
 
-            
-            
+        if (AttackCount<=JumpCountLimit && target != null && !alreadyAttacked)
+        {
+            print("Attack!!!!!!!!!");
+            AttackCount++;
+            alreadyAttacked = true;
+            anim.SetBool("isAttacking", true);
 
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
+        if(AttackCount>JumpCountLimit && target != null && !alreadyAttacked)
+        {
+            //Jump Attack
+            print("Jump Attack!!!!!!!!!");
+
+            AttackCount = 0;
             alreadyAttacked = true;
             anim.SetBool("isAttacking", true);
 

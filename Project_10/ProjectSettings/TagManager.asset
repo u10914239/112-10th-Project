@@ -19,6 +19,8 @@ TagManager:
   - Boss
   - EnemyType2
   - Scene2
+  - Activator
+  - Deactivator
   layers:
   - Default
   - TransparentFX
@@ -55,4 +57,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Note
+    uniqueID: 3710337309
     locked: 0

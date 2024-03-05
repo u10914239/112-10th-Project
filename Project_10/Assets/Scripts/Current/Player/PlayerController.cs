@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
 
     public Animator anim;
     public GameObject Sync;
+    public GameObject EnergyBar;
     public GameObject WeaponHolder;
 
     private NavMeshAgent enemyAgent;
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour
     public PlayerHealthBar playerHealthBar;
 
     private Coroutine recharge;
+    public GameObject MiniGame, Holder;
    
     private void Awake()
     {
@@ -95,6 +97,14 @@ public class PlayerController : MonoBehaviour
         {
             moveInput.x = Input.GetAxisRaw("Horizontal");
             moveInput.y = Input.GetAxisRaw("Vertical");
+            if(Input.GetKey(KeyCode.A))
+            {
+                moveInput.x = -1;
+            }
+            if(Input.GetKey(KeyCode.D))
+            {
+                moveInput.x = 1;
+            }
             moveInput.Normalize();
         }
         //�ˬd��W���S������
@@ -206,6 +216,7 @@ public class PlayerController : MonoBehaviour
             Explosion(transform.position, 0.5f);
             canMove = false;
             col.isTrigger = true;
+            powerTime = 3;
 
 
             RaycastHit hit;
@@ -228,10 +239,14 @@ public class PlayerController : MonoBehaviour
         
         if (isTransformed)
         {
-            Sync.SetActive(true);
-            powerTime += Time.deltaTime;
+            //Sync.SetActive(true);
+            MiniGame.SetActive(true);
+            Holder.SetActive(true);
+            SyncManager.CallbyKnight = true;
+            powerTime -= Time.deltaTime;
+            EnergyBar.SetActive(true);
             
-            if (powerTime >= 3)
+            if (powerTime <= 0 && Note.ConfirmDestroy)
             {
                 rb.isKinematic = false;
                 rb.interpolation = RigidbodyInterpolation.Interpolate;
@@ -240,12 +255,15 @@ public class PlayerController : MonoBehaviour
 
                 powerTime = 0;
 
-
+                SyncManager.CallbyKnight = false;
                 col.isTrigger = false;
                 isTransformed = false;
                 canMove = true;
                 Sync.SetActive(false);
-               
+                MiniGame.SetActive(false);
+                Holder.SetActive(false);
+                EnergyBar.SetActive(false);
+                
             }
 
         }

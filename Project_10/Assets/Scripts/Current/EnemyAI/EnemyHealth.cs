@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using JetBrains.Annotations;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -15,10 +16,10 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private Slider SliderValueShield;
     
     [SerializeField] private SimpleFlash flashEffect;
-    [SerializeField] bool AmIBoss;
+    [SerializeField] bool AmIBoss, AmIBoss2;
 
     [SerializeField] float shieldHealth;
-    [SerializeField] bool Round2;
+    [SerializeField] public bool Round2;
     [SerializeField] public static int shieldKind;
     [SerializeField] GameObject NoSword,NoMagic;
     void Awake()
@@ -38,16 +39,17 @@ public class EnemyHealth : MonoBehaviour
    
     void Update()
     {
-        SliderValue.value = currentHealth;
-        if(AmIBoss)
+        if(AmIBoss2)
         {
-            SliderValueShield.value = shieldHealth;
+            SecondRound2();
         }
-        
         if(AmIBoss)
         {
             SecondRound();
+            SliderValueShield.value = shieldHealth;
         }
+
+        SliderValue.value = currentHealth;
         
         
     }
@@ -98,7 +100,7 @@ public class EnemyHealth : MonoBehaviour
             }
         }
     }
-    void SecondRound()
+    void SecondRound() //Slime Boss
     {
         if(currentHealth <= maxHealth/2 && !Round2)
         {
@@ -115,6 +117,37 @@ public class EnemyHealth : MonoBehaviour
             }
         }
         if(AmIBoss && shieldKind == 0)
+        {
+            NoSword.SetActive(false);
+            NoMagic.SetActive(false);
+        }
+    }
+
+    public GameObject BonePrefeb;
+    void SecondRound2() //Bone Boss
+    {
+
+        if(currentHealth <= maxHealth/2 && !Round2)
+        {
+            for(int i = 0; i < 3; i++)
+            {
+                Instantiate(BonePrefeb, new Vector3(transform.position.x + UnityEngine.Random.Range(-5,5),transform.position.y,transform.position.z + UnityEngine.Random.Range(-5,5)), Quaternion.identity);
+            }
+            shieldKind = UnityEngine.Random.Range(1,3);
+            Round2 = true;
+            shieldHealth = 30;
+            print("ShieldKind is" + shieldKind);
+            if(shieldKind == 1)
+            {
+                NoMagic.SetActive(true);
+            }else if(shieldKind ==2)
+            {
+                NoSword.SetActive(true);
+            }
+
+            
+        }
+        if(AmIBoss2 && shieldKind == 0)
         {
             NoSword.SetActive(false);
             NoMagic.SetActive(false);

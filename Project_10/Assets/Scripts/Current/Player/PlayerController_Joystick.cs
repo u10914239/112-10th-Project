@@ -15,6 +15,7 @@ public class PlayerController_Joystick : MonoBehaviour
     public float groundDist;
     public float raycastDistance = 0.5f;
     public GameObject Sync;
+    public GameObject EnergyBar;
     public LayerMask terrainLayer;
     public Animator anim;
     public static float powerTime;
@@ -52,6 +53,7 @@ public class PlayerController_Joystick : MonoBehaviour
     public bool RollCoolDown;
     public PlayerHealthBar playerHealthBar;
     public Coroutine recharge;
+    public GameObject MiniGame, Holder;
 
     void Awake()
     {
@@ -220,7 +222,7 @@ public class PlayerController_Joystick : MonoBehaviour
             Explosion(transform.position, 2f);
             canMove = false;
             col.isTrigger = true;
-           
+            powerTime = 3;
 
 
             RaycastHit hit;
@@ -244,10 +246,15 @@ public class PlayerController_Joystick : MonoBehaviour
        
         if (isTransformed)
         {
-            Sync.SetActive(true);
-            powerTime += Time.deltaTime;
+            //Sync.SetActive(true);
+            MiniGame.SetActive(true);
+            Holder.SetActive(true);
+            SyncManager.CallbyMagic = true;
+            EnergyBar.SetActive(true);
+            powerTime -= Time.deltaTime;
+            //print(powerTime);
 
-            if (powerTime >= 3)
+            if (powerTime <= 0 && Note.ConfirmDestroy)
             {
                 anim.SetBool("Transform", false);
                 rb.isKinematic = false;
@@ -255,12 +262,16 @@ public class PlayerController_Joystick : MonoBehaviour
                 
 
 
-
+                SyncManager.CallbyMagic = false;
                 powerTime = 0;
                 col.isTrigger = false;
                 isTransformed = false;
                 canMove = true;
                 Sync.SetActive(false);
+                
+                MiniGame.SetActive(false);
+                Holder.SetActive(false);
+                EnergyBar.SetActive(false);
 
             }
 
