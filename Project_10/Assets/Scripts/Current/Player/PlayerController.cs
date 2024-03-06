@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -39,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
 
     private bool isGrounded;
-    bool canMove , isMoving , isDodging;
+    public bool canMove , isMoving , isDodging;
     private Vector2 moveInput;
 
     PickUp_Joystick pickUp;
@@ -56,6 +57,10 @@ public class PlayerController : MonoBehaviour
 
     private Coroutine recharge;
     public GameObject MiniGame, Holder;
+    public PlayerHealthBar Player2HealthBar;
+    public PlayerController_Joystick playerController_Joystick;
+
+    
    
     private void Awake()
     {
@@ -76,18 +81,17 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        
         TurnIntoWeapon();
         isGrounded = Physics.Raycast(transform.position, Vector3.down, raycastDistance, terrainLayer);
 
-        if (playerHealthBar.currentStamina>=30 && Input.GetKeyDown(KeyCode.Joystick2Button2) && !isDodging && isMoving && !isTransformed)
+        if (playerHealthBar.currentStamina>=30 && Input.GetKeyDown(KeyCode.Joystick2Button2) && !isDodging && isMoving && !isTransformed && PlayerHealthBar.Player1WaitForRescue == false)
         {
 
             RollForward();
             Swoosh3.Play();
             Invoke("RollCoolDownTimeEnd", 0.5f);
         }
-        if (isGrounded && Input.GetKeyDown(KeyCode.Joystick2Button0))
+        if (isGrounded && Input.GetKeyDown(KeyCode.Joystick2Button0) && PlayerHealthBar.Player1WaitForRescue == false)
         {
             
             rb.velocity += new Vector3(0, jumpForce, 0);
@@ -105,6 +109,15 @@ public class PlayerController : MonoBehaviour
             {
                 moveInput.x = 1;
             }
+            if(Input.GetKey(KeyCode.W))
+            {
+                moveInput.y = -1;
+            }
+            if(Input.GetKey(KeyCode.S))
+            {
+                moveInput.y = 1;
+            }
+
             moveInput.Normalize();
         }
         //�ˬd��W���S������
@@ -133,12 +146,14 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
 
 
-
+        //if(PlayerHealthBar.Player1WaitForRescue)
+        //{
+         //   canMove = false;
+        //}
     }
-    
     private void FixedUpdate()
     {
-        if(canMove)
+        if(canMove && PlayerHealthBar.Player1WaitForRescue == false)
         {
             rb.velocity = new Vector3(moveInput.x * speed, rb.velocity.y, -moveInput.y * speed);
         }
@@ -206,8 +221,8 @@ public class PlayerController : MonoBehaviour
 
     void TurnIntoWeapon()
     {
-        if (PlayerCombat.MagicAmount >= 50 &&pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.E) ||
-            PlayerCombat.MagicAmount >= 50 && pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick2Button1))
+        if (PlayerCombat.MagicAmount >= 50 &&pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.E) && PlayerHealthBar.Player1WaitForRescue == false ||
+            PlayerCombat.MagicAmount >= 50 && pickUp.isHeld == false && isDodging == false && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick2Button1) && PlayerHealthBar.Player1WaitForRescue == false)
         {
             rb.isKinematic = true;
             rb.interpolation = RigidbodyInterpolation.None;
@@ -316,6 +331,47 @@ public class PlayerController : MonoBehaviour
 
 
 
+    }
+
+    public float Rescuing;
+    public GameObject RescuingBar;
+    public Slider Slider4Value;
+    void OnTriggerStay(Collider other)
+    {
+        if(other.tag =="Player 2" && PlayerHealthBar.WaitForRescue)
+        {
+            if(Input.GetKey(KeyCode.Joystick2Button3) || Input.GetKey(KeyCode.Y))
+            
+            {
+                //print("Player1"+Rescuing);
+                Rescuing += Time.deltaTime;
+                RescuingBar.SetActive(true);
+                Slider4Value.value = Rescuing;
+                if(Rescuing >= 3)
+                {
+                    
+                   //playerHealthBar.Player2Rescued();
+                    PlayerHealthBar.Player2WaitForRescue = false;
+                    Rescuing = 0;
+                    PlayerHealthBar.WaitForRescue = false;
+                    Player2HealthBar.currentHealth = Player2HealthBar.maxHealth / 2;
+                    RescuingBar.SetActive(false);
+                }
+            }else if(Input.GetKeyUp(KeyCode.Joystick2Button3) || Input.GetKeyUp(KeyCode.Y))
+            {
+                Rescuing = 0;
+                RescuingBar.SetActive(false);
+            }
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if(other.tag == "Player 2")
+        {
+            Rescuing = 0;
+            RescuingBar.SetActive(false);
+        }
     }
 
 }

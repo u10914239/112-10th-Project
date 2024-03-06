@@ -11,7 +11,7 @@ public class PlayerHealthBar : MonoBehaviour
     public bool isInvulernable = false;
 
     [SerializeField] private Slider SliderValue;
-    [SerializeField] int currentHealth;
+    [SerializeField] public int currentHealth;
     [SerializeField] private SimpleFlash flashEffect;
     public GameObject EndCover,Slider1,Slider2;
     public AudioSource Punch;
@@ -20,10 +20,20 @@ public class PlayerHealthBar : MonoBehaviour
     [SerializeField] public float currentStamina;
     [SerializeField] public float MaxStamina = 100;
     [SerializeField] public bool StartRecover;
+
+    public static bool WaitForRescue, Player1WaitForRescue, Player2WaitForRescue;
+    public static bool Rescued;
+
+    public bool Player1, Player2;
+    public PlayerController playerController;
+    public PlayerController_Joystick playerController_Joystick;
     void Start()
     {
         currentHealth = maxHealth;
         currentStamina = MaxStamina;
+        Player1WaitForRescue = false;
+        Player2WaitForRescue = false;
+        
     }
 
     // Update is called once per frame
@@ -40,7 +50,23 @@ public class PlayerHealthBar : MonoBehaviour
             StartRecover = false;
         }
         
-        
+        //Rescue();
+        if (currentHealth <= 0) 
+        {
+            WaitForRescue = true;
+            //print("Player is Dead");
+
+            if(Player1 == true && Player2 == false)
+            {
+                Player1WaitForRescue = true;
+            }
+            if(Player2 && !Player1)
+            {
+                Player2WaitForRescue = true;
+            }
+            //Die();
+            //Invoke("GameOver",2f );
+        }
     }
 
     public void TakeDamage(int damage)
@@ -51,12 +77,7 @@ public class PlayerHealthBar : MonoBehaviour
         flashEffect.Flash();
         currentHealth -= damage;
         //Debug.Log("Player Health: " + currentHealth);
-        if (currentHealth <= 0)
-        {
-
-            Die();
-            Invoke("GameOver",2f );
-        }
+        
     }
     public void Stamina()
     {

@@ -155,10 +155,12 @@ MonoBehaviour:
   SliderValueShield: {fileID: 0}
   flashEffect: {fileID: 7325822620816479786}
   AmIBoss: 0
+  AmIBoss2: 0
   shieldHealth: 0
   Round2: 0
   NoSword: {fileID: 2405120145593113202}
   NoMagic: {fileID: 2405120145593113202}
+  BonePrefeb: {fileID: 0}
 --- !u!1 &1088377695038925600
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,6 +628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9873b53312fc45142ad58e7ecabf80db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageAmount: 0
 --- !u!54 &3734611267486818959
 Rigidbody:
   m_ObjectHideFlags: 0

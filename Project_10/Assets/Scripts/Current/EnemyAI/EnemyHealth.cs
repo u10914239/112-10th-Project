@@ -42,6 +42,7 @@ public class EnemyHealth : MonoBehaviour
         if(AmIBoss2)
         {
             SecondRound2();
+            SliderValueShield.value = shieldHealth;
         }
         if(AmIBoss)
         {
@@ -56,7 +57,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        flashEffect.Flash();
+        //flashEffect.Flash();
 
 
         if (shieldHealth > 0)

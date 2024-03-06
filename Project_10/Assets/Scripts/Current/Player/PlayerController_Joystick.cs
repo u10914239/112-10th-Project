@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class PlayerController_Joystick : MonoBehaviour
 {
@@ -46,7 +47,7 @@ public class PlayerController_Joystick : MonoBehaviour
 
 
     private bool isGrounded;
-    bool canMove, isMoving;
+    public bool canMove, isMoving;
     bool currentFacing;
     public AudioSource Swoosh3;
 
@@ -54,6 +55,8 @@ public class PlayerController_Joystick : MonoBehaviour
     public PlayerHealthBar playerHealthBar;
     public Coroutine recharge;
     public GameObject MiniGame, Holder;
+    public PlayerHealthBar Player1HealthBar;
+    public PlayerController playerController;
 
     void Awake()
     {
@@ -93,7 +96,7 @@ public class PlayerController_Joystick : MonoBehaviour
         //    Swoosh3.Play();
         //}
 
-        if (playerHealthBar.currentStamina>=30 && Input.GetKeyDown(KeyCode.Joystick1Button2) && isMoving && !isTransformed)
+        if (playerHealthBar.currentStamina>=30 && Input.GetKeyDown(KeyCode.Joystick1Button2) && isMoving && !isTransformed && PlayerHealthBar.Player2WaitForRescue == false)
         {
 
             RollForward();
@@ -109,7 +112,7 @@ public class PlayerController_Joystick : MonoBehaviour
             moveInput.Normalize();
         }
 
-        if (isGrounded && Input.GetKeyDown(KeyCode.Joystick1Button0))
+        if (isGrounded && Input.GetKeyDown(KeyCode.Joystick1Button0) && PlayerHealthBar.Player2WaitForRescue == false)
         {
 
             rb.velocity += new Vector3(0, jumpForce, 0);
@@ -135,11 +138,14 @@ public class PlayerController_Joystick : MonoBehaviour
         stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal2") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical2") * speed);
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
 
-
+        //if(PlayerHealthBar.Player2WaitForRescue)
+        //{
+         //   canMove = false;
+        //}
     }
     void FixedUpdate()
     {
-        if (canMove)
+        if (canMove && PlayerHealthBar.Player2WaitForRescue == false)
         {
             rb.velocity = new Vector3(moveInput.x * speed  , rb.velocity.y, moveInput.y * speed );
 
@@ -213,7 +219,7 @@ public class PlayerController_Joystick : MonoBehaviour
 
     void TurnIntoWeapon()
     {
-        if (PlayerCombat_Joystick_Wizard.MagicAmount >= 50 && pickUp1.isHeld == false  && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1))
+        if (PlayerCombat_Joystick_Wizard.MagicAmount >= 50 && pickUp1.isHeld == false  && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1) && PlayerHealthBar.Player2WaitForRescue == false)
         {
             rb.isKinematic = true;
             rb.interpolation = RigidbodyInterpolation.None;
@@ -325,6 +331,45 @@ public class PlayerController_Joystick : MonoBehaviour
       
         
 
+    }
+    public float Rescuing;
+    public GameObject RescuingBar;
+    public Slider Slider4Value;
+    void OnTriggerStay(Collider other)
+    {
+        if(other.tag =="Player 1" && PlayerHealthBar.WaitForRescue)
+        {
+            
+            if(Input.GetKey(KeyCode.Joystick1Button3))
+            {
+                //print("Player2"+Rescuing);
+                Rescuing += Time.deltaTime;
+                RescuingBar.SetActive(true);
+                Slider4Value.value = Rescuing;
+                if(Rescuing >= 3)
+                {
+                    
+                    //playerHealthBar.Player1Rescued();
+                    PlayerHealthBar.Player1WaitForRescue = false;
+                    Rescuing = 0;
+                    PlayerHealthBar.WaitForRescue = false;
+                    Player1HealthBar.currentHealth = Player1HealthBar.maxHealth / 2;
+                    RescuingBar.SetActive(false);
+                }
+            }else if(Input.GetKeyUp(KeyCode.Joystick1Button3))
+            {
+                Rescuing = 0;
+                RescuingBar.SetActive(false);
+            }
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if(other.tag == "Player 1")
+        {
+            Rescuing = 0;
+            RescuingBar.SetActive(false);
+        }
     }
 
 }
