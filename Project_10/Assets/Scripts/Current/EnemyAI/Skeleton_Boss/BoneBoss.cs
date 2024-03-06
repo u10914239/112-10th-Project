@@ -22,7 +22,7 @@ public class BoneBoss : MonoBehaviour
     private NavMeshAgent agent;
 
     private float lastPlayerMovementTime = Mathf.NegativeInfinity;
-    private bool isFacingRight = false;
+    private bool isFacingRight = true;
     
     private EnemyHealth enemyHealth;
 
