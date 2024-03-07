@@ -84,14 +84,16 @@ public class PlayerController : MonoBehaviour
         TurnIntoWeapon();
         isGrounded = Physics.Raycast(transform.position, Vector3.down, raycastDistance, terrainLayer);
 
-        if (playerHealthBar.currentStamina>=30 && Input.GetKeyDown(KeyCode.Joystick2Button2) && !isDodging && isMoving && !isTransformed && PlayerHealthBar.Player1WaitForRescue == false)
+        if (playerHealthBar.currentStamina>=30 && Input.GetKeyDown(KeyCode.Joystick2Button2) && !isDodging && isMoving && !isTransformed && PlayerHealthBar.Player1WaitForRescue == false
+        ||playerHealthBar.currentStamina>=30 && Input.GetKeyDown(KeyCode.R) && !isDodging && isMoving && !isTransformed && PlayerHealthBar.Player1WaitForRescue == false)
         {
 
             RollForward();
             Swoosh3.Play();
             Invoke("RollCoolDownTimeEnd", 0.5f);
         }
-        if (isGrounded && Input.GetKeyDown(KeyCode.Joystick2Button0) && PlayerHealthBar.Player1WaitForRescue == false)
+        if (isGrounded && Input.GetKeyDown(KeyCode.Joystick2Button0) && PlayerHealthBar.Player1WaitForRescue == false
+        ||isGrounded && Input.GetKeyDown(KeyCode.Space) && PlayerHealthBar.Player1WaitForRescue == false)
         {
             
             rb.velocity += new Vector3(0, jumpForce, 0);

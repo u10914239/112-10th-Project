@@ -24,6 +24,7 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         FlipSprite();
+        Invoke("DestroyIt",2f);
     }
 
     private void FlipSprite()
@@ -79,5 +80,10 @@ public class Projectile : MonoBehaviour
 
 
         }
+    }
+
+    void DestroyIt()
+    {
+        Destroy(gameObject);
     }
 }
