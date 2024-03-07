@@ -44,9 +44,13 @@ public class Skeleton_Boss_Run : StateMachineBehaviour
 
         if (Time.time - boss.lastPlayerMovementTime > chaseCooldown)
         {
-            agent.SetDestination(boss.target.position);
+            
             boss.FindNearestPlayer();
             
+            if(distanceToTarget < boss.attackRange) 
+            {
+                agent.SetDestination(boss.target.position);
+            }
 
         }
 

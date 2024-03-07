@@ -36,7 +36,7 @@ public class EnemyType : MonoBehaviour
         enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
-        centrePoint = GameObject.Find("Enemy Generator").GetComponent<Transform>();
+        //centrePoint = GameObject.Find("Enemy Generator").GetComponent<Transform>();
     }
 
     void Update()
@@ -51,7 +51,7 @@ public class EnemyType : MonoBehaviour
             FindNearestPlayer();
             if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         }
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
+        //if (!playerInSightRange && !playerInAttackRange) Patroling();
         
         if (playerInAttackRange && playerInSightRange) 
         {
@@ -118,7 +118,7 @@ public class EnemyType : MonoBehaviour
     }
 
 
-    private void Patroling()
+    /*private void Patroling()
     {
         anim.SetBool("isAttacking", false);
 
@@ -152,7 +152,7 @@ public class EnemyType : MonoBehaviour
         }
         
         
-    }
+    }*/
 
    
 

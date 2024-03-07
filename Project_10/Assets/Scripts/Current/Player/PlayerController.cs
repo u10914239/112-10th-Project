@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
     public PlayerHealthBar Player2HealthBar;
     public PlayerHealthBar Player1HealthBar;
     public PlayerController_Joystick playerController_Joystick;
-    public Transform DeadZone1Positon = null,DeadZone2Positon = null,DeadZone3Positon = null,DeadZone4Positon = null,DeadZone5Positon = null;
+    public Transform DeadZone1Positon ,DeadZone2Positon ,DeadZone3Positon ,DeadZone4Positon ,DeadZone5Positon;
     public GameObject FindPlayerDectector;
 
     
@@ -399,6 +399,7 @@ public class PlayerController : MonoBehaviour
             print("DeadZone1");
             this.transform.position = DeadZone1Positon.position;
             Player1HealthBar.currentHealth = 0;
+            rb.velocity = Vector3.zero;
             PlayerHealthBar.Player1WaitForRescue = true;
         }
         if(other.tag == "DeadZone2")
@@ -406,6 +407,7 @@ public class PlayerController : MonoBehaviour
             print("DeadZone2");
             this.transform.position = DeadZone2Positon.position;
             Player1HealthBar.currentHealth = 0;
+            rb.velocity = Vector3.zero;
             PlayerHealthBar.Player1WaitForRescue = true;
         }
         if(other.tag == "DeadZone3")
@@ -413,6 +415,7 @@ public class PlayerController : MonoBehaviour
             print("DeadZone3");
             this.transform.position = DeadZone3Positon.position;
             Player1HealthBar.currentHealth = 0;
+            rb.velocity = Vector3.zero;
             PlayerHealthBar.Player1WaitForRescue = true;
         }
         if(other.tag == "DeadZone4")
@@ -420,12 +423,14 @@ public class PlayerController : MonoBehaviour
             print("DeadZone4");
             this.transform.position = DeadZone4Positon.position;
             Player1HealthBar.currentHealth = 0;
+            rb.velocity = Vector3.zero;
             PlayerHealthBar.Player1WaitForRescue = true;
         }if(other.tag == "DeadZone5")
         {
             print("DeadZone5");
             this.transform.position = DeadZone5Positon.position;
             Player1HealthBar.currentHealth = 0;
+            rb.velocity = Vector3.zero;
             PlayerHealthBar.Player1WaitForRescue = true;
         }
     }

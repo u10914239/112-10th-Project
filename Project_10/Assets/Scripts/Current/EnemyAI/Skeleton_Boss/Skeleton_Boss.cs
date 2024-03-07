@@ -7,7 +7,7 @@ public class Skeleton_Boss : MonoBehaviour
 {
     //public Transform player;
     public float detectionRange;
-
+    public float attackRange;
     public LayerMask playerLayer;
     public bool isFlipped = false;
     //public bool isFacingRight;
