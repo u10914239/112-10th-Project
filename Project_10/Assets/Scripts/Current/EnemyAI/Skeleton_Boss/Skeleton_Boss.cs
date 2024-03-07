@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Skeleton_Boss : MonoBehaviour
 {
@@ -9,12 +10,17 @@ public class Skeleton_Boss : MonoBehaviour
 
     public LayerMask playerLayer;
     public bool isFlipped = false;
-
+    //public bool isFacingRight;
 
     public Transform target;
     public float lastPlayerMovementTime  = Mathf.NegativeInfinity;
 
+    NavMeshAgent agent;
 
+    private void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
     public void LookAtPlayer()
     {
         Vector3 flipped = transform.localScale;
@@ -33,6 +39,16 @@ public class Skeleton_Boss : MonoBehaviour
             isFlipped = true;
         }
     }
+
+    /* public void Flip()
+     {
+         isFacingRight = !isFacingRight;
+         transform.Rotate(0f, 180f, 0f);
+         Vector3 newScale = transform.localScale;
+         newScale.x *= -1;
+         transform.localScale = newScale;
+         EnemyHealthBar.FlipR = true;
+     }*/
 
     public void FindNearestPlayer()
     {
@@ -53,7 +69,7 @@ public class Skeleton_Boss : MonoBehaviour
         if (nearestPlayer != null)
         {
             SetTargetPlayer(nearestPlayer);
-
+           
         }
     }
 

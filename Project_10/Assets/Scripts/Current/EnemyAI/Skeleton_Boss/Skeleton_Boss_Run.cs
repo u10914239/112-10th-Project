@@ -30,26 +30,28 @@ public class Skeleton_Boss_Run : StateMachineBehaviour
         
            
         boss.FindNearestPlayer();
-           
+        boss.LookAtPlayer();
 
-        
+
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         float distanceToTarget = Vector3.Distance(rb.position, boss.target.position);
+        boss.LookAtPlayer();
 
-        
 
-        if(Time.time - boss.lastPlayerMovementTime > chaseCooldown)
+        if (Time.time - boss.lastPlayerMovementTime > chaseCooldown)
         {
             agent.SetDestination(boss.target.position);
             boss.FindNearestPlayer();
-            boss.LookAtPlayer();
+            
 
         }
+
         
+
 
         if (distanceToTarget < attackRange && bossAttack.attackCount <= 4)
         {
