@@ -37,12 +37,12 @@ public class Story : MonoBehaviour
         }else if(!firstStory)
         {
             if(Cue < Storys.Length-1 && Input.GetMouseButtonDown(0))
-        {
-            Cue = Cue += 1;
-        }else if(Cue == Storys.Length-1 && Input.GetMouseButtonDown(0))
-        {
-            VisualNovel.VisualNovel.SetActive(false);
-        }
+            {
+             Cue = Cue += 1;
+            }else if(Cue == Storys.Length-1 && Input.GetMouseButtonDown(0))
+            {
+                VisualNovel.VisualNovel.SetActive(false);
+            }
         }
 
         
