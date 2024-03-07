@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5504895091422978446}
   - component: {fileID: 3997829888025423086}
   - component: {fileID: 7653031439648328146}
+  - component: {fileID: -3175750896560538650}
   m_Layer: 9
   m_Name: Skeleton
   m_TagString: Enemy
@@ -85,7 +86,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.53
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.3, z: 0}
@@ -149,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 6779663651013844258}
-  maxHealth: 1
+  maxHealth: 30
   currentHealth: 0
   SliderValue: {fileID: 6468859261440403849}
   SliderValueShield: {fileID: 0}
@@ -161,6 +162,29 @@ MonoBehaviour:
   NoSword: {fileID: 2405120145593113202}
   NoMagic: {fileID: 2405120145593113202}
   BonePrefeb: {fileID: 0}
+--- !u!136 &-3175750896560538650
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999302080350788599}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!1 &1088377695038925600
 GameObject:
   m_ObjectHideFlags: 0

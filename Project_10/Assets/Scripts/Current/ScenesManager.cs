@@ -33,6 +33,14 @@ public class ScenesManager : MonoBehaviour
     {
         SceneManager.LoadScene("FrontStory");
     }
+    public void Level1()
+    {
+        SceneManager.LoadScene("Testing");
+    }
+    public void Level2()
+    {
+        SceneManager.LoadScene("Level_1");
+    }
 
 
     void OnTriggerStay(Collider Player)

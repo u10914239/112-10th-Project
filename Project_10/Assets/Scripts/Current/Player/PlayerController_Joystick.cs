@@ -56,8 +56,11 @@ public class PlayerController_Joystick : MonoBehaviour
     public Coroutine recharge;
     public GameObject MiniGame, Holder;
     public PlayerHealthBar Player1HealthBar;
+    public PlayerHealthBar Player2HealthBar;
     public PlayerController playerController;
+    public Transform DeadZone1Positon = null,DeadZone2Positon = null,DeadZone3Positon = null,DeadZone4Positon = null,DeadZone5Positon = null;
 
+    public GameObject FindPlayerDectector;
     void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody>();
@@ -88,6 +91,7 @@ public class PlayerController_Joystick : MonoBehaviour
     {
         
         TurnIntoWeapon();
+        WhenDead();
         isGrounded = Physics.Raycast(transform.position, Vector3.down, raycastDistance, terrainLayer);
         //if (Input.GetKeyDown(KeyCode.Joystick1Button0) && isMoving)
         //{
@@ -138,6 +142,7 @@ public class PlayerController_Joystick : MonoBehaviour
         stopSpeed = Mathf.Abs(Input.GetAxisRaw("Horizontal2") * speed) + Mathf.Abs(Input.GetAxisRaw("Vertical2") * speed);
         anim.SetFloat("Speed", Mathf.Abs(stopSpeed));
 
+        
         //if(PlayerHealthBar.Player2WaitForRescue)
         //{
          //   canMove = false;
@@ -195,7 +200,7 @@ public class PlayerController_Joystick : MonoBehaviour
         playerHealthBar.StartRecover = false;
         if(recharge != null) StopAllCoroutines();
         recharge = StartCoroutine(Recover());
-
+        Invoke("RollCoolDownTimeEnd", 1f);
         //StopCoroutine(Recover());
         //StartCoroutine(Recover());
     }
@@ -219,7 +224,7 @@ public class PlayerController_Joystick : MonoBehaviour
 
     void TurnIntoWeapon()
     {
-        if (PlayerCombat_Joystick_Wizard.MagicAmount >= 50 && pickUp1.isHeld == false  && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1) && PlayerHealthBar.Player2WaitForRescue == false)
+        if (PlayerCombat_Joystick_Wizard.MagicAmount >= 70 && pickUp1.isHeld == false  && isTransformed == false && Input.GetKeyDown(KeyCode.Joystick1Button1) && PlayerHealthBar.Player2WaitForRescue == false)
         {
             rb.isKinematic = true;
             rb.interpolation = RigidbodyInterpolation.None;
@@ -229,6 +234,7 @@ public class PlayerController_Joystick : MonoBehaviour
             canMove = false;
             col.isTrigger = true;
             powerTime = 3;
+            PlayerCombat_Joystick_Wizard.MagicAmount = PlayerCombat_Joystick_Wizard.MagicAmount - 70;
 
 
             RaycastHit hit;
@@ -307,6 +313,16 @@ public class PlayerController_Joystick : MonoBehaviour
         }
     }
 
+    void WhenDead()
+    {
+        if(Player2HealthBar.currentHealth <= 0)
+        {
+            FindPlayerDectector.GetComponent<CapsuleCollider>().enabled = false;
+        }else
+        {
+            FindPlayerDectector.GetComponent<CapsuleCollider>().enabled = true;
+        }
+    }
     IEnumerator TemporarilyStopAgentAfterExplosion()
     {
         originalSpeed = enemyAgent.speed;
@@ -369,6 +385,44 @@ public class PlayerController_Joystick : MonoBehaviour
         {
             Rescuing = 0;
             RescuingBar.SetActive(false);
+        }
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "DeadZone1")
+        {
+            print("DeadZone1");
+            this.transform.position = DeadZone1Positon.position;
+            Player2HealthBar.currentHealth = 0;
+            PlayerHealthBar.Player2WaitForRescue = true;
+        }
+        if(other.tag == "DeadZone2")
+        {
+            print("DeadZone2");
+            this.transform.position = DeadZone2Positon.position;
+            Player2HealthBar.currentHealth = 0;
+            PlayerHealthBar.Player2WaitForRescue = true;
+        }
+        if(other.tag == "DeadZone3")
+        {
+            print("DeadZone3");
+            this.transform.position = DeadZone3Positon.position;
+            Player2HealthBar.currentHealth = 0;
+            PlayerHealthBar.Player2WaitForRescue = true;
+        }
+        if(other.tag == "DeadZone4")
+        {
+            print("DeadZone4");
+            this.transform.position = DeadZone4Positon.position;
+            Player2HealthBar.currentHealth = 0;
+            PlayerHealthBar.Player2WaitForRescue = true;
+        }
+        if(other.tag == "DeadZone5")
+        {
+            print("DeadZone5");
+            this.transform.position = DeadZone5Positon.position;
+            Player2HealthBar.currentHealth = 0;
+            PlayerHealthBar.Player2WaitForRescue = true;
         }
     }
 

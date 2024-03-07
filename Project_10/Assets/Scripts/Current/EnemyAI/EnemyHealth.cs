@@ -22,6 +22,8 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] public bool Round2;
     [SerializeField] public static int shieldKind;
     [SerializeField] GameObject NoSword,NoMagic;
+    public static bool SlimeBossDead;
+    
     void Awake()
     {
        
@@ -52,7 +54,28 @@ public class EnemyHealth : MonoBehaviour
 
         SliderValue.value = currentHealth;
         
-        
+        if (currentHealth <= 0)
+        {
+            
+            Die();
+            GameManager.PlayerKillCount++;
+            if(AmIBoss)
+            {
+                Die1();
+                Story.ResetStory = true;
+                Story.ScriptsVersion = 2;
+            }
+        }
+        if (currentHealth <= 0 && AmIBoss2)
+        {
+            
+            GameManager.PlayerKillCount++;
+            if(AmIBoss)
+            {
+                Story.ResetStory = true;
+                Story.ScriptsVersion = 2;
+            }
+        }
     }
 
     public void TakeDamage(int damage)
@@ -89,17 +112,7 @@ public class EnemyHealth : MonoBehaviour
 
 
 
-        if (currentHealth <= 0)
-        {
-            
-            Die();
-            GameManager.PlayerKillCount++;
-            if(AmIBoss)
-            {
-                Story.ResetStory = true;
-                Story.ScriptsVersion = 2;
-            }
-        }
+        
     }
     void SecondRound() //Slime Boss
     {
@@ -157,7 +170,16 @@ public class EnemyHealth : MonoBehaviour
 
     public void Die()
     {
-
+        
+        anim.SetTrigger("isDead");
+        Debug.Log("Enemy Died");
+        DisableAllColliders(transform);
+        //StartCoroutine(Disable());
+        Destroy(this.gameObject,2f);
+    }
+    public void Die1()
+    {
+        SlimeBossDead = true;
         anim.SetTrigger("isDead");
         Debug.Log("Enemy Died");
         DisableAllColliders(transform);

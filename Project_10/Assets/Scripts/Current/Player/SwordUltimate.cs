@@ -66,9 +66,12 @@ public class SwordUltimate : MonoBehaviour
             EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
-                // Apply damage to the enemy
-                enemyHealth.TakeDamage(damageAmount);
-                PlayerCombat.MagicAmount += 5;
+                if(EnemyHealth.shieldKind ==0 || EnemyHealth.shieldKind ==1)
+                {
+                    // Apply damage to the enemy
+                    enemyHealth.TakeDamage(damageAmount);
+                    PlayerCombat.MagicAmount += 5;
+                }
             }
 
             Invoke("Destroy", 2f);

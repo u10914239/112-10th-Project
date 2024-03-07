@@ -30,7 +30,7 @@ public class PlayerCombat_Joystick_Wizard : MonoBehaviour
     void Start()
     {
         movement = GetComponentInParent<PlayerController_Joystick>();
-        MagicAmount = 100;
+        MagicAmount = 0;
 
     }
 

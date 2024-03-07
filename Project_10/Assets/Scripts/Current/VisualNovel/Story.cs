@@ -24,10 +24,10 @@ public class Story : MonoBehaviour
     {
         if(firstStory)
         {
-            if(Cue < 1 && Input.GetMouseButtonDown(0))
+            if(Cue < 1 && Input.GetMouseButtonDown(0) || Cue < 1 && Input.GetKeyDown(KeyCode.Joystick2Button3)|| Cue < 1 && Input.GetKeyDown(KeyCode.Joystick1Button3))
             {
                 Cue = Cue += 1;
-            }else if(Cue == 1 && Input.GetMouseButtonDown(0))
+            }else if(Cue == 1 && Input.GetMouseButtonDown(0)|| Cue == 1 && Input.GetKeyDown(KeyCode.Joystick2Button3)|| Cue == 1 && Input.GetKeyDown(KeyCode.Joystick1Button3))
             {
                 firstStory = false;
                 ScriptsVersion = 1;
@@ -36,10 +36,10 @@ public class Story : MonoBehaviour
             }
         }else if(!firstStory)
         {
-            if(Cue < Storys.Length-1 && Input.GetMouseButtonDown(0))
+            if(Cue < Storys.Length-1 && Input.GetMouseButtonDown(0)|| Cue < 1 && Input.GetKeyDown(KeyCode.Joystick2Button3)|| Cue < 1 && Input.GetKeyDown(KeyCode.Joystick1Button3))
             {
              Cue = Cue += 1;
-            }else if(Cue == Storys.Length-1 && Input.GetMouseButtonDown(0))
+            }else if(Cue == Storys.Length-1 && Input.GetMouseButtonDown(0)|| Cue == 1 && Input.GetKeyDown(KeyCode.Joystick2Button3)|| Cue == 1 && Input.GetKeyDown(KeyCode.Joystick1Button3))
             {
                 VisualNovel.VisualNovel.SetActive(false);
             }

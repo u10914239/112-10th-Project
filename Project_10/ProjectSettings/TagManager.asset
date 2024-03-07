@@ -21,6 +21,11 @@ TagManager:
   - Scene2
   - Activator
   - Deactivator
+  - DeadZone1
+  - DeadZone2
+  - DeadZone3
+  - DeadZone4
+  - DeadZone5
   layers:
   - Default
   - TransparentFX

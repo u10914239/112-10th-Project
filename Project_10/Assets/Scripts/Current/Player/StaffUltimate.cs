@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,7 +51,7 @@ public class StaffUltimate : MonoBehaviour
             {
                 // Apply damage to the enemy
                 enemyHealth.TakeDamage(damageAmount);
-                PlayerCombat.MagicAmount += 5;
+                PlayerCombat.MagicAmount += 5;  
             }
 
 
@@ -62,9 +63,13 @@ public class StaffUltimate : MonoBehaviour
             EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
-                // Apply damage to the enemy
-                enemyHealth.TakeDamage(damageAmount);
-                PlayerCombat.MagicAmount += 5;
+
+                if(EnemyHealth.shieldKind ==0 || EnemyHealth.shieldKind ==2)
+                {
+                    // Apply damage to the enemy
+                    enemyHealth.TakeDamage(damageAmount);
+                    PlayerCombat.MagicAmount += 5;
+                }
             }
 
             // Destroy the arrow upon hitting the enemy
