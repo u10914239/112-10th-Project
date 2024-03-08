@@ -58,7 +58,7 @@ public class PlayerController_Joystick : MonoBehaviour
     public PlayerHealthBar Player1HealthBar;
     public PlayerHealthBar Player2HealthBar;
     public PlayerController playerController;
-    public Transform DeadZone1Positon = null,DeadZone2Positon = null,DeadZone3Positon = null,DeadZone4Positon = null,DeadZone5Positon = null;
+    public Transform DeadZone1Positon = null,DeadZone2Positon = null,DeadZone3Positon = null,DeadZone4Positon = null,DeadZone5Positon = null, DeadZone3_2Positon = null;
 
     public GameObject FindPlayerDectector;
     void Awake()
@@ -369,7 +369,7 @@ public class PlayerController_Joystick : MonoBehaviour
                     PlayerHealthBar.Player1WaitForRescue = false;
                     Rescuing = 0;
                     PlayerHealthBar.WaitForRescue = false;
-                    Player1HealthBar.currentHealth = Player1HealthBar.maxHealth / 2;
+                    Player1HealthBar.currentHealth = Player1HealthBar.maxHealth;
                     RescuingBar.SetActive(false);
                 }
             }else if(Input.GetKeyUp(KeyCode.Joystick1Button3))
@@ -407,6 +407,13 @@ public class PlayerController_Joystick : MonoBehaviour
         {
             print("DeadZone3");
             this.transform.position = DeadZone3Positon.position;
+            Player2HealthBar.currentHealth = 0;
+            PlayerHealthBar.Player2WaitForRescue = true;
+        }
+        if(other.tag == "DeadZone3-2")
+        {
+            print("DeadZone3");
+            this.transform.position = DeadZone3_2Positon.position;
             Player2HealthBar.currentHealth = 0;
             PlayerHealthBar.Player2WaitForRescue = true;
         }

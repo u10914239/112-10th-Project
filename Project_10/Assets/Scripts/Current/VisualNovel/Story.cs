@@ -36,10 +36,11 @@ public class Story : MonoBehaviour
             }
         }else if(!firstStory)
         {
-            if(Cue < Storys.Length-1 && Input.GetMouseButtonDown(0)|| Cue < 1 && Input.GetKeyDown(KeyCode.Joystick2Button3)|| Cue < 1 && Input.GetKeyDown(KeyCode.Joystick1Button3))
+            print("Notfirst");
+            if(Cue < Storys.Length-1 && Input.GetMouseButtonDown(0)|| Cue < Storys.Length-1 && Input.GetKeyDown(KeyCode.Joystick2Button3)|| Cue < Storys.Length-1 && Input.GetKeyDown(KeyCode.Joystick1Button3))
             {
              Cue = Cue += 1;
-            }else if(Cue == Storys.Length-1 && Input.GetMouseButtonDown(0)|| Cue == 1 && Input.GetKeyDown(KeyCode.Joystick2Button3)|| Cue == 1 && Input.GetKeyDown(KeyCode.Joystick1Button3))
+            }else if(Cue == Storys.Length-1 && Input.GetMouseButtonDown(0)|| Cue == Storys.Length-1 && Input.GetKeyDown(KeyCode.Joystick2Button3)|| Cue == Storys.Length-1 && Input.GetKeyDown(KeyCode.Joystick1Button3))
             {
                 VisualNovel.VisualNovel.SetActive(false);
             }
@@ -81,11 +82,11 @@ public class Story : MonoBehaviour
     }
     void Scripts2()
     {
-        Storys[0] = " 「太感謝你們的幫忙」 ";
-        Storys[1] = " 「因為有你們的協助」 ";
+        Storys[0] = "「太感謝你們的幫忙」 ";
+        Storys[1] = "「因為有你們的協助」 ";
         Storys[2] = "「一天又平安的過去了，感謝勇者們的努力！」";
-        Storys[3] = " 「其實聽說藏有神器的地窖就是村莊口附近的那個......」 ";
-        Storys[4] = "真的嗎!";
+        Storys[3] = "「其實聽說藏有神器的地窖就是村莊口附近的那個......」 ";
+        Storys[4] = "「真的嗎!」";
     }
     void Scripts3()
     {

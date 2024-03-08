@@ -63,6 +63,7 @@ public class Projectile : MonoBehaviour
         if (other.CompareTag("Boss"))
         {
             EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
+            
             if (enemyHealth != null)
             {
                 // Apply damage to the enemy
@@ -70,6 +71,7 @@ public class Projectile : MonoBehaviour
                 if(EnemyHealth.shieldKind ==0 || EnemyHealth.shieldKind ==2)
                 {
                     enemyHealth.TakeDamage(damageAmount);
+                    PlayerCombat_Joystick_Wizard.MagicAmount +=5;
                 }
 
                 

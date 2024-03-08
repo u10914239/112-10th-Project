@@ -158,6 +158,8 @@ public class PlayerCombat : MonoBehaviour
                     if(EnemyHealth.shieldKind ==0 || EnemyHealth.shieldKind ==1)
                     {
                         enemyHealth.TakeDamage(damageAmount);
+                        Punch.Play();
+                        MagicAmount += 5;
                     }
 
                     

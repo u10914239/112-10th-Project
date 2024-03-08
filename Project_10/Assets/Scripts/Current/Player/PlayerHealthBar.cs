@@ -44,7 +44,7 @@ public class PlayerHealthBar : MonoBehaviour
 
         if(StartRecover && currentStamina < MaxStamina)
         {
-            currentStamina += Time.deltaTime*20;
+            currentStamina += Time.deltaTime*50;
         }else if(currentStamina >= MaxStamina)
         {
             StartRecover = false;

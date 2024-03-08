@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
     public PlayerHealthBar Player2HealthBar;
     public PlayerHealthBar Player1HealthBar;
     public PlayerController_Joystick playerController_Joystick;
-    public Transform DeadZone1Positon ,DeadZone2Positon ,DeadZone3Positon ,DeadZone4Positon ,DeadZone5Positon;
+    public Transform DeadZone1Positon ,DeadZone2Positon ,DeadZone3Positon ,DeadZone4Positon ,DeadZone5Positon, DeadZone3_2Position;
     public GameObject FindPlayerDectector;
 
     
@@ -98,9 +98,9 @@ public class PlayerController : MonoBehaviour
             Invoke("RollCoolDownTimeEnd", 0.5f);
         }
         if (isGrounded && Input.GetKeyDown(KeyCode.Joystick2Button0) && PlayerHealthBar.Player1WaitForRescue == false
-        ||isGrounded && Input.GetKeyDown(KeyCode.Space) && PlayerHealthBar.Player1WaitForRescue == false)
+        )
         {
-            
+            Debug.Log("Jumping!!!!!");
             rb.velocity += new Vector3(0, jumpForce, 0);
         }
 
@@ -372,7 +372,7 @@ public class PlayerController : MonoBehaviour
                     PlayerHealthBar.Player2WaitForRescue = false;
                     Rescuing = 0;
                     PlayerHealthBar.WaitForRescue = false;
-                    Player2HealthBar.currentHealth = Player2HealthBar.maxHealth / 2;
+                    Player2HealthBar.currentHealth = Player2HealthBar.maxHealth;
                     RescuingBar.SetActive(false);
                 }
             }else if(Input.GetKeyUp(KeyCode.Joystick2Button3) || Input.GetKeyUp(KeyCode.Y))
@@ -414,6 +414,14 @@ public class PlayerController : MonoBehaviour
         {
             print("DeadZone3");
             this.transform.position = DeadZone3Positon.position;
+            Player1HealthBar.currentHealth = 0;
+            rb.velocity = Vector3.zero;
+            PlayerHealthBar.Player1WaitForRescue = true;
+        }
+        if(other.tag == "DeadZone3-2")
+        {
+            print("DeadZone3");
+            this.transform.position = DeadZone3_2Position.position;
             Player1HealthBar.currentHealth = 0;
             rb.velocity = Vector3.zero;
             PlayerHealthBar.Player1WaitForRescue = true;

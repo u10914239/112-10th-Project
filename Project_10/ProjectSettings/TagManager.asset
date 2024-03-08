@@ -26,6 +26,8 @@ TagManager:
   - DeadZone3
   - DeadZone4
   - DeadZone5
+  - DeadZone3-2
+  - DeadZone32
   layers:
   - Default
   - TransparentFX
